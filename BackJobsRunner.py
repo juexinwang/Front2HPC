@@ -1,19 +1,22 @@
 import sys,resource,os
 
 class BackJobsRunner:
-    """ Basic Runner from the front-end """
+    """ Basic Runner from the front-end, used for submit jobs"""
 
     def __init__(self,jobid,filepath,filename,params):
         self.jobid = jobid
         self.filepath = filepath
         self.filename = filename
         self.params = params
-        self.slurmFolder = './'
+        self.slurmDir = './'
+        self.inputDir = './'
+        self.slurmHPCDir = '/N/u/soicwang/BigRed200/inputslurm/'
+        self.inputHPCDir = '/N/u/soicwang/BigRed200/inputDir/'
 
     def generateSlurm(self):
         """ Generate slurm script for BigRed 200"""
 
-        slurmFileName = self.slurmFolder + self.jobid+'.slurm'
+        slurmFileName = self.slurmDir + self.jobid+'.slurm'
         fileStr = '#!/bin/bash\n'
         +'#SBATCH -J '+self.jobid+'\n'
         +'#SBATCH -p gpu\n'
@@ -39,21 +42,20 @@ class BackJobsRunner:
 
     def submit(self):
         """ Main entrance of the work"""
-
-        hpcFolder = '/N/u/soicwang/BigRed200/NRI-MDtransfer/'
+       
         ## 1. Generate slurm script
         self.generateSlurm()
 
         ## 2. Copy slurm script to HPC
-        cmd =  'scp '+self.slurmFolder+self.jobid+'.slurm soicwang@bigred200.uits.iu.edu:'+hpcFolder
+        cmd =  'scp '+self.slurmDir+self.jobid+'.slurm soicwang@bigred200.uits.iu.edu:'+self.slurmHPCDir
         os.system(cmd)
 
         ## 3. Copy input to HPC
-        cmd =  'scp '+self.slurmFolder+self.jobid+'.pdb soicwang@bigred200.uits.iu.edu:'+hpcFolder
+        cmd =  'scp -r '+self.inputDir+self.jobid+'/ soicwang@bigred200.uits.iu.edu:'+self.inputHPCDir
         os.system(cmd)
 
         ## 4. Submit slurm script
-        cmd = 'ssh soicwang@bigred200.uits.iu.edu sbatch '+hpcFolder+self.jobid+'.slurm'
+        cmd = 'ssh soicwang@bigred200.uits.iu.edu sbatch '+self.inputHPCDir+self.jobid+'.slurm'
         os.system(cmd)
 
         ## Finished

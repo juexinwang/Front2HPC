@@ -3,9 +3,18 @@
 
 import sys,os,shutil
 
+##################### 
+# Params setting
+#
+# Only change here if needed
+#####################
+
+transferDir = "/N/u/soicwang/BigRed200/transfer/"
+resultsDir = "/N/u/soicwang/BigRed200/projects/NRI-MD/logs/"
+
 jobidList = []
 
-# Read diff.txt
+# Read diff.txt, find all finished jobs at jobid
 with open('diff.txt','r') as f:
     lines = f.readlines()
     for line in lines:
@@ -16,7 +25,7 @@ with open('diff.txt','r') as f:
                 jobidList.append(words[2])
 
 # move according results to the folder
-os.remove("my_file_path")
-os.makedirs("my_file_path")
+os.remove(transferDir)
+os.makedirs(transferDir)
 for jobid in jobidList:
-    shutil.copy2("source_file_path", "destination_directory_path")
+    shutil.copy2(resultsDir+jobid+'/', transferDir)
