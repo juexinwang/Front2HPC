@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  pv-web:
+    privileged: true
+    build:
+      context: .
+      dockerfile: Dockerfile.apache.dev
+    container_name: "pv-frontend"
+    tty: true
+    working_dir: /var/www/html/
+    volumes:
+      - .:/var/www/html/
+    expose: 
+      - 80
+    ports:
+      - '9090:80'
+

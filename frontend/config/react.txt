@@ -1,0 +1,33 @@
+npx create-react-app frontend
+cd frontend
+npm i antd@^4.24.2 redux react-redux react-router-dom@6 axios less less-loader@6.0.0 moment --save
+config antd css：@import '~antd/dist/antd.css'
+
+git init
+git config user.name heyi21
+git config user.email heyi21@mails.jlu.edu.cn
+git add .
+git commit -m 'beforeEject'
+yarn eject
+==========config/webpack.config.js/line545==========
+{
+  test: /\.less$/,
+    use: getStyleLoaders(
+      {
+        //暂不配置
+      },
+      'less-loader'
+    ),
+},
+=====================================================
+
+======config/webpackDevServer.config.js/line103======
+proxy: {
+  '/api': {
+    target: 'http://127.0.0.1:8000',
+    changeOrigin: true, //是否跨域
+    pathRewrite: { '^/api': '/' }
+  }
+}
+=====================================================
+将request.js的配置项的 baseURL改为 '/api',

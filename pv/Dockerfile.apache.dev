@@ -1,0 +1,29 @@
+# FROM centos/systemd
+FROM centos:7
+
+# Add PHP 7.4 Remi repository
+RUN yum -y install http://rpms.remirepo.net/enterprise/remi-release-7.rpm 
+RUN yum -y install epel-release yum-utils
+
+# Disable repo for PHP 7.4
+RUN yum-config-manager --disable remi-php56
+RUN yum-config-manager --enable remi-php74
+
+# Install PHP 7.4 on CentOS 7 / Fedora
+RUN yum -y install \
+  php php-cli php-fpm php-mysqlnd php-zip php-devel \
+  php-gd php-mcrypt php-mbstring php-curl php-xml \
+  php-pear php-bcmath php-json
+
+
+# Install tool for email and apache
+RUN yum -y install httpd mod_ssl; yum clean all; systemctl enable httpd.service
+RUN yum -y install sendmail; yum clean all; systemctl enable sendmail.service
+RUN yum -y install libcurl libcurl-devel pandoc
+
+# Copy code to work directory
+WORKDIR /var/www/html/
+
+# # Start Apache
+CMD ["/usr/sbin/init"]
+

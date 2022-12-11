@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  pv-web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: "pv-frontend"
+    command: sh -c "./serve 9000"
+    tty: true
+    volumes:
+      - .:/usr/src/app
+    expose: 
+      - 9000
+    ports:
+      - '127.0.0.1:9000:9000'
+    networks:
+      - default
+

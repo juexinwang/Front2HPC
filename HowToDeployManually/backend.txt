@@ -1,0 +1,29 @@
+#1.install cuda cuDNN 
+conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
+
+#2.install miniconda3
+conda create -n nar python==3.7
+conda activate nar
+pip install -r requirements.txt
+=========requirements.txt=========
+Django==2.2.13
+django-filter==2.2.0
+djangorestframework==3.10.3
+joblib==0.14.0
+Markdown==3.1.1
+numpy==1.17.3
+pandas==0.25.2
+requests==2.22.0
+scikit-learn==0.21.3
+apscheduler==3.9.1
+django-apscheduler==0.6.0
+django-cors-headers==3.6.0
+===================================
+
+#3.enjoy
+cd backend
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+
+#can visit in http://localhost:8000
