@@ -77,3 +77,26 @@ resultsBJ.getPaths(jobid) #dict
 # output directory
 
 
+
+# interaction
+# preprocessing
+--start
+--end
+--timestep-size
+--train-interval
+--validate-interval
+--test-interval
+
+# main.py
+--seed
+--epochs
+--lr
+--encoder-hidden
+--decoder-hidden
+--encoder
+--decoder
+--encoder-dropout
+--decoder-dropout
+--lr-decay
+--gamma
+--var

@@ -2,10 +2,14 @@
 #
 # Check cron jobs
 # crontab -l
-# Edit cron jobs, 
-# 1. Every 5 minutes to check the status. (NRI-MD_daemon_communication.py)
-# 2. Delete results in 14 days
+#
+# Edit cron jobs
 # crontab -e
+# 1. Every 5 minutes to check the status. (NRI-MD_daemon_communication.py)
+#
+# 2. Delete results in 14 days
+# find /path/to/directory/ -mindepth 1 -mtime +14 -delete
+## Check: find /path/to/directory/ -mindepth 1 -mtime +14 -depth -print
 #
 
 import sys,os

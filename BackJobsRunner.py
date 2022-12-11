@@ -1,4 +1,6 @@
-import sys,resource,os
+## For submiting jobs from front-end in Django
+
+import os
 
 class BackJobsRunner:
     """ Basic Runner from the front-end, used for submit jobs"""
@@ -26,7 +28,8 @@ class BackJobsRunner:
         +'#SBATCH --gpus-per-node 1\n'
         +'#SBATCH --time=24:00:00\n\n'
         +'module load deeplearning\n'
-        +'srun python convert_dataset.py\n'
+        # +'srun python convert_dataset.py\n' # validate input in the front end
+        +'srun python preprocess_dataset.py\n' # Generate data in specific format at HPC
         +'srun python main.py '
 
         # Add params
