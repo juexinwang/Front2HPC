@@ -1,12 +1,12 @@
 1.prepare environment
-node.js, npm, yarn ...
+sudo apt install nodejs npm yarn
 
 2.create frontend project and install dependencies
 $npx create-react-app frontend
 $cd frontend
 $npm i antd@^4.24.2 redux react-redux react-router-dom@6 axios less less-loader@6.0.0 moment --save
 
-3.eject (must git before eject) 
+3.eject (must git before eject) #Question
 $git init
 $git config user.name heyi21
 $git config user.email heyi21@mails.jlu.edu.cn

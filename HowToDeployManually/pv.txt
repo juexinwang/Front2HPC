@@ -1,4 +1,4 @@
-1.prepare docker
+1.prepare docker # More details on that
 
 2.create image and container
 install extesion for docker in vscode

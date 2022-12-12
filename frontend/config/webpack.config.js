@@ -547,7 +547,7 @@ module.exports = function (webpackEnv) {
               test: /\.less$/,
                 use: getStyleLoaders(
                   {
-                    //暂不配置
+                    //not config now
                   },
                   'less-loader'
                 ),

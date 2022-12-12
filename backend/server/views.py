@@ -26,6 +26,8 @@ from django_apscheduler.jobstores import DjangoJobStore, register_events, regist
 import os
 scheduler = BackgroundScheduler()
 scheduler.add_jobstore(DjangoJobStore(), 'default')
+register_events(scheduler)
+scheduler.start()
 
 def preditct(trajfilepath,email,jobid,epochs,batchsize,encoder,decoder,lr):
     print(type(epochs))

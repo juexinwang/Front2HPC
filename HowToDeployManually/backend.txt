@@ -1,3 +1,6 @@
+#1.install conda
+#https://www.digitalocean.com/community/tutorials/how-to-install-the-anaconda-python-distribution-on-ubuntu-22-04
+
 #1.install cuda cuDNN 
 conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
 
