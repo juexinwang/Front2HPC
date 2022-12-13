@@ -62,8 +62,7 @@ class BackJobsRunner:
 
         fileStr = fileStr + ' --MDfolder '+self.inputHPCDir
         + ' --inputFile '+self.jobid+'.pdb' 
-        + ' --datafolder '+self.inputHPCDir+self.jobid+'/data/'
-        #TODO generate folders
+        + ' --datafolder '+self.inputHPCDir+self.jobid+'/data/' #'/N/u/soicwang/BigRed200/inputPDBDir/1213AAAA/data/'
 
         ## Add params of preprocess_dataset.py
         fileStr = fileStr + ' --start ' + self.params['start']
@@ -76,12 +75,14 @@ class BackJobsRunner:
 
         fileStr = fileStr + 'srun python main.py'
         ## Add params of main.py from input
-        fileStr = fileStr + ' --num-residues ' + num_residues
+        fileStr = fileStr + ' --jobid ' + self.jobid
+        + ' --inputdir ' + self.inputHPCDir + self.jobid +'/data/' #/N/u/soicwang/BigRed200/inputPDBDir/1213AAAA/data/
+        + ' --num-residues ' + num_residues
         + ' --timesteps ' + self.params['timestep_size']
         + ' --number-expstart ' + self.params['start']
         + ' --number-exp ' + self.params['end']
         ## Add params of main.py
-        
+
         fileStr = fileStr + ' --seed ' + self.params['seed']
         + ' --epochs ' + self.params['epochs']
         + ' --lr ' + self.params['lr']
