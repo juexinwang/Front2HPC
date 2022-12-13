@@ -76,7 +76,7 @@ class BackJobsRunner:
         ## Add params of main.py from input
         #inputdir: /N/u/soicwang/BigRed200/inputPDBDir/1213AAAA/data/
         fileStr = fileStr + ' --jobid ' + self.jobid \
-        + ' --inputdir ' + self.inputHPCDir + self.jobid +'/'+'data/' \ 
+        + ' --inputdir ' + self.inputHPCDir + str(self.jobid) +'/'+'data/' \ 
         + ' --num-residues ' + num_residues \
         + ' --timesteps ' + str(self.params['timestep_size']) \
         + ' --number-expstart ' + str(self.params['start']) \
