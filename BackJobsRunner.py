@@ -125,7 +125,7 @@ class BackJobsRunner:
         print(cmd)
 
         ## 5. Submit slurm script
-        cmd = 'ssh soicwang@bigred200.uits.iu.edu sbatch '+self.inputHPCDir+self.jobid+'.slurm'
+        cmd = 'ssh soicwang@bigred200.uits.iu.edu sbatch '+self.slurmHPCDir+self.jobid+'.slurm'
         os.system(cmd)
         print(cmd)
 
