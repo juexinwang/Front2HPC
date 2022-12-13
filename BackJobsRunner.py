@@ -64,35 +64,36 @@ class BackJobsRunner:
         + ' --datafolder '+ self.inputHPCDir + self.jobid + '/data/' #'/N/u/soicwang/BigRed200/inputPDBDir/1213AAAA/data/'
 
         ## Add params of preprocess_dataset.py
-        fileStr = fileStr + ' --start ' + str(self.params['start'])
-        + ' --end ' + str(self.params['end'])
-        + ' --timestep-size ' + str(self.params['timestep_size'])
-        + ' --train-interval ' + str(self.params['train_interval'])
-        + ' --validate-interval ' + str(self.params['validate_interval'])
+        fileStr = fileStr + ' --start ' + str(self.params['start'])\
+        + ' --end ' + str(self.params['end'])\
+        + ' --timestep-size ' + str(self.params['timestep_size'])\
+        + ' --train-interval ' + str(self.params['train_interval'])\
+        + ' --validate-interval ' + str(self.params['validate_interval'])\
         + ' --test-interval ' + str(self.params['test_interval'])
         fileStr = fileStr + '\n'
 
         fileStr = fileStr + 'srun python main.py'
         ## Add params of main.py from input
-        fileStr = fileStr + ' --jobid ' + self.jobid
-        + ' --inputdir ' + self.inputHPCDir + self.jobid +'/data/' #/N/u/soicwang/BigRed200/inputPDBDir/1213AAAA/data/
-        + ' --num-residues ' + num_residues
-        + ' --timesteps ' + str(self.params['timestep_size'])
-        + ' --number-expstart ' + str(self.params['start'])
-        + ' --number-exp ' + str(self.params['end'])
+        #inputdir: /N/u/soicwang/BigRed200/inputPDBDir/1213AAAA/data/
+        fileStr = fileStr + ' --jobid ' + self.jobid\
+        + ' --inputdir ' + self.inputHPCDir + self.jobid +'/data/'\ 
+        + ' --num-residues ' + num_residues\
+        + ' --timesteps ' + str(self.params['timestep_size'])\
+        + ' --number-expstart ' + str(self.params['start'])\
+        + ' --number-exp ' + str(self.params['end'])\
         ## Add params of main.py
 
-        fileStr = fileStr + ' --seed ' + str(self.params['seed'])
-        + ' --epochs ' + str(self.params['epochs'])
-        + ' --lr ' + str(self.params['lr'])
-        + ' --encoder-hidden ' + str(self.params['encoder_hidden'])
-        + ' --decoder-hidden ' + str(self.params['decoder_hidden'])
-        + ' --encoder ' + str(self.params['encoder'])
-        + ' --decoder ' + str(self.params['decoder'])
-        + ' --encoder-dropout ' + str(self.params['encoder_dropout'])
-        + ' --decoder-dropout ' + str(self.params['decoder_dropout'])
-        + ' --lr-decay ' + str(self.params['lr_decay'])
-        + ' --gamma ' + str(self.params['gamma'])
+        fileStr = fileStr + ' --seed ' + str(self.params['seed'])\
+        + ' --epochs ' + str(self.params['epochs'])\
+        + ' --lr ' + str(self.params['lr'])\
+        + ' --encoder-hidden ' + str(self.params['encoder_hidden'])\
+        + ' --decoder-hidden ' + str(self.params['decoder_hidden'])\
+        + ' --encoder ' + str(self.params['encoder'])\
+        + ' --decoder ' + str(self.params['decoder'])\
+        + ' --encoder-dropout ' + str(self.params['encoder_dropout'])\
+        + ' --decoder-dropout ' + str(self.params['decoder_dropout'])\
+        + ' --lr-decay ' + str(self.params['lr_decay'])\
+        + ' --gamma ' + str(self.params['gamma'])\
         + ' --var ' + str(self.params['var'])
         fileStr = fileStr + '\n'        
 
