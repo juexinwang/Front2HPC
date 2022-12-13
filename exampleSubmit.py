@@ -1,4 +1,4 @@
-import BackJobsRunner
+from BackJobsRunner import BackJobsRunner
 
 jobid = '1213AAAA'
 filename = '1213AAAA_77_3000.pdb'
