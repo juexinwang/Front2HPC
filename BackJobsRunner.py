@@ -49,19 +49,18 @@ class BackJobsRunner:
 
         slurmFileName = self.slurmDir + self.jobid+'.slurm'
         fileStr = '#!/bin/bash\n'\
-        +'#SBATCH -J ' + self.jobid + '\n'\
-        +'#SBATCH -p gpu\n'\
-        +'#SBATCH -o ' + self.jobid + '_%j.txt\n'\
-        +'#SBATCH -e ' + self.jobid + '_%j.err\n'\
-        +'#SBATCH --nodes=1\n'\
-        +'#SBATCH --gpus-per-node 1\n'\
-        +'#SBATCH --time=24:00:00\n\n'\
-        +'module load deeplearning\n'\
-        # +'srun python convert_dataset.py\n' # validate input in the front end
-        +'srun python preprocess_dataset.py' # Generate data in specific format at HPC
+                '#SBATCH -J ' + self.jobid + '\n'\
+                '#SBATCH -p gpu\n'\
+                '#SBATCH -o ' + self.jobid + '_%j.txt\n'\
+                '#SBATCH -e ' + self.jobid + '_%j.err\n'\
+                '#SBATCH --nodes=1\n'\
+                '#SBATCH --gpus-per-node 1\n'\
+                '#SBATCH --time=24:00:00\n\n'\
+                'module load deeplearning\n'\
+                'srun python preprocess_dataset.py' # Generate data in specific format at HPC
 
-        fileStr = fileStr + ' --MDfolder ' + self.inputHPCDir
-        + ' --inputFile ' + self.jobid+'.pdb' 
+        fileStr = fileStr + ' --MDfolder ' + self.inputHPCDir\
+        + ' --inputFile ' + self.jobid+'.pdb' \
         + ' --datafolder '+ self.inputHPCDir + self.jobid + '/data/' #'/N/u/soicwang/BigRed200/inputPDBDir/1213AAAA/data/'
 
         ## Add params of preprocess_dataset.py
