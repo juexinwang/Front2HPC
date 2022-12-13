@@ -31,7 +31,7 @@ class BackJobsRunner:
 
 
     def __init__(self,jobid,filename,params):
-        self.jobid = str(jobid)
+        self.jobid = jobid
         self.filepath = '/media/volume/sdb/jobs/files/'
         self.filename = filename #jobid_numresidues_nummodels.pdb #TODO
         self.params = params
@@ -49,10 +49,10 @@ class BackJobsRunner:
 
         slurmFileName = self.slurmDir + self.jobid+'.slurm'
         fileStr = '#!/bin/bash\n'
-        +'#SBATCH -J '+self.jobid+'\n'
+        +'#SBATCH -J ' + str(self.jobid) + '\n'
         +'#SBATCH -p gpu\n'
-        +'#SBATCH -o '+self.jobid+'_%j.txt\n'
-        +'#SBATCH -e '+self.jobid+'_%j.err\n'
+        +'#SBATCH -o ' + str(self.jobid) + '_%j.txt\n'
+        +'#SBATCH -e ' + str(self.jobid) + '_%j.err\n'
         +'#SBATCH --nodes=1\n'
         +'#SBATCH --gpus-per-node 1\n'
         +'#SBATCH --time=24:00:00\n\n'
@@ -60,9 +60,9 @@ class BackJobsRunner:
         # +'srun python convert_dataset.py\n' # validate input in the front end
         +'srun python preprocess_dataset.py' # Generate data in specific format at HPC
 
-        fileStr = fileStr + ' --MDfolder '+self.inputHPCDir
-        + ' --inputFile '+self.jobid+'.pdb' 
-        + ' --datafolder '+self.inputHPCDir+self.jobid+'/data/' #'/N/u/soicwang/BigRed200/inputPDBDir/1213AAAA/data/'
+        fileStr = fileStr + ' --MDfolder ' + self.inputHPCDir
+        + ' --inputFile ' + self.jobid+'.pdb' 
+        + ' --datafolder '+ self.inputHPCDir + self.jobid + '/data/' #'/N/u/soicwang/BigRed200/inputPDBDir/1213AAAA/data/'
 
         ## Add params of preprocess_dataset.py
         fileStr = fileStr + ' --start ' + self.params['start']
