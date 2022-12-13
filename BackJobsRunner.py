@@ -37,7 +37,8 @@ class BackJobsRunner:
         self.params = params
         self.slurmDir = '/media/volume/sdb/jobs/slurmDir/'
         self.slurmHPCDir = '/N/u/soicwang/BigRed200/inputslurmDir/'
-        self.inputHPCDir = '/N/u/soicwang/BigRed200/inputPDBDir/'    
+        self.inputHPCDir = '/N/u/soicwang/BigRed200/inputPDBDir/'
+        self.codeDir = '/N/u/soicwang/BigRed200/projects/NRI-MD/'    
 
     def generateSlurm(self):
         """ Generate slurm script for BigRed 200"""
@@ -57,7 +58,7 @@ class BackJobsRunner:
                 '#SBATCH --gpus-per-node 1\n'\
                 '#SBATCH --time=24:00:00\n\n'\
                 'module load deeplearning\n'\
-                'srun python preprocess_dataset.py' # Generate data in specific format at HPC
+                'srun python ' + self.codeDir + 'preprocess_dataset.py' # Generate data in specific format at HPC
 
         fileStr = fileStr + ' --MDfolder ' + self.inputHPCDir\
         + ' --inputFile ' + self.jobid+'.pdb' \
@@ -72,7 +73,7 @@ class BackJobsRunner:
         + ' --test-interval ' + str(self.params['test_interval'])
         fileStr = fileStr + '\n'
 
-        fileStr = fileStr + 'srun python main.py'
+        fileStr = fileStr + 'srun python ' + self.codeDir + 'main.py'
         ## Add params of main.py from input
         #inputdir: /N/u/soicwang/BigRed200/inputPDBDir/1213AAAA/data/
         fileStr = fileStr + ' --jobid ' + self.jobid \
@@ -116,14 +117,17 @@ class BackJobsRunner:
         ## 3. Copy slurm script to HPC
         cmd =  'scp '+self.slurmDir+self.jobid+'.slurm soicwang@bigred200.uits.iu.edu:'+self.slurmHPCDir
         os.system(cmd)
+        print(cmd)
 
         ## 4. Copy input to HPC
         cmd =  'scp -r '+self.filepath+self.jobid+'.pdb soicwang@bigred200.uits.iu.edu:'+self.inputHPCDir
         os.system(cmd)
+        print(cmd)
 
         ## 5. Submit slurm script
         cmd = 'ssh soicwang@bigred200.uits.iu.edu sbatch '+self.inputHPCDir+self.jobid+'.slurm'
         os.system(cmd)
+        print(cmd)
 
         ## Finished
 
