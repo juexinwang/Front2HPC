@@ -28,7 +28,7 @@ deployedDir = '/N/u/soicwang/BigRed200/projects/Front2HPC/'
 
 # main
 # Check the status of the jobs
-cmd = 'ssh soicwang@bigred200.uits.iu.edu shell '+ deployedDir +'HPC_NRI-MD_check.sh'
+cmd = 'ssh soicwang@bigred200.uits.iu.edu bash '+ deployedDir +'HPC_NRI-MD_check.sh'
 os.system(cmd)
 # Debug:
 print(datetime.datetime.now())
