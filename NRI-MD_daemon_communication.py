@@ -1,4 +1,4 @@
-## Use cron in linux
+## Use cron in linux of front end
 #
 # Check cron jobs
 # crontab -l
@@ -21,7 +21,7 @@ import sys,os
 # Only change here if needed
 #####################
 transferDir = "/N/u/soicwang/BigRed200/transfer/"
-targetDir = '~/results/'
+targetDir = '/media/volume/sdb/jobs/jobs/'
 
 
 # main

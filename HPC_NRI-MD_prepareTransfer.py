@@ -1,5 +1,5 @@
 ## Prepare a folder only for transfering
-## It should located on the HPC
+## It should located on the root of the HPC under username of soicwang
 
 import sys,os,shutil
 

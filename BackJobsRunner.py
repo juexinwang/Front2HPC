@@ -30,18 +30,22 @@ class BackJobsRunner:
     """
 
 
-    def __init__(self,jobid,filepath,filename,params):
+    def __init__(self,jobid,filename,params):
         self.jobid = jobid
-        self.filepath = filepath
-        self.filename = filename
+        self.filepath = '/media/volume/sdb/jobs/files/'
+        self.filename = filename #jobid_numresidues_nummodels.pdb #TODO
         self.params = params
-        self.slurmDir = './'
-        self.inputDir = './'
-        self.slurmHPCDir = '/N/u/soicwang/BigRed200/inputslurm/'
-        self.inputHPCDir = '/N/u/soicwang/BigRed200/inputDir/'
+        self.slurmDir = '/media/volume/sdb/jobs/slurmDir/'
+        self.slurmHPCDir = '/N/u/soicwang/BigRed200/inputslurmDir/'
+        self.inputHPCDir = '/N/u/soicwang/BigRed200/inputPDBDir/'    
 
     def generateSlurm(self):
         """ Generate slurm script for BigRed 200"""
+
+        ## Find the appropriate params of number of reisdues and number of models
+        words = self.filename.split('_')
+        num_residues = words[1]
+        num_models = words[2]
 
         slurmFileName = self.slurmDir + self.jobid+'.slurm'
         fileStr = '#!/bin/bash\n'
@@ -56,9 +60,10 @@ class BackJobsRunner:
         # +'srun python convert_dataset.py\n' # validate input in the front end
         +'srun python preprocess_dataset.py' # Generate data in specific format at HPC
 
-        fileStr = fileStr + ' --MDfolder '+self.inputHPCDir+self.jobid+'/input/'
-        + ' --inputFile fixed.pdb' #TODO
+        fileStr = fileStr + ' --MDfolder '+self.inputHPCDir
+        + ' --inputFile '+self.jobid+'.pdb' 
         + ' --datafolder '+self.inputHPCDir+self.jobid+'/data/'
+        #TODO generate folders
 
         ## Add params of preprocess_dataset.py
         fileStr = fileStr + ' --start ' + self.params['start']
@@ -70,7 +75,13 @@ class BackJobsRunner:
         fileStr = fileStr + '\n'
 
         fileStr = fileStr + 'srun python main.py'
+        ## Add params of main.py from input
+        fileStr = fileStr + ' --num-residues ' + num_residues
+        + ' --timesteps ' + self.params['timestep_size']
+        + ' --number-expstart ' + self.params['start']
+        + ' --number-exp ' + self.params['end']
         ## Add params of main.py
+        
         fileStr = fileStr + ' --seed ' + self.params['seed']
         + ' --epochs ' + self.params['epochs']
         + ' --lr ' + self.params['lr']
@@ -93,19 +104,23 @@ class BackJobsRunner:
 
     def submit(self):
         """ Main entrance of the work"""
+
+        ## 1. Change the corresponding files for submitting usage
+        cmd = 'mv ' + self.filepath + self.filename + ' ' + self.filepath + self.jobid +'.pdb'
+        os.system(cmd)
        
-        ## 1. Generate slurm script
+        ## 2. Generate slurm script
         self.generateSlurm()
 
-        ## 2. Copy slurm script to HPC
+        ## 3. Copy slurm script to HPC
         cmd =  'scp '+self.slurmDir+self.jobid+'.slurm soicwang@bigred200.uits.iu.edu:'+self.slurmHPCDir
         os.system(cmd)
 
-        ## 3. Copy input to HPC
-        cmd =  'scp -r '+self.inputDir+self.jobid+'/ soicwang@bigred200.uits.iu.edu:'+self.inputHPCDir
+        ## 4. Copy input to HPC
+        cmd =  'scp -r '+self.filepath+self.jobid+'.pdb soicwang@bigred200.uits.iu.edu:'+self.inputHPCDir
         os.system(cmd)
 
-        ## 4. Submit slurm script
+        ## 5. Submit slurm script
         cmd = 'ssh soicwang@bigred200.uits.iu.edu sbatch '+self.inputHPCDir+self.jobid+'.slurm'
         os.system(cmd)
 
