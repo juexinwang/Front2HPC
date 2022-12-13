@@ -6,7 +6,7 @@
 # Edit cron jobs
 # crontab -e
 # 1. Every 5 minutes to check the status. (NRI-MD_daemon_communication.py)
-# */5 * * * * python /N/u/soicwang/BigRed200/projects/Front2HPC/NRI-MD_daemon_communication.py >> ~/daemonlog.txt
+# */5 * * * * python /home/exouser/NRIproject/Front2HPC/NRI-MD_daemon_communication.py >> ~/daemonlog.txt
 #
 # 2. Delete results in 14 days
 # find /path/to/directory/ -mindepth 1 -mtime +14 -delete
