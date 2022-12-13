@@ -25,7 +25,9 @@ with open('diff.txt','r') as f:
                 jobidList.append(words[2])
 
 # move according results to the folder
-os.remove(transferDir)
-os.makedirs(transferDir)
+if os.path.exists(transferDir):
+    os.rmdir(transferDir)
+else:
+    os.makedirs(transferDir)
 for jobid in jobidList:
     shutil.copy2(resultsDir+jobid+'/', transferDir)
