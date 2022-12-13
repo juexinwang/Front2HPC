@@ -31,13 +31,15 @@ deployedDir = '/N/u/soicwang/BigRed200/projects/Front2HPC/'
 cmd = 'ssh soicwang@bigred200.uits.iu.edu shell '+ deployedDir +'HPC_NRI-MD_check.sh'
 os.system(cmd)
 # Debug:
-print(datetime.datetime.now()+'\t'+cmd)
+print(datetime.datetime.now())
+print(cmd)
 
 # Copy the files from HPC to the frontend
 cmd =  'scp -r soicwang@bigred200.uits.iu.edu:'+transferDir+' '+targetDir
 os.system(cmd)
 # Debug:
-print(datetime.datetime.now()+'\t'+cmd)
+print(datetime.datetime.now())
+print(cmd)
 
 # Update the sql?
 #TODO by Yi He
