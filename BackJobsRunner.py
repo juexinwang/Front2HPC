@@ -74,10 +74,9 @@ class BackJobsRunner:
 
         fileStr = fileStr + 'srun python main.py'
         ## Add params of main.py from input
-        inputdir = self.inputHPCDir + self.jobid +'/data/'
         #inputdir: /N/u/soicwang/BigRed200/inputPDBDir/1213AAAA/data/
         fileStr = fileStr + ' --jobid ' + self.jobid \
-        + ' --inputdir ' + inputdir \ 
+        + ' --inputdir ' + self.inputHPCDir + self.jobid +'/data/' \
         + ' --num-residues ' + num_residues \
         + ' --timesteps ' + str(self.params['timestep_size']) \
         + ' --number-expstart ' + str(self.params['start']) \
