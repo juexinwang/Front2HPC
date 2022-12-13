@@ -48,15 +48,15 @@ class BackJobsRunner:
         num_models = words[2]
 
         slurmFileName = self.slurmDir + self.jobid+'.slurm'
-        fileStr = '#!/bin/bash\n'
-        +'#SBATCH -J ' + str(self.jobid) + '\n'
-        +'#SBATCH -p gpu\n'
-        +'#SBATCH -o ' + str(self.jobid) + '_%j.txt\n'
-        +'#SBATCH -e ' + str(self.jobid) + '_%j.err\n'
-        +'#SBATCH --nodes=1\n'
-        +'#SBATCH --gpus-per-node 1\n'
-        +'#SBATCH --time=24:00:00\n\n'
-        +'module load deeplearning\n'
+        fileStr = '#!/bin/bash\n'\
+        +'#SBATCH -J ' + self.jobid + '\n'\
+        +'#SBATCH -p gpu\n'\
+        +'#SBATCH -o ' + self.jobid + '_%j.txt\n'\
+        +'#SBATCH -e ' + self.jobid + '_%j.err\n'\
+        +'#SBATCH --nodes=1\n'\
+        +'#SBATCH --gpus-per-node 1\n'\
+        +'#SBATCH --time=24:00:00\n\n'\
+        +'module load deeplearning\n'\
         # +'srun python convert_dataset.py\n' # validate input in the front end
         +'srun python preprocess_dataset.py' # Generate data in specific format at HPC
 
