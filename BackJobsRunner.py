@@ -31,7 +31,7 @@ class BackJobsRunner:
 
 
     def __init__(self,jobid,filename,params):
-        self.jobid = jobid
+        self.jobid = str(jobid)
         self.filepath = '/media/volume/sdb/jobs/files/'
         self.filename = filename #jobid_numresidues_nummodels.pdb #TODO
         self.params = params

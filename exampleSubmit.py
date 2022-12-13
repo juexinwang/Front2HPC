@@ -1,5 +1,7 @@
 from BackJobsRunner import BackJobsRunner
 
+## example of submit jobs
+
 jobid = '1213AAAA'
 filename = '1213AAAA_77_3000.pdb'
 params={
