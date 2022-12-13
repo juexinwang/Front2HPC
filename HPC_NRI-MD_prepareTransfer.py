@@ -26,7 +26,7 @@ with open('diff.txt','r') as f:
 
 # move according results to the folder
 if os.path.exists(transferDir):
-    os.rmdir(transferDir)
+    shutil.rmtree(transferDir)
 else:
     os.makedirs(transferDir)
 for jobid in jobidList:
