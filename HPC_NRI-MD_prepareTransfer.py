@@ -24,10 +24,11 @@ with open('diff.txt','r') as f:
             if words[3]=='gpu' and words[6]=='COMPLETED':
                 jobidList.append(words[2])
 
-# move according results to the folder
-if os.path.exists(transferDir):
-    shutil.rmtree(transferDir)
-else:
-    os.makedirs(transferDir)
-for jobid in jobidList:
-    shutil.copytree(resultsDir+jobid+'/', transferDir+jobid+'/')
+# if jobidList not eq to 0, then move according results to the folder
+if not len(jobidList) == 0:
+    if os.path.exists(transferDir):
+        shutil.rmtree(transferDir)
+    else:
+        os.makedirs(transferDir)
+    for jobid in jobidList:
+        shutil.copytree(resultsDir+jobid+'/', transferDir+jobid+'/')

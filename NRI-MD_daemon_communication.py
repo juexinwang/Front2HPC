@@ -35,7 +35,7 @@ print(datetime.datetime.now())
 print(cmd)
 
 # Copy the files from HPC to the frontend
-cmd =  'scp -r soicwang@bigred200.uits.iu.edu:'+transferDir+'/* '+targetDir
+cmd =  'scp -r soicwang@bigred200.uits.iu.edu:'+transferDir+'* '+targetDir
 os.system(cmd)
 # Debug:
 print(datetime.datetime.now())
