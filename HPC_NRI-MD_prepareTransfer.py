@@ -30,4 +30,4 @@ if os.path.exists(transferDir):
 else:
     os.makedirs(transferDir)
 for jobid in jobidList:
-    shutil.copytree(resultsDir+jobid+'/', transferDir)
+    shutil.copytree(resultsDir+jobid+'/', transferDir+jobid+'/')
