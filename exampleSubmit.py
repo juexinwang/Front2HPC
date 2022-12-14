@@ -1,6 +1,6 @@
 from BackJobsRunner import BackJobsRunner
 
-## example of submit jobs
+## example of submit jobs from the front end
 
 jobid = '1213AAAA'
 filename = '1213AAAA_77_3000.pdb'
@@ -23,6 +23,10 @@ params={
     'lr_decay':200,
     'gamma':0.5,
     'var':5e-5,
+    # postanalysis_path.py
+    'dist_threshold':12,
+    'source_node':46,
+    'target_node':61,
 }
 bj = BackJobsRunner(jobid = '1213AAAA', filename = '1213AAAA_77_3000.pdb',params = params)
 print('Submit:')

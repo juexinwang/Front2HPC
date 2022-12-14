@@ -98,7 +98,21 @@ class BackJobsRunner:
         + ' --var ' + str(self.params['var'])
         fileStr = fileStr + '\n'        
 
-        #num_residues = self.params['num_residues']
+        fileStr = fileStr + 'srun python ' + self.codeDir + 'postanalysis_path.py'\
+        + ' --num-residues ' + num_residues \
+        + ' --windowsize ' + str(int(self.params['end'])-int(str(self.params['start']))+1) \
+        + ' --filename' + self.codeDir + '/logs/' + self.jobid + '/logs/out_probs_train.npy' \
+        + ' --PDBfilename' + self.inputHPCDir + self.jobid + '.pdb' \
+        + ' --outputDir' + self.codeDir + '/logs/' + self.jobid + '/analysis/' \
+
+        # filename: '/N/u/soicwang/BigRed200/projects/NRI-MD/logs/1213AAAA/logs/out_probs_train.npy'
+        # PDBfilename: '/N/u/soicwang/BigRed200/inputPDBDir/1213AAAA.pdb'
+        # outputfilename: '/N/u/soicwang/BigRed200/projects/NRI-MD/logs/1213AAAA/analysis/paths.txt'
+
+        fileStr = fileStr + ' --dist-threshold ' + str(self.params['dist_threshold'])\
+        + ' --source-node ' + str(self.params['source_node'])\
+        + ' --target-node ' + str(self.params['target_node'])
+        fileStr = fileStr + '\n'
 
         with open(slurmFileName,'w') as fw:
             fw.write(fileStr)
