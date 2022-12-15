@@ -32,3 +32,8 @@ if not len(jobidList) == 0:
         os.makedirs(transferDir)
     for jobid in jobidList:
         shutil.copytree(resultsDir+jobid+'/', transferDir+jobid+'/')
+    # shutil.rmtree(transferDir)
+# if jobidList eq to 0, then move according results to the folder
+else:
+    if os.path.exists(transferDir):
+        shutil.rmtree(transferDir)
