@@ -80,7 +80,7 @@ class BackJobsRunner:
         + ' --inputdir ' + self.inputHPCDir + self.jobid +'/data/' \
         + ' --num-residues ' + num_residues \
         + ' --timesteps ' + str(self.params['timestep_size']) \
-        + ' --number-expstart ' + str(self.params['start']) \
+        + ' --number-expstart ' + int(str(self.params['start'])-1) \
         + ' --number-exp ' + str(self.params['end']) \
         ## Add params of main.py
 
@@ -101,9 +101,9 @@ class BackJobsRunner:
         fileStr = fileStr + 'srun python ' + self.codeDir + 'postanalysis_path.py'\
         + ' --num-residues ' + num_residues \
         + ' --windowsize ' + str(int(self.params['end'])-int(str(self.params['start']))+1) \
-        + ' --filename ' + self.codeDir + '/logs/' + self.jobid + '/logs/out_probs_train.npy' \
+        + ' --filename ' + self.codeDir + 'logs/' + self.jobid + '/logs/out_probs_train.npy' \
         + ' --PDBfilename ' + self.inputHPCDir + self.jobid + '.pdb' \
-        + ' --outputDir ' + self.codeDir + '/logs/' + self.jobid + '/analysis/' \
+        + ' --outputDir ' + self.codeDir + 'logs/' + self.jobid + '/analysis/' \
 
         # filename: '/N/u/soicwang/BigRed200/projects/NRI-MD/logs/1213AAAA/logs/out_probs_train.npy'
         # PDBfilename: '/N/u/soicwang/BigRed200/inputPDBDir/1213AAAA.pdb'
@@ -117,8 +117,8 @@ class BackJobsRunner:
         fileStr = fileStr + 'srun python ' + self.codeDir + 'postanalysis_visual.py'\
         + ' --num-residues ' + num_residues \
         + ' --windowsize ' + str(int(self.params['end'])-int(str(self.params['start']))+1) \
-        + ' --fileDir ' + self.codeDir + '/logs/' + self.jobid + '/logs/' \
-        + ' --outputDir ' + self.codeDir + '/logs/' + self.jobid + '/analysis/' \
+        + ' --fileDir ' + self.codeDir + 'logs/' + self.jobid + '/logs/' \
+        + ' --outputDir ' + self.codeDir + 'logs/' + self.jobid + '/analysis/' \
 
         # fileDir: '/N/u/soicwang/BigRed200/projects/NRI-MD/logs/1213AAAA/logs/'
         # outputDir: '/N/u/soicwang/BigRed200/projects/NRI-MD/logs/1213AAAA/analysis/'
