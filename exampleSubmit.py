@@ -5,8 +5,8 @@ from BackJobsRunner import BackJobsRunner
 jobid = '1213AAAA'
 filename = '1213AAAA_77_3000.pdb'
 params={
-    'start':1,
-    'end':56,
+    'start':1, # start from 1
+    'end':56,  # start from 1
     'timestep_size':50,
     'train_interval':60,
     'validate_interval':80,
@@ -24,14 +24,14 @@ params={
     'gamma':0.5,
     'var':5e-5,
     # postanalysis_path.py
-    'dist_threshold':12,
-    'source_node':46,
-    'target_node':61,
+    'dist_threshold':12, # default is end-start+1
+    'source_node':46, # start from 0
+    'target_node':61, # start from 0
     # postanalysis_visual.py
     'threshold':0.6,
-    'domainInput':'A_0_40,B_41_70,C_71_76',
+    'domainInput':'A_0_40,B_41_70,C_71_76', # default: ',', # start from 0
 }
-bj = BackJobsRunner(jobid = '1213AAAA', filename = '1213AAAA_77_3000.pdb',params = params)
+bj = BackJobsRunner(jobid = jobid, filename = filename, params = params)
 print('Submit:')
 bj.submit()
 print('Submit finished.')
