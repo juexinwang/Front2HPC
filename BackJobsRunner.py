@@ -58,6 +58,7 @@ class BackJobsRunner:
                 '#SBATCH --gpus-per-node 1\n'\
                 '#SBATCH --time=24:00:00\n\n'\
                 'module load deeplearning\n'\
+                'echo Start at `date`\n'\
                 'srun python ' + self.codeDir + 'preprocess_dataset.py' # Generate data in specific format at HPC
 
         fileStr = fileStr + ' --MDfolder ' + self.inputHPCDir\
@@ -127,6 +128,7 @@ class BackJobsRunner:
         + ' --threshold ' + str(self.params['threshold'])\
         + ' --domainInput ' + str(self.params['domainInput'])
         fileStr = fileStr + '\n'
+        fileStr = fileStr + 'echo End at `date`\n'\
 
         with open(slurmFileName,'w') as fw:
             fw.write(fileStr)
