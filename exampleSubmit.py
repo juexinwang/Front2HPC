@@ -29,7 +29,7 @@ params={
     'target_node':61,
     # postanalysis_visual.py
     'threshold':0.6,
-    'domainInput':',',
+    'domainInput':'A_0_40,B_41_70,C_71_76',
 }
 bj = BackJobsRunner(jobid = '1213AAAA', filename = '1213AAAA_77_3000.pdb',params = params)
 print('Submit:')
