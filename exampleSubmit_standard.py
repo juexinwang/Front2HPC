@@ -1,9 +1,9 @@
 from BackJobsRunner import BackJobsRunner
 
-## example of submit jobs from the front end, this is just quick test
+## example of submit jobs from the front end, standard
 
-jobid = '1213AAAA'
-filename = '1213AAAA_77_3000.pdb'
+jobid = '1213AAAB'
+filename = '1213AAAB_77_3000.pdb'
 params={
     'start':1, # start from 1
     'end':56,  # start from 1
@@ -12,7 +12,7 @@ params={
     'validate_interval':80,
     'test_interval':100,
     'seed':42,
-    'epochs':10,
+    'epochs':500,
     'lr':0.0005,
     'encoder_hidden':256,
     'decoder_hidden':256,
@@ -29,8 +29,7 @@ params={
     'target_node':61, # start from 0
     # postanalysis_visual.py
     'threshold':0.6,
-    'domainInput':',',
-    #'domainInput':'A_0_40,B_41_70,C_71_76', # default: ',', # start from 0
+    'domainInput':'A_0_40,B_41_70,C_71_76', # default: ',', # start from 0
 }
 bj = BackJobsRunner(jobid = jobid, filename = filename, params = params)
 print('Submit:')
