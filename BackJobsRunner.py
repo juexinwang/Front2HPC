@@ -80,7 +80,7 @@ class BackJobsRunner:
         + ' --inputdir ' + self.inputHPCDir + self.jobid +'/data/' \
         + ' --num-residues ' + num_residues \
         + ' --timesteps ' + str(self.params['timestep_size']) \
-        + ' --number-expstart ' + int(str(self.params['start'])-1) \
+        + ' --number-expstart ' + str(int(self.params['start'])-1) \
         + ' --number-exp ' + str(self.params['end']) \
         ## Add params of main.py
 
