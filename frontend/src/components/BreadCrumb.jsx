@@ -10,17 +10,22 @@ export default function BreadCrumb() {
     useEffect(()=>{
         switch(pathname){
             case '/submit':
-                setbreadName('submit');
+                setbreadName('submit job');
                 break;
             case '/result':
-                setbreadName('result');
+                setbreadName('check result');
                 break;
             case '/help':
-                setbreadName('help');
+                setbreadName('help document');
                 break;            
             case '/intro':
-                setbreadName('intro');
+                setbreadName('introduction');
                 break; 
+            case '/contact':
+                setbreadName('contact us');
+                break;    
+            default:
+                setbreadName('get result');                                                                   
         }
     },[pathname])
   return (

@@ -35,7 +35,7 @@ export default function App() {
       <header>
         <div className='logo'>NRI-MD</div>
         <div className='word'>Neural relational inference to learn long-range allosteric interactions in proteins from molecular dynamics simulations</div>
-        <div className='contactus'><a>Contact us</a></div>
+        <div className='contactus'><Link to='/contact'>Contact us</Link></div>
       </header>
       <Layout className='midLayout'>
         <Sider width={250} >

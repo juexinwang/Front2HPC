@@ -12,7 +12,8 @@ const SubmitSuccessfully = (props) => {
         title="Submit Successfully!"
         subTitle= {subTitle}
         extra={[
-        <Button type="primary" key="console" onClick={()=> {navigate('/result', {state:{"jobid":jobid}})}}>Check Result</Button>
+        <Button type="primary" key="console" onClick={()=> {navigate('/result/', {state:{"jobid":jobid}})}}>Check Result</Button>
+        // <Button type="primary" key="console" onClick={()=> {navigate('/result/'+jobid)}}>Check Result</Button>
         ,
         <Button key="buy" onClick={()=>window.history.go(0)}>Submit Again</Button>,
         ]}
