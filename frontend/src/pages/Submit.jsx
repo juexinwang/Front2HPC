@@ -59,7 +59,7 @@ export default function Submit() {
   Encoder:'mlp', Decoder:'rnn', EncoderHidden:256, DecoderHidden:256, EncoderDropout:0, DecoderDropout:0,
   StrucFilePath:'', 
   SourceNode:46, TargetNode:61,
-  // VisualThreshold: 0.6,
+  VisualThreshold: 0.6,
   DistThreshold:12, 
   // Domain: 'A_0_40,B_41_70,C_71_76',
   }); 
@@ -161,7 +161,7 @@ const [exampleSha1,setExampleSha1] = useState(true)
           <Form.Item name="JobFile" label="Trajectory File" rules={[{ required: true, },] } 
           extra="upload protein trajectory pdb file ( only include CA atoms ), protein should be less than 100 residues" >
             <Upload {...trajProps} fileList={trajFileList}> 
-              <Button icon={<UploadOutlined />}>Upload</Button> <a href='https://www.baidu.com'>example</a>
+              <Button icon={<UploadOutlined />}>Upload</Button> <a href='/api/download1/' onClick={(e)=>{e.stopPropagation()}}>example</a>
             </Upload>
           </Form.Item>
           {/* <span className="ant-form-text" style={{ marginLeft: 8 }}><Link  to='/help'> how to prapare the input file</Link></span> */}

@@ -1,0 +1,65 @@
+import React,{useState} from 'react'
+import Domain from './Domain';
+import Node from './Node';
+import { Button, Form, Input, InputNumber, message, Upload ,Table, Divider, Tag, Space,Radio } from 'antd';
+import { Col, Row } from 'antd';
+import { useEffect } from 'react';
+export default function Plot(props){
+  const [path,setPath] = useState('')
+  const [paths,setPaths] = useState()
+  const [probImg,setprobImg] = useState()
+  const [domainImg,setdomainImg] = useState()
+  // let paths = props.paths
+  // let probImg = props.probImg
+  // let domainImg = props.domainImg
+
+  const rowSelection = {
+    defaultSelectedRowKeys: [0],
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows[0].path);
+      setPath(selectedRows[0].path.replace(/\>/g,''))
+      console.log(path);
+    },
+    fixed: false,
+  
+  };
+  const ListPath = () => {
+  //   useEffect(()=>{
+  
+  // },[pathname])
+    return (
+      <div>
+        <Table rowSelection={{type: "radio",...rowSelection,}} columns={paths.columns} dataSource={paths.data} /></div> );
+  };   
+            
+    
+  return <>
+    <Divider>Visual1</Divider>
+    <Row>
+      <Col span={8}>
+        <div style={{textAlign:"center"}}>edges_domain image</div>
+        <img style={{width:'100%',display:"flex"}} src={`data:image/png;base64,${probImg}`} alt=""/>
+      </Col>
+      <Col span={8} style={{marginRight:0}}>
+        <div style={{textAlign:"center"}}>edges_domain image</div>
+        <img style={{width:'100%',}} src={`data:image/png;base64,${domainImg}`} alt=""/>
+      </Col>
+      <Col span={8}>
+        <Domain />
+      </Col>
+    </Row>
+
+    <Divider>Visual2</Divider>
+    <Row>
+      <Col span={12}>
+      <Node />
+    <div >{ListPath()}</div>
+      </Col>
+      <Col span={12}>
+      <iframe src={`http://localhost:9090/index.php?pdb=1ake.pdb&path=${path}`}  height="800px" frameBorder = "1" ></iframe>
+      </Col>
+    </Row>
+    
+    
+  </>
+}
