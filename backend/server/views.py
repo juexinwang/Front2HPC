@@ -24,6 +24,7 @@ from ml.algorithm.postanalysis_path import AnalysisPath
 from ml.algorithm.postanalysis_visual import AnalysisVisual
 from ml.algorithm.postanalysis_pathW import AnalysisPathInResult
 from ml.algorithm.postanalysis_visualW import AnalysisVisualInResult
+from ml.hpc.BackJobsRunner import BackJobsRunner
 
 from django.core import mail
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -31,12 +32,12 @@ from django_apscheduler.jobstores import DjangoJobStore, register_events, regist
 import os
 
 #auto configration 
-StorageFolder= "/home/hy/Desktop/websever/store/v1/backend/ml/"
-# StorageFolder= "/media/volume/sdb/jobs/"
+# StorageFolder= "/home/hy/Desktop/websever/store/v1/backend/ml/"
+StorageFolder= "/media/volume/sdb/jobs/"
 JobsFolder = StorageFolder+"jobs/"
 TrajFileFolder= StorageFolder+"files/"
-StrucFileFolder= "/home/hy/Desktop/websever/store/v1/pv/pdbs/"
-COMPUTE_LOCALHOST = True
+StrucFileFolder= "/home/exouser/NRIproject/Front2HPC/pv/pdbs/"
+COMPUTE_LOCALHOST = False
 
 if COMPUTE_LOCALHOST:
     scheduler = BackgroundScheduler()
@@ -63,7 +64,7 @@ def preditctLocalHost(trajfilepath,email,jobid,epochs,batchsize,encoder,decoder,
     mail.send_mail(
     subject='submit',
     message='your job has finished, job id is {}'.format(jobid),
-    from_email='2938225901@qq.com',
+    from_email='nrimdserver@gmail.com',
     recipient_list=['{}'.format(email)]
     )
 
@@ -259,11 +260,10 @@ class JobAPIView(APIView):
                 'domainInput':serializer.data["Domain"],
                 #'domainInput':'A_0_40,B_41_70,C_71_76', # default: ',', # start from 0
             }
-            #TODO
-            # bj = BackJobsRunner(jobid = jobid, filename = filename, params = params)
-            # print('Submit:')
-            # bj.submit()
-            # print('Submit finished.')
+            bj = BackJobsRunner(jobid = jobid, filename = filename, params = params)
+            print('Submit:')
+            bj.submit()
+            print('Submit finished.')
         return Response(serializer.data)
            
 #===========================view: check and get result===========================
@@ -305,7 +305,6 @@ class ResultAPIView(APIView):
                 if os.path.exists(jobfolder)==True:
                     job.JobStatus=True
                     job.save()
-                    #TODOok by Yi HE
                     #visual HPC
                     result_folder = JobsFolder+JobId+'/analysis/'
                     imgpaths_list = [result_folder+"probs.png",result_folder+"edges_domain.png",]
@@ -361,7 +360,6 @@ def Path_localhost(request):
     target_node=int(request.GET.get('Nodes[TargetNode]'))
     print(dist_threshold,source_node,target_node)
     #postanalysis_path.py
-    #TODOok
     analysispath = AnalysisPathInResult(
                                         dist_threshold=dist_threshold,
                                         filename=JobsFolder+jobid+"/logs/out_probs_train.npy",
@@ -392,7 +390,6 @@ class VisualLocalhost(APIView):
         threshold=float(request.GET.get('Domains[visualThreshold]'))
         domainInput=request.GET.get('Domains[domains]')
         # postanalysis_visual.py
-        #TODOok
         num_residues=job.NumResidues
         fileDir=JobsFolder+jobid+"/logs/"
         outputDir=JobsFolder+jobid+"/analysis/"
