@@ -1,12 +1,14 @@
+# clean cache
+conda clean --all
+pip cache purge
+
 #1.install conda
 #https://www.digitalocean.com/community/tutorials/how-to-install-the-anaconda-python-distribution-on-ubuntu-22-04
 
-#1.install cuda cuDNN 
-conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
-
 #2.install miniconda3
-conda create -n nar python==3.7
-conda activate nar
+##conda create -n nar python==3.7
+conda create --prefix /media/volume/sdb/nar python=3.7
+conda activate /media/volume/sdb/nar
 pip install -r requirements.txt
 =========requirements.txt=========
 Django==2.2.13
@@ -23,6 +25,8 @@ django-apscheduler==0.6.0
 django-cors-headers==3.6.0
 ===================================
 
+conda install networkx seaborn pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
+
 #3.enjoy
 cd backend
 python manage.py makemigrations
@@ -30,3 +34,4 @@ python manage.py migrate
 python manage.py runserver
 
 #can visit in http://localhost:8000
+
