@@ -8,7 +8,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from django.http import FileResponse
 from hashlib import md5, sha1
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 #action
 from rest_framework.decorators import action
 from rest_framework.parsers import FileUploadParser,MultiPartParser, FormParser
@@ -22,6 +22,8 @@ from ml.algorithm.convert_dataset import Convert
 from ml.algorithm.main import Compute
 from ml.algorithm.postanalysis_path import AnalysisPath
 from ml.algorithm.postanalysis_visual import AnalysisVisual
+from ml.algorithm.postanalysis_pathW import AnalysisPathInResult
+from ml.algorithm.postanalysis_visualW import AnalysisVisualInResult
 
 from django.core import mail
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -29,12 +31,12 @@ from django_apscheduler.jobstores import DjangoJobStore, register_events, regist
 import os
 
 #auto configration 
-# StorageFolder= "/home/hy/Desktop/websever/store/v1/backend/ml/"
-StorageFolder= "/media/volume/sdb/jobs/"
+StorageFolder= "/home/hy/Desktop/websever/store/v1/backend/ml/"
+# StorageFolder= "/media/volume/sdb/jobs/"
 JobsFolder = StorageFolder+"jobs/"
 TrajFileFolder= StorageFolder+"files/"
-StrucFileFolder= StorageFolder+"strucFiles/"
-COMPUTE_LOCALHOST = False
+StrucFileFolder= "/home/hy/Desktop/websever/store/v1/pv/pdbs/"
+COMPUTE_LOCALHOST = True
 
 if COMPUTE_LOCALHOST:
     scheduler = BackgroundScheduler()
@@ -275,19 +277,18 @@ class ResultAPIView(APIView):
             serializer = JobSerializer (instance=job)
             if COMPUTE_LOCALHOST:
                 if serializer.data['JobStatus']==True:
-                    request.img_list = []
-                    find(JobId, request)
-                    # for i in request.img_list:
-                    #     print(i['file_name'])
+                    #visual local
+                    result_folder = JobsFolder+JobId+'/analysis/'
+                    imgpaths_list = [result_folder+"probs.png",result_folder+"edges_domain.png",]
+                    img_list=find(imgpaths_list)
+                    #path local
                     path = JobsFolder+f'{JobId}/analysis/source46.txt'
                     source = open(path, 'rb').readlines()
                     newsource=[]
                     for line in source:
                         string=str(line,'utf-8')
                         newsource.append(string.strip())
-                    d={}
-                    d['data'] = []
-                    d['columns'] = [{'title':'Node','dataIndex':'node'},{'title':'Path Name','dataIndex':'pathname'},{'title':'Path','dataIndex':'path'},{'title':'Probability','dataIndex':'probability'}]
+                    paths = []
                     i=0
                     print(newsource)
                     for line in newsource:
@@ -295,30 +296,48 @@ class ResultAPIView(APIView):
                             node = int(line.split(':')[1])
                         else:
                             line.split(':')[1].split('->') 
-                            d['data'].append({'key':i,'node':node,'pathname':line.split(':')[0].strip(),'path':line.split(':')[1].strip(),'probability':float(line.split(':')[2])})
+                            paths.append({'key':i,'pathname':line.split(':')[0].strip(),'path':line.split(':')[1].strip(),'probability':float(line.split(':')[2])})
                             i+=1
-                    print(d)
-                    return Response({"JobId":serializer.data['JobId'],"JobStatus":serializer.data['JobStatus'],'file_data': request.img_list,'paths':d})
+                    return Response({"JobId":serializer.data['JobId'],"JobStatus":serializer.data['JobStatus'],'file_data': img_list,'paths':paths,'strucFilePath':serializer.data['StrucFilePath']})
                 return Response(serializer.data)
             else:
-                path = JobsFolder+serializer.data['JobId']
-                if os.path.exists(path)==True:
+                jobfolder = JobsFolder+serializer.data['JobId']
+                if os.path.exists(jobfolder)==True:
                     job.JobStatus=True
                     job.save()
-                    #need proecess paths
-                    #TODO by Yi HE
-                    return Response({"JobId":serializer.data['JobId'],"JobStatus":serializer.data['JobStatus'],'file_data': request.img_list,'paths':d})
+                    #TODOok by Yi HE
+                    #visual HPC
+                    result_folder = JobsFolder+JobId+'/analysis/'
+                    imgpaths_list = [result_folder+"probs.png",result_folder+"edges_domain.png",]
+                    img_list=find(imgpaths_list)
+                    #path HPC
+                    path = JobsFolder+f'{JobId}/analysis/paths.txt'
+                    source = open(path, 'rb').readlines()
+                    newsource=[]
+                    for line in source:
+                        string=str(line,'utf-8')
+                        newsource.append(string.strip())
+                    paths = []
+                    i=0
+                    for line in newsource:
+                        if line.startswith('target node'):
+                            node = int(line.split(':')[1])
+                        else:
+                            line.split(':')[1].split('->') 
+                            paths.append({'key':i,'pathname':line.split(':')[0].strip(),'path':line.split(':')[1].strip(),'probability':float(line.split(':')[2])})
+                            i+=1
+                    return Response({"JobId":serializer.data['JobId'],"JobStatus":serializer.data['JobStatus'],'file_data': img_list,'paths':paths})
                 return Response(serializer.data)
         except:
             return Response('NotExist')
-def find(dir_name, request):
-    path = JobsFolder+f'{dir_name}/analysis'
-    dir_list = os.listdir(path)
-    for i in dir_list:
-        pro = open(path + '//' + i, 'rb')
+def find(imgpaths_list):
+    img_list=[]
+    for i in imgpaths_list:
+        pro = open(i, 'rb')
         data = pro.read()
-        request.img_list.append({'file_name': i, 'file_base64': base64.b64encode(data)})
+        img_list.append({'file_name': i, 'file_base64': base64.b64encode(data)})
         pro.close()
+    return img_list
 
 
 """
@@ -334,35 +353,66 @@ def find(dir_name, request):
 #===========================view: get localhost compute path===========================
 def Path_localhost(request):
     print(request.GET)
-    dist_threshold=request.GET.get('Nodes[DistThreshold]')
-    source_node=request.GET.get('Nodes[SourceNode]')
-    target_node=request.GET.get('Nodes[TargetNode]')
+    jobid=request.GET.get('Nodes[JobId]')
+    job=JobModel.objects.get(JobId=jobid)
+    PDBfilename=job.TrajFilePath
+    dist_threshold=int(request.GET.get('Nodes[DistThreshold]'))
+    source_node=int(request.GET.get('Nodes[SourceNode]'))
+    target_node=int(request.GET.get('Nodes[TargetNode]'))
     print(dist_threshold,source_node,target_node)
     #postanalysis_path.py
-    
-    #TODO
-    return HttpResponse("ok")
+    #TODOok
+    analysispath = AnalysisPathInResult(
+                                        dist_threshold=dist_threshold,
+                                        filename=JobsFolder+jobid+"/logs/out_probs_train.npy",
+                                        source_node=source_node,
+                                        target_node=target_node,
+                                        PDBfilename=PDBfilename,
+                                        outputDir=JobsFolder+jobid+"/analysis/",
+                                        )
+    strings = analysispath.caculate()
+    paths = []
+    i=0
+    print(paths)
+    for line in strings:
+        line.split(':')[1].split('->') 
+        paths.append({'key':i,'pathname':line.split(':')[0].strip(),'path':line.split(':')[1].strip(),'probability':float(line.split(':')[2])})
+        i+=1
+    print(paths)
+    return JsonResponse({"paths":paths})
 
 
 
 #===========================view: get localhost compute visual===========================
-def Visual_localhost(request):
-    print(request.GET)
-    threshold=request.GET.get('Domains[visualThreshold]')
-    print(threshold)
-    domainInput=request.GET.get('Domains[domains]')
-    print(domainInput)
-    # postanalysis_visual.py
-    #TODO
-    return HttpResponse("ok")
-
-
+class VisualLocalhost(APIView):
+    def get(self, request):
+        print(request.GET)
+        jobid=request.GET.get('Domains[JobId]')
+        job=JobModel.objects.get(JobId=jobid)
+        threshold=float(request.GET.get('Domains[visualThreshold]'))
+        domainInput=request.GET.get('Domains[domains]')
+        # postanalysis_visual.py
+        #TODOok
+        num_residues=job.NumResidues
+        fileDir=JobsFolder+jobid+"/logs/"
+        outputDir=JobsFolder+jobid+"/analysis/"
+        analysisvisual = AnalysisVisualInResult(
+                                                num_residues=num_residues,
+                                                threshold=threshold,
+                                                fileDir=fileDir,
+                                                outputDir=outputDir,
+                                                domainInput=domainInput
+                                                )
+        imgpaths = analysisvisual.compute()
+        print(imgpaths)
+        img_list=find(imgpaths)
+        return Response({'file_data': img_list})
 
 
 #===========================view: download example trajectory===========================
 print(settings.STATIC_URL)
 print(settings.BASE_DIR)
-def download_et(request):
+def download_exampletraj(request):
     path=settings.BASE_DIR+settings.STATIC_URL+'pdbs/ca_1.pdb'
     print(path)
     file = open(path, 'rb')
@@ -373,3 +423,25 @@ def download_et(request):
 
 
 #===========================view: download example protein structure file===========================
+print(settings.STATIC_URL)
+print(settings.BASE_DIR)
+def download_examplestruc(request):
+    path=settings.BASE_DIR+settings.STATIC_URL+'pdbs/sod1.pdb'
+    print(path)
+    file = open(path, 'rb')
+    response = FileResponse(file)
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment;filename="ca_1.pdb"'
+    return response
+
+#===========================view: download python script===========================
+print(settings.STATIC_URL)
+print(settings.BASE_DIR)
+def download_python(request):
+    path=settings.BASE_DIR+settings.STATIC_URL+'scripts/python.zip'
+    print(path)
+    file = open(path, 'rb')
+    response = FileResponse(file)
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment;filename="ca_1.pdb"'
+    return response

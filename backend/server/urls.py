@@ -6,8 +6,10 @@ urlpatterns=[
     url(r"^uploadstruc/$", views.StructureFileAPIView.as_view()),
     url(r"^submit/$", views.JobAPIView.as_view()),
     url(r'^result/$', views.ResultAPIView.as_view()),
-    url('download1/',views.download_et),
-    url(r'^setdomain/$',views.Visual_localhost), 
+    url('download1/',views.download_exampletraj),
+    url('download2/',views.download_examplestruc),
+    url('download3/',views.download_python),
+    url(r'^setdomain/$',views.VisualLocalhost.as_view()), 
     url(r'^setnode/$',views.Path_localhost),
     
     # url(r'^check/$',views.JobIdAPIView.as_view()),
