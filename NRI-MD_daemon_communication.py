@@ -6,7 +6,7 @@
 # Edit cron jobs
 # crontab -e
 # 1. Every 5 minutes to check the status. (NRI-MD_daemon_communication.py)
-# */5 * * * * /home/exouser/anaconda3/bin/python /home/exouser/NRIproject/Front2HPC/NRI-MD_daemon_communication.py >> ~/daemonlog.txt 2>&1
+# */5 * * * * /home/exouser/anaconda3/bin/python /home/exouser/NRIproject/Front2HPC/NRI-MD_daemon_communication.py >> /media/volume/sdb/daemonlog.txt 2>&1
 #
 # 2. Delete results in 14 days
 # find /path/to/directory/ -mindepth 1 -mtime +14 -delete

@@ -1,6 +1,9 @@
 1.prepare environment
 sudo apt install nodejs npm yarn
 
+# update node.js to 14.X
+https://computingforgeeks.com/install-node-js-14-on-ubuntu-debian-linux/
+
 2.create frontend project and install dependencies
 $npx create-react-app frontend
 $cd frontend
@@ -46,7 +49,7 @@ if you want create yourself axios request, you should set axiosOption={baseURL: 
 
 5.enjoy
 now you only replace src folders with our src folders
-$npm start
+$sudo npm start
 can visit in 'http://127.0.0.1:3000'
 
     
