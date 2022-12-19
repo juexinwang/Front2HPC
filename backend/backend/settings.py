@@ -169,9 +169,13 @@ CORS_ALLOW_HEADERS = (
 #E-mail
 #Yi He
 #qtejejwutpnqdcee
-EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+#yutrapqopvfgfouz
+
+#gmail_send/settings.py
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
 EMAIL_HOST_USER = 'nrimdserver@gmail.com'
-EMAIL_HOST_PASSWORD = 'jlusoicindiana'
+EMAIL_HOST_PASSWORD = 'yutrapqopvfgfouz' #past the key or password app here
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'default from email'
