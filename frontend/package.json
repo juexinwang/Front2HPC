@@ -66,7 +66,7 @@
     "workbox-webpack-plugin": "^6.4.1"
   },
   "scripts": {
-    "start": "export HTTPS=true&&SSL_CRT_FILE=reactcert/nrimd_luddy_iupui_edu_cert.cer&&SSL_KEY_FILE=reactcert/nrimd.luddy.iupui.edu.key.2022_12_19 node scripts/start.js",
+    "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
   },
