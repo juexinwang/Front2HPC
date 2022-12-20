@@ -22,8 +22,8 @@ $path = $_GET['path']
 <script type='text/javascript'>
   // override the default options with something less restrictive.
   var options = {
-    width: 1200,
-    height: 800,
+    width: 645,
+    height: 500,
     antialias: true,
     quality: 'medium'
   };
@@ -36,10 +36,7 @@ $path = $_GET['path']
     var pdb_name = '<?php echo $pdb_name ;?>';
     var path = '<?php echo $path ;?>';
     var pdb_filename = '/pdbs/' + pdb_name;
-    console.log(pdb_filename);
-    console.log(path)
     var arr = path.trim().split('-')
-    console.log(arr)
 
     // asynchronously load the PDB file for the dengue methyl transferase
     // from the server and display it in the viewer.
@@ -52,8 +49,8 @@ $path = $_GET['path']
       // the three-letter codes SAH and RVP, respectively. Let's display them
       // with balls and sticks.
       var ligands = structure.select({ rnames: ['SAH', 'RVP'] });
-      viewer.ballsAndSticks('ligands', ligands);
-      viewer.centerOn(structure);
+     
+      
       for (i = 0; i < arr.length-1; i++) { 
         let res1_atom;
         let res2_atom;
@@ -68,8 +65,10 @@ $path = $_GET['path']
         cm.addSphere(res1_atom.pos(), 2, { color : 'black' });
         cm.addTube(res2_atom.pos(), res1_atom.pos(), .5, { cap : true, color : 'grey' });
       }
-      viewer.fitParent();
+      viewer.ballsAndSticks('ligands', ligands);
+      // viewer.fitParent();
       viewer.autoZoom();
+      viewer.centerOn(structure);
     });
   }
 
