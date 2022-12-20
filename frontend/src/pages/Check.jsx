@@ -37,7 +37,7 @@ export default function Check() {
     return <>
     <Form {...layout}  onFinish={onFinish} form={form}>
 
-      <Form.Item name="JobId" label="JobId" rules={[{ required: true, },]}>
+      <Form.Item name="JobId" label="Job Id" rules={[{ required: true, },]}>
           <Input /> 
       </Form.Item>
 

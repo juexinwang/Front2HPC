@@ -1,6 +1,6 @@
 //react
-import React, { useState } from 'react'
-import { useNavigate,Link } from 'react-router-dom';
+import React, { useState,useEffect } from 'react'
+import { useNavigate,Link, } from 'react-router-dom';
 //antd
 import { Button, Form, Input, InputNumber, Radio, message, Upload ,Slider,Space} from 'antd';
 import { UploadOutlined,MinusCircleOutlined,PlusOutlined } from '@ant-design/icons';
@@ -8,6 +8,7 @@ import { UploadOutlined,MinusCircleOutlined,PlusOutlined } from '@ant-design/ico
 import { submitJobApi } from '../requests/api'
 //component
 import SubmitSuccessfully from '../components/SubmitSuccessfully';
+import ExampleDrawer from '../components/tutorials/ExampleDrawer';
 //less
 import '../assets/lesses/submit.less'
 import { useRef } from 'react';
@@ -39,30 +40,19 @@ export default function Submit() {
   const [ifsubmit,setIfSubmit] = useState(true)
   //state for submitting form
   const [advanced,setAdvanced] = useState('none')
-  // const [form, setForm] = useState({ 
-  //                                   Name:'user',  Email:'',
-  //                                   TrajFilePath:'', NumResidues: 0, NumFrames: 0,
-  //                                   Start: 1, End: 56, TimestepSize: 50, TrainInterval:60, ValidateInterval:80, TestInterval:100,
+  //form
+  const navigate = useNavigate()
 
-  //                                   Epochs:200, Lr:0.0005, LrDecay:200, Gamma:0.5, Var:0.00005, 
-  //                                   Encoder:'mlp', Decoder:'rnn', EncoderHidden:256, DecoderHidden:256, EncoderDropout:0, DecoderDropout:0,
-
-  //                                   StrucFilePath:'', 
-  //                                   DistThreshold:12, SourceNode:46, TargetNode:61,
-  //                                   VisualThreshold:12, Domain: 'A_0_40,B_41_70,C_71_76',
-
-  //                                   });
-  const [form, setForm] = useState({ Name:'1',  Email:'', 
-  TrajFilePath:'',NumResidues: 0, NumFrames: 0, 
-  Start: 1, End: 56, TimestepSize: 50, TrainInterval:60, ValidateInterval:80, TestInterval:100,
-  Epochs:200,Lr:0.0005, LrDecay:200, Gamma:0.5, Var:0.00005, Seed:42,
-  Encoder:'mlp', Decoder:'rnn', EncoderHidden:256, DecoderHidden:256, EncoderDropout:0, DecoderDropout:0,
-  StrucFilePath:'', 
-  SourceNode:46, TargetNode:61,
-  VisualThreshold: 0.6,
-  DistThreshold:12, 
-  // Domain: 'A_0_40,B_41_70,C_71_76',
-  }); 
+  const [form, setForm] = useState({ 
+    Name:'user',  Email:'', 
+    TrajFilePath:'',NumResidues: 0, NumFrames: 0, 
+    Start: 0, End: 0, TimestepSize: 0, TrainInterval:0, ValidateInterval:0, TestInterval:0,
+    Epochs:0,Lr:0.0, LrDecay:0, Gamma:0.0, Var:0.0, Seed:0,
+    Encoder:'mlp', Decoder:'rnn', EncoderHidden:0, DecoderHidden:0, EncoderDropout:0, DecoderDropout:0,
+    StrucFilePath:'', 
+    SourceNode:0, TargetNode:0, VisualThreshold: 0, DistThreshold:0, 
+    Domain: ',',
+    }); 
   console.log(form);
   //state for uploading trajectory file
   const [trajFileList, setTrajFileList] = useState([]);
@@ -75,9 +65,61 @@ export default function Submit() {
   //now use form.JobId instead > setJobid(res.JobId)
   
   //
-const [exampleSha1,setExampleSha1] = useState(true)
+  const [exampleSha1,setExampleSha1] = useState(false)
 
 
+
+
+  const [formform] = Form.useForm()
+
+    useEffect(()=>{
+      if(exampleSha1){
+        console.log("example")
+        formform.setFieldsValue({
+                                  Start: 1, End: 96, TimestepSize: 45, TrainInterval:100, ValidateInterval:120, TestInterval:150,
+                                  Epochs:500, Lr:0.0005, LrDecay:200, Gamma:0.5, Var:0.00005, Seed:42,
+                                  Encoder:'mlp', Decoder:'rnn', EncoderHidden:256, DecoderHidden:256, EncoderDropout:0.0, DecoderDropout:0.0,
+                                  SourceNode:46, TargetNode:61, DistThreshold:12, VisualThreshold: 0.5,
+                                  domain_arr:[{domain:"b1",start:1,end:26},
+                                  {domain:"diml",start:26,end:30}  ,
+                                  {domain:"disl",start:30,end:33}  ,
+                                  {domain:"zl",start:33,end:44}  ,
+                                  {domain:"b2",start:44,end:63}  ,
+                                  {domain:"el",start:63,end:78}  ,
+                                  {domain:"b3",start:73,end:78}  ,
+                                ]
+          })
+        setForm({...form,
+          Start: 1, End: 96, TimestepSize: 45, TrainInterval:100, ValidateInterval:120, TestInterval:150,
+          Epochs:500, Lr:0.0005, LrDecay:200, Gamma:0.5, Var:0.00005, Seed:42,
+          Encoder:'mlp', Decoder:'rnn', EncoderHidden:256, DecoderHidden:256, EncoderDropout:0.0, DecoderDropout:0.0,
+          SourceNode:46, TargetNode:61, DistThreshold:12, VisualThreshold: 0.5,
+          Domain:'b1_0_25,diml_25_29,disl_29_32,zl_32_43,b2_43_62,el_62_77,b3_72_77',
+          // TrajFilePath: "//////",
+          // NumResidues: 77,
+          // NumFrames:3000,
+
+        })
+      }else{
+        formform.setFieldsValue({
+          Start: 1, End: 56, TimestepSize: 50, TrainInterval:60, ValidateInterval:80, TestInterval:100,
+          Epochs:200,Lr:0.0005, LrDecay:200, Gamma:0.5, Var:0.00005, Seed:42,
+          Encoder:'mlp', Decoder:'rnn', EncoderHidden:256, DecoderHidden:256, EncoderDropout:0, DecoderDropout:0,
+          SourceNode:46, TargetNode:61,VisualThreshold: 0.6, DistThreshold:12, 
+          
+      })
+        setForm({...form,
+          Start: 1, End: 56, TimestepSize: 50, TrainInterval:60, ValidateInterval:80, TestInterval:100,
+          Epochs:200,Lr:0.0005, LrDecay:200, Gamma:0.5, Var:0.00005, Seed:42,
+          Encoder:'mlp', Decoder:'rnn', EncoderHidden:256, DecoderHidden:256, EncoderDropout:0, DecoderDropout:0,
+          SourceNode:46, TargetNode:61,VisualThreshold: 0.6, DistThreshold:12, 
+        })
+      }
+    },[exampleSha1])
+
+    // console.log('submit',form);
+  
+    console.log("esha", exampleSha1)
   //upload trajectory file
   const trajHandleChange = (info) => {
     let newFileList = [...info.fileList];
@@ -92,8 +134,10 @@ const [exampleSha1,setExampleSha1] = useState(true)
         }
         setLength(file.response.amount_residues)
         setLengthValid(file.response.length_valid)
-        setExampleSha1(file.response.sha1==="fb23725ba350646c11db9845f7c865a040b3ae87") 
         setForm({ ...form, TrajFilePath: file.response.TrajFilePath, NumResidues:file.response.NumResidues,NumFrames:file.response.NumFrames})
+        setExampleSha1(file.response.sha1==="fb23725ba350646c11db9845f7c865a040b3ae87") 
+        console.log(2222222);
+        
       }
       return file;
     });
@@ -116,25 +160,60 @@ const [exampleSha1,setExampleSha1] = useState(true)
   const strucProps={action:'/api/uploadstruc/',onChange:strucHandleChange,multiple:true}
 
   //submit form
-  let domain = 'A_0_40,B_41_70,C_71_76'
+  let domain = ''
   const onFinish = async (values) => {
     console.log('Received values of form:', values.domain_arr);
     if(values.domain_arr!==undefined){
-      const arr=values.domain_arr
-      domain = arr.map(obj => obj.domain+'_'+obj.start+'_'+obj.end).join(',')
-      console.log(domain)
+      if((values.domain_arr.length)>0){
+        const arr=values.domain_arr
+        domain = arr.map(obj => obj.domain+'_'+Number(obj.start-1)+'_'+Number(obj.end-1)).join(',')
+        console.log(domain)
+        console.log(domain=='b1_0_25,diml_25_29,disl_29_32,zl_32_43,b2_43_62,el_62_77,b3_72_77')
+        // b1_1_26,diml_26_30,disl_30_33,zl_33_44,b2_44_63,el_63_78,b3_73_78
+      }else{
+        domain = ','
+      }
+    }else{
+      domain = ','
     }
-    // console.log('domain',{...form,Domain:domain})
     if(lengthValid){
-      console.log('submit',form)
-      const res = await submitJobApi({...form,Domain:domain});
-      console.log(res.TrajFilePath)
-      if (res) {
-        message.success('Submit Successfully')
-        setIfSubmit(false)
-        setJobid(res.JobId)
-      } else {
-        message.error('Submit failedly')
+      if(exampleSha1&&
+        form.Start==1
+        && form.End==96
+        && form.TimestepSize== 45
+        && form.TrainInterval==100
+        && form.ValidateInterval==120
+        && form.TestInterval==150
+        && form.Epochs==500
+        && form.Lr==0.0005 
+        && form.LrDecay==200
+        && form.Gamma==0.5
+        && form.Var==0.00005
+        && form.Seed==42
+        && form.Encoder=='mlp'
+        && form.Decoder=='rnn'
+        && form.EncoderHidden==256
+        && form.DecoderHidden==256
+        && form.EncoderDropout==0.0
+        && form.DecoderDropout==0.0
+        && form.SourceNode==46
+        && form.TargetNode==61
+        && form.DistThreshold==12
+        && form.VisualThreshold== 0.5
+        &&domain=='b1_0_25,diml_25_29,disl_29_32,zl_32_43,b2_43_62,el_62_77,b3_72_77'
+        ){
+          console.log("domain",domain);
+          navigate('/result/0000AAAA') 
+      }else{
+        console.log('submitting',{...form,Domain:domain})
+        const res = await submitJobApi({...form,Domain:domain});
+        if (res) {
+          message.success('Submit Successfully')
+          setIfSubmit(false)
+          setJobid(res.JobId)
+        } else {
+          message.error('Submit failedly')
+        }
       }
     }else{
       message.error(`Your protein length is valid, now we don't support caculating a protein more than 100 amino-acids`)
@@ -143,54 +222,51 @@ const [exampleSha1,setExampleSha1] = useState(true)
 
   let submitForm = <>
       <div>
-        <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages} >
+        <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages} form={formform}>
 
-          <Form.Item name='JobName' label="Name" rules={[{ type: 'string',max: 50, }]} extra="optional, user name we called you" >
+        <Form.Item name="JobFile" label="Trajectory File" rules={[{ required: true, },] } 
+          extra="upload protein trajectory pdb file ( only include CA atoms ), protein should be less than 100 residues" >
+            <Upload {...trajProps} fileList={trajFileList}> 
+              <Button icon={<UploadOutlined />}>Upload</Button> <span  onClick={(e)=>{e.stopPropagation()}}><ExampleDrawer/></span>
+            </Upload>
+          </Form.Item>
+
+          <Form.Item name='JobName' label="Name" rules={[{ type: 'string',max: 50, }]} extra="user name we called you" >
             <Input onChange={(e) => setForm({ ...form, JobName: e.target.value })} placeholder='optional'/>
           </Form.Item>
 
-          <Form.Item name='Email' label="Email" rules={[{ type: 'email', }]}  extra="optional, can remind you when the job is completed">
+          <Form.Item name='Email' label="Email" rules={[{ type: 'email', }]}  extra="can remind you when the job is completed">
             <Input onChange={(e) => setForm({ ...form, Email: e.target.value })} placeholder='optional'/>
           </Form.Item>
-
-
 
             <Form.Item name="" wrapperCol={{offset:8,span:8}} style={{ display: advanced}}  >   
               <div><hr/></div>
             </Form.Item>
-          <Form.Item name="JobFile" label="Trajectory File" rules={[{ required: true, },] } 
-          extra="upload protein trajectory pdb file ( only include CA atoms ), protein should be less than 100 residues" >
-            <Upload {...trajProps} fileList={trajFileList}> 
-              <Button icon={<UploadOutlined />}>Upload</Button> <a href='/api/download1/' onClick={(e)=>{e.stopPropagation()}}>example</a>
-            </Upload>
-          </Form.Item>
+
           {/* <span className="ant-form-text" style={{ marginLeft: 8 }}><Link  to='/help'> how to prapare the input file</Link></span> */}
 
-          <Form.Item name="" label="Protein Range" style={{display:advanced,marginBottom:"0"}}>   
-            <Form.Item name="Start" style={{ display: 'inline-block', width: 'calc(50% - 10px)',}} rules={[{ }]} >   
-              <Input  onChange={(e) => setForm({ ...form, Start: Number(e.target.value) })} placeholder='protein start'/>
+          <Form.Item name="Start" label="Sample Range" style={{display:advanced,marginBottom:"0"}}>   
+            <Form.Item name="Start" style={{ display: 'inline-block', width: 'calc(50% - 10px)',}} rules={[{type:"number", min: 1, max: 200, }]} >   
+              <Input onChange={(e) => setForm({ ...form, Start: Number(e.target.value) })} placeholder='protein start'/>
             </Form.Item>
-            <Form.Item name=""  style={{ display: 'inline-block',  width: '20px', textAlign:'center'}}  >   
+            <Form.Item name="~"  style={{ display: 'inline-block',  width: '20px', textAlign:'center'}}  >   
               <div>~</div>
             </Form.Item>
-            <Form.Item name="End"  style={{ display: 'inline-block',  width: 'calc(50% - 10px)',}} rules={[{ min: 1, max: 3, }]} >   
-              <Input  onChange={(e) => setForm({ ...form, End: Number(e.target.value) })} placeholder='protein end'/>
+            <Form.Item name="End"  style={{ display: 'inline-block',  width: 'calc(50% - 10px)',}} rules={[{type:"number", min: 1, max: 200, }]} >   
+              <Input   onChange={(e) => setForm({ ...form, End: Number(e.target.value) })} placeholder='protein end'/>
             </Form.Item>
           </Form.Item>
 
-          <Form.Item name="TimestepSize" label="Timestep Size" style={{display:advanced}} rules={[{type:"number", min: 1, max: 1000, }]} >   
-              <InputNumber  onChange={(e) => setForm({ ...form, TimestepSize: e })} placeholder='step'/>
-            </Form.Item>
 
           <Form.Item name="" label="Interval" style={{display:advanced,marginBottom:"0"}}>   
-            <Form.Item name="TrainInterval" style={{ display: 'inline-block', width: '30%',}} rules={[{ }]} extra="train interval">   
-              <Input defaultValue={60} onChange={(e) => setForm({ ...form, TrainInterval: Number(e.target.value) })} placeholder='train interval'/>
+            <Form.Item name="TrainInterval" style={{ display: 'inline-block', width: '30%',}} rules={[{type:"number",min: 1, max: 1000, }]} extra="train interval">   
+              <Input onChange={(e) => setForm({ ...form, TrainInterval: Number(e.target.value) })} placeholder='train interval'/>
             </Form.Item>
-            <Form.Item name="ValidateInterval"  style={{ display: 'inline-block',  width: '30%', marginLeft: '5%', }} rules={[{ min: 1, max: 3, }]}  extra="validate interval">   
-              <Input defaultValue={80} onChange={(e) => setForm({ ...form, ValidateInterval: Number(e.target.value) })} placeholder='validate interval'/>
+            <Form.Item name="ValidateInterval"  style={{ display: 'inline-block',  width: '30%', marginLeft: '5%', }} rules={[{type:"number", min: 1, max: 1000, }]}  extra="validate interval">   
+              <Input onChange={(e) => setForm({ ...form, ValidateInterval: Number(e.target.value) })} placeholder='validate interval'/>
             </Form.Item>
-            <Form.Item name="TestInterval"  style={{ display: 'inline-block',  width: '30%', marginLeft: '5%', }} rules={[{ min: 1, max: 3, }]} extra="test interval">   
-              <Input defaultValue={100} onChange={(e) => setForm({ ...form, TestInterval: Number(e.target.value) })} placeholder='test interval'/>
+            <Form.Item name="TestInterval"  style={{ display: 'inline-block',  width: '30%', marginLeft: '5%', }} rules={[{type:"number", min: 1, max: 1000, }]} extra="test interval">   
+              <Input  onChange={(e) => setForm({ ...form, TestInterval: Number(e.target.value) })} placeholder='test interval'/>
             </Form.Item>
           </Form.Item>
 
@@ -199,33 +275,39 @@ const [exampleSha1,setExampleSha1] = useState(true)
             </Form.Item>
 
           <Form.Item name="Epochs" label="Epochs" rules={[{ type: 'number',min: 1, max: 500, }]} style={{display:advanced}}>
-            <Slider marks={{0:0,100:100, 200:200, 300:300, 400:400, 500:500,} }  defaultValue={200}  max={500} onChange={(e) => {setForm({ ...form, Epochs: e })}}/>
+            <Slider marks={{0:0,100:100, 200:200, 300:300, 400:400, 500:500,} }  max={500} onChange={(e) => {setForm({ ...form, Epochs: e })}}/>
           </Form.Item>
 
           {/* <Form.Item name="BatchSize" label="Batch Size" className='formbatchsize' rules={[{ type: 'number',min: 1, max: 50, }]} style={{display:advanced}}>
             <Slider marks={{0:0,10:10, 20:20, 30:30, 40:40, 50:50,} }  max={50} defaultValue={1}  trackStyle={{backgroundColor: 'red',}} 	handleStyle={{backgroundColor:'red'}} onChange={(e) => {setForm({ ...form, BatchSize: e })}}/>
           </Form.Item> */}
 
+            <Form.Item name="TimestepSize" label="Timestep Size" style={{display:advanced}} rules={[{type:"number", min: 1, max: 1000, }]}  extra="Note: TimeStep Size * Interval >= trajectory frame">   
+              <InputNumber  onChange={(e) => setForm({ ...form, TimestepSize: e })} placeholder='step' />
+            </Form.Item>
+
+            
+
           <Form.Item label="Learning Rate" name="Lr" className='formlr' style={{display:advanced}} rules={[{ type: 'float',min: 0.0001, max: 0.0050, }]}>
             <Slider marks={{0:0, 0.0005:0.0005, 0.0010:0.0010, 0.0015:0.0015, 0.0020:0.0020, 0.0025:0.0025, 0.0030:0.0030, 0.0035:0.0035, 0.0040:0.0040, 0.0045:0.0045, 0.0050:0.0050,} }  
-            max={0.0050} defaultValue={0.0005} step={0.0001} trackStyle={{backgroundColor: 'green',}} handleStyle={{backgroundColor:'green'}} 
+            max={0.0050} step={0.0001} trackStyle={{backgroundColor: 'green',}} handleStyle={{backgroundColor:'green'}} 
             onChange={(e) => {setForm({ ...form, Lr: e })}}/>
           </Form.Item>
 
           <Form.Item name="LrDecay" label="Learning Rate Decay" className='formbatchsize' rules={[{ type: 'number',min: 1, max: 500, }]} style={{display:advanced}}>
-            <Slider defaultValue={200}  marks={{0:0,100:100, 200:200, 300:300, 400:400, 500:500,} }  max={500}  trackStyle={{backgroundColor: 'red',}} 	handleStyle={{backgroundColor:'red'}} onChange={(e) => {setForm({ ...form,LrDecay: e })}}/>
+            <Slider  marks={{0:0,100:100, 200:200, 300:300, 400:400, 500:500,} }  max={500}  trackStyle={{backgroundColor: 'red',}} 	handleStyle={{backgroundColor:'red'}} onChange={(e) => {setForm({ ...form,LrDecay: e })}}/>
           </Form.Item>
 
           <Form.Item  label="Gamma" name="Gamma" style={{display:advanced}} rules={[{ type: 'number',min: 0.1, max: 1, }]}>
-            <InputNumber min={0.1} max={1}  onChange={(e) => {console.log(e);setForm({ ...form, Gamma: e })}} defaultValue={0.5} step={0.1}/>
+            <InputNumber min={0.1} max={1}  onChange={(e) => {console.log(e);setForm({ ...form, Gamma: e })}} step={0.1}/>
           </Form.Item>
 
           <Form.Item  label="Seed" name="Seed" style={{display:advanced}} rules={[{ type: 'number',min: 0, max: 100, }]}>
-            <InputNumber min={0} max={100}  onChange={(e) => {console.log(e);setForm({ ...form, Seed: e })}} defaultValue={42}/>
+            <InputNumber min={0} max={100}  onChange={(e) => {console.log(e);setForm({ ...form, Seed: e })}}/>
           </Form.Item>
 
           <Form.Item  label="Var" name="Var" style={{display:advanced}} rules={[{ type: 'float',min: 1e-5, max: 1e-4, }]}>
-            <InputNumber min={1e-5} max={1e-4}  onChange={(e) => {console.log(e);setForm({ ...form, Var: e })}} defaultValue={5e-5} step={1e-5}/>
+            <InputNumber min={1e-5} max={1e-4}  onChange={(e) => {console.log(e);setForm({ ...form, Var: e })}} step={1e-5}/>
           </Form.Item>
 
           {/* <Form.Item  label="Learning Rate" name="Lr" style={{display:advanced}} rules={[{ type: 'float',min: 0.0001, max: 0.0100, }]}>
@@ -238,10 +320,10 @@ const [exampleSha1,setExampleSha1] = useState(true)
             </Radio.Group>
           </Form.Item>
           <Form.Item name="DecoderHidden" label="Decoder Hidden" style={{display:advanced}} rules={[{type:"number", min: 1, max: 1000, }]} >   
-            <InputNumber  defaultValue={256} onChange={(e) => setForm({ ...form, DecoderHidden: e })} />
+            <InputNumber  onChange={(e) => setForm({ ...form, DecoderHidden: e })} />
           </Form.Item>
-          <Form.Item name="DecoderDropout" label="Decoder Dropout" style={{display:advanced}} rules={[{type:"number", min: 0.1, max: 10, }]} >   
-            <InputNumber  defaultValue={0.0} onChange={(e) => setForm({ ...form, DecoderDropout: e })} />
+          <Form.Item name="DecoderDropout" label="Decoder Dropout" style={{display:advanced}} rules={[{type:"number", min: 0, max: 1, }]} >   
+            <InputNumber  onChange={(e) => setForm({ ...form, DecoderDropout: e })} />
           </Form.Item>
 
 
@@ -252,27 +334,30 @@ const [exampleSha1,setExampleSha1] = useState(true)
             </Radio.Group>
           </Form.Item>
           <Form.Item name="EncoderHidden" label="Encoder Hidden" style={{display:advanced}} rules={[{type:"number", min: 1, max: 1000, }]} >   
-            <InputNumber  defaultValue={256} onChange={(e) => setForm({ ...form, EncoderHidden: e })} />
+            <InputNumber   onChange={(e) => setForm({ ...form, EncoderHidden: e })} />
           </Form.Item>
-          <Form.Item name="Encoder Dropout" label="Encoder Dropout" style={{display:advanced}} rules={[{type:"number", min: 0.1, max: 10, }]} >   
-            <InputNumber  defaultValue={0.0} onChange={(e) => setForm({ ...form, EncoderDropout: e })} />
+          <Form.Item name="EncoderDropout" label="Encoder Dropout" style={{display:advanced}} rules={[{type:"number", min: 0, max: 1, }]} >   
+            <InputNumber   onChange={(e) => setForm({ ...form, EncoderDropout: e })} />
           </Form.Item>
 
 
           <Form.Item name="" wrapperCol={{offset:8,span:8}} style={{ display: advanced}}  >   
               <div><hr/></div>
             </Form.Item>
-          <Form.Item name="StrucFile" label="Protein Structure File" extra="optional, upload protein structure pdb file ( include all atoms ) can visualize long-range allosteric interactions in protein " >
+
+
+
+          <Form.Item name="StrucFile" label="PDB File" extra="optional, upload protein structure pdb file ( include all atoms ) can visualize long-range allosteric interactions in protein " >
             <Upload {...strucProps} fileList={strucFileList}>
               <Button icon={<UploadOutlined />}>Upload</Button>
             </Upload>
           </Form.Item>
 
-          <Form.Item name="VisualThreshold" label= "VisualThreshold"style={{ display:advanced,}} rules={[{type:"float" }]} extra="VisualThreshold">   
-              <InputNumber defaultValue={0.6} min={0.1} max={1.0} step={0.01} onChange={(e) => setForm({ ...form, VisualThreshold: e })} placeholder='Visual Threshold'/>
+          <Form.Item name="VisualThreshold" label= "Visualization Threshold" style={{}} rules={[{type:"float" }]} extra="Threshold for interaction visualization">   
+              <InputNumber  min={0.1} max={1.0} step={0.01} onChange={(e) => setForm({ ...form, VisualThreshold: e })} placeholder='Visual Threshold'/>
           </Form.Item>
 
-          <Form.Item name="Domain" label="Domain" style={{display:advanced}}>
+          <Form.Item name="Domain" label="Domain" style={{}}>
             <Form.List name="domain_arr">
             {(fields, { add, remove }) => (
               <>
@@ -282,11 +367,11 @@ const [exampleSha1,setExampleSha1] = useState(true)
                       <Input placeholder="Domain name" />
                     </Form.Item>
                     <div style={{display:'flex'}}>
-                    <Form.Item {...restField} name={[name, 'start']} rules={[{ required: true, message: 'Missing start index',},  ]}>
+                    <Form.Item {...restField} name={[name, 'start']} rules={[{ required: true,type:"number", message: 'Missing start index',},  ]}>
                         <Input style={{width: 100,textAlign: 'center', }} placeholder="start index"/>
                     </Form.Item>
                     <Input className="site-input-split" style={{width: 30,borderLeft: 0,borderRight: 0,pointerEvents: 'none',marginBottom:'24px'}} placeholder="~" disabled/>
-                    <Form.Item {...restField} name={[name, 'end']} rules={[{ required: true, message: 'Missing end index',},  ]}>
+                    <Form.Item {...restField} name={[name, 'end']} rules={[{ required: true,type:"number", message: 'Missing end index',},  ]}>
                     <Input  className="site-input-right"style={{width: 100,textAlign: 'center',}} placeholder="end index" />
                     </Form.Item>
                     </div>
@@ -303,19 +388,19 @@ const [exampleSha1,setExampleSha1] = useState(true)
             </Form.List>
           </Form.Item>
 
-          <Form.Item name="DistThreshold" label= "Distance Threshold"style={{ display:advanced,}} rules={[{type:"number" }]} extra="Distance Threshold">   
-              <InputNumber defaultValue={12} onChange={(e) => setForm({ ...form, DistThreshold: e })} placeholder='Distance Threshold'/>
+          <Form.Item name="DistThreshold" label= "Distance Threshold" rules={[{type:"number" }]} extra="Ignore the distance if residue distance larger than the Distance Threshold (Default: 12)">   
+              <InputNumber onChange={(e) => setForm({ ...form, DistThreshold: e })} placeholder='Distance Threshold'/>
           </Form.Item>
 
-          <Form.Item name="" label="Paths" style={{display:advanced,marginBottom:"0"}}> 
-            <Form.Item name="SourceNode" style={{ display: 'inline-block', width: 'calc(50% - 15px)',}} rules={[{ }]} extra="Source Node" >   
-              <Input  defaultValue={46} onChange={(e) => setForm({ ...form, SourceNode: Number(e.target.value) })} placeholder='Source Node'/>
+          <Form.Item name="" label="Paths" style={{marginBottom:"0"}} rules={[{type:"number",  min: 1, max: 1000, }]}> 
+            <Form.Item name="SourceNode" style={{ display: 'inline-block', width: 'calc(50% - 15px)',}} rules={[{type:"number", min: 1, max: 1000, }]} extra="Source Node" >   
+              <Input   onChange={(e) => setForm({ ...form, SourceNode: Number(e.target.value) })} placeholder='Source Node'/>
             </Form.Item>
             <Form.Item name=""  style={{ display: 'inline-block',  width: '30px', textAlign:'center'}}  >   
               <div>-&gt;</div>
             </Form.Item>
-            <Form.Item name="TargetNod"  style={{ display: 'inline-block',  width: 'calc(50% - 15px)',}} rules={[{ min: 1, max: 1000, }]} extra="Target Node">   
-              <Input  defaultValue={61} onChange={(e) => setForm({ ...form, TargetNode: Number(e.target.value) })} placeholder='Target Node'/>
+            <Form.Item name="TargetNode"  style={{ display: 'inline-block',  width: 'calc(50% - 15px)',}} rules={[{type:"number", min: 1, max: 1000, }]} extra="Target Node">   
+              <Input   onChange={(e) => setForm({ ...form, TargetNode: Number(e.target.value) })} placeholder='Target Node'/>
             </Form.Item>
           </Form.Item>
 
@@ -323,7 +408,7 @@ const [exampleSha1,setExampleSha1] = useState(true)
 
           <div style={{width:"67%",display: "flex",justifyContent: "flex-end",height:"40px",transition: '.3s',}} >
             <Button onClick={() => {
-              advanced === "none" ? setAdvanced("block") : setAdvanced("none")
+              advanced === "none" ? setAdvanced("") : setAdvanced("none")
             }} >{advanced === "none" ?'Advanced':'Fold'}</Button>
           </div>
 

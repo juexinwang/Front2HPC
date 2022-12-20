@@ -8,6 +8,8 @@ import Status from '../components/results/Status';
 import Plot from '../components/results/Plot';
 import Domain from '../components/results/Domain';
 import Node from '../components/results/Node';
+import { SyncOutlined,} from '@ant-design/icons';
+
 
 const layout = {
   labelCol: {
@@ -40,44 +42,39 @@ export default function Result() {
     if(!jobStatus){
       timer = setInterval(()=>{
         check();
-      },15000);
+      },300000);
     }
     return ()=>{
       clearInterval(timer);
     }
   },[jobStatus])
 
-
+  const tag = <Tag icon={<SyncOutlined spin />} color="processing">running</Tag>
   const check = async () => {
     const res = await CheckApi({ JobId: id});
     console.log('submit', res);
     if (res == "NotExist") {
       navigate('/result',{state:{jobIfExist:false,jobid:id}})
     } else {
-      setJobStatus(res.JobStatus)
+      console.log(res.JobStatus)
       if(res.JobStatus){
         // console.log('11222',res.file_data[1].file_base64);
         console.log(res.JobStatus);
         console.log(res.paths);
         console.log(res.strucFilePath);
-        // setImgs([res.file_data[0].file_base64,res.file_data[1].file_base64])
-        // setPaths(res.paths)
-        setResults({'probImg':res.file_data[0].file_base64,'domainImg':res.file_data[1].file_base64,'paths':res.paths,'strucFilePath':res.strucFilePath})
-        // probImg=res.file_data[0].file_base64
-        // domainImg=res.file_data[1].file_base64
-        // paths=res.paths
+        // setResults({'probImg':res.file_data[0].file_base64,'domainImg':res.file_data[1].file_base64,'paths':res.paths,'strucFilePath':res.strucFilePath})
+        setResults({'imgs':res.file_data,'paths':res.paths,'strucFilePath':res.strucFilePath})
       }else{
-        setTable([{id:1,jobid:id,time:res.Created_at,status:'running'}])
+        setTable([{id:1,jobid:id,time:res.Created_at.split('.')[0].replace('T', ' '),status:tag}])
         message.success("fresh")
       }
+      setJobStatus(res.JobStatus)
     }
   }
-  // console.log('resultprobimg',probImg)
-  // console.log('resultdomainimg',domainImg)
-  // console.log("paths",paths)
+  console.log('results',results);
 
 
   return <div>{jobStatus
           ?<Plot results = {results} setResults={setResults}/>
-          :<Status table={table}/>}</div>
+          :<Status table={table} jobid={id}/> }</div>
 }

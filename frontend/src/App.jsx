@@ -33,22 +33,22 @@ export default function App() {
   return (
     <Layout className='totolLayout'>
       <header>
-        <div className='logo'>NRI-MD</div>
-        <div className='word'>Neural relational inference to learn long-range allosteric interactions in proteins from molecular dynamics simulations</div>
+        <div className='logo'>NRIMD</div>
+        <span className='word'>a web server for analyzing long-range interactions in proteins from molecular dynamics simulations</span>
         <div className='contactus'><Link to='/contact'>Contact us</Link></div>
       </header>
       <Layout className='midLayout'>
         <Sider width={250} >
             <Menu className='Menu' mode="inline" defaultSelectedKeys={['1']} items={items}/>
         </Sider>
-        <Content className='Content'>
+        <Content className='Content' >
           <BreadCrumb className="BreadCrumb"/>
           <div className="siteLayoutContent">
             <Outlet/>
           </div>
         </Content> 
       </Layout> 
-      <Footer  style={{textAlign: 'center',}}>Ant Design ©2018 Created by Ant UED</Footer>
+      <Footer  style={{textAlign: 'center',}}>NRIMD ©2022 Created by Yi He</Footer>
     </Layout>
   )
 }

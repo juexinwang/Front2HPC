@@ -3,9 +3,10 @@ import { Button, message, Steps } from 'antd'
 import flowchart from '../assets/imgs/chart.webp'
 import { Typography,Divider } from 'antd';
 import HowSubmit from './HowSubmit';
+import { Link } from 'react-router-dom';
 const { Title } = Typography;
 let intro=<div>
-  <img src={flowchart} alt="" style={{width:'500px'}}></img>
+  
             <h2>Neural relational inference</h2>
             <h3>
             Neural relational inference to learn long-range allosteric interactions in proteins from molecular dynamics simulations
@@ -13,12 +14,15 @@ let intro=<div>
             <div>
             The process includes the system preparation of a ligand-binding complex or mutant protein structure with allostery (a), the MD simulation of a prepared allosteric system to obtain the trajectory with the dynamic 3D coordinates (b), the conventional analysis for the trajectory (c), and the sampling and training using the NRI model with two jointly trained components (d). In d, the NRI model consists of an encoder, which infers a factorized distribution qΦ(z|x) over the latent interactions based on the input trajectories and a decoder, which reconstructs the future trajectories of the dynamic systems given the latent graph learned from the encoder. Based on the MD trajectory, the NRI model formulates the protein allosteric process as a dynamic network of interacting residues. The interaction graph learned from this model is compared with the conventional analysis to better understand the allosteric pathway in the protein.
             </div>
-            
+            <img src={flowchart} alt="" style={{width:'500px'}}></img>
         </div>
 let submit=<div>
   <HowSubmit/>
         </div>
-let result=<div>dasdsadasd</div>
+let result=<div>
+              You can get result <Link to='/result'>here</Link> and input your Job ID that we provide for you when submitting Successfully. <br/>
+              You can also bookmark your job by https://nrimd.luddy.iupui.edu/result/ + your job Id.
+          </div>
 
 const steps = [
   {

@@ -57,15 +57,15 @@ const items = new Array(3).fill(null).map((_, i) => {
   );
 const HowSubmit = () => {
   return <>
-    <h2>① prepare trajectory</h2>
+    <h2>1 prepare trajectory</h2>
     <div>Your molecular dynamics trajectory should like <ExampleDrawer/>, every frame the protein only includes CA atom information of each residue and file needs to be in pdb format. </div>
     <div>We provide 3 methods below for praparing CA trajecory file in pdb format: </div>
     <br/>
     <div className="card-container">
         <Tabs type="card" items={methods} />
     </div>
-    <h2>② submit</h2>
-    <div>then upload your pdb file and submit, <Link to='/submit/'>Go to submit</Link></div>
+    <h2>2 submit</h2>
+    <div>then upload your prapared file <span style={{color:"green"}}>ca_traj.pdb</span> and submit, <Link to='/submit'>Go to submit</Link>.</div>
   </>
 };
 export default HowSubmit;
