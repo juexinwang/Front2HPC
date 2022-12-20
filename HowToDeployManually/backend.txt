@@ -35,3 +35,5 @@ python manage.py runserver
 
 #can visit in http://localhost:8000
 
+##
+sudo HTTPS=true SSL_CRT_FILE=reactcert/nrimd_luddy_iupui_edu_cert.cer SSL_KEY_FILE=reactcert/nrimd.luddy.iupui.edu.key.2022_12_19 npm start
