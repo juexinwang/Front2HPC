@@ -47,7 +47,7 @@ class JobModel(models.Model):
     JobStatus = models.BooleanField(default=False)
     NumResidues = models.IntegerField(default=0)
     NumFrames = models.IntegerField(default=0)
-    Created_at = models.DateTimeField(auto_now_add=True)
+    Created_at = models.DateTimeField(auto_now_add=True,)
     TrajFilePath = models.CharField(max_length=500,blank=True,null=True)
     StrucFilePath = models.CharField(max_length=500,blank=True,null=True)
     DomainImg = models.ImageField(null=True) 

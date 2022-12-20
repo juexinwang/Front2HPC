@@ -64,7 +64,7 @@ def preditctLocalHost(trajfilepath,email,jobid,epochs,batchsize,encoder,decoder,
     mail.send_mail(
     subject='submit',
     message='your job has finished, job id is {}'.format(jobid),
-    from_email='nrimdserver@gmail.com',
+    from_email='2938225901@qq.com',
     recipient_list=['{}'.format(email)]
     )
 
@@ -265,7 +265,22 @@ class JobAPIView(APIView):
             bj.submit()
             print('Submit finished.')
         return Response(serializer.data)
-           
+class JobDetailAPIView(APIView):
+    def get(self,request,JobId):
+        job = JobModel.objects.get(JobId=JobId)
+        serializer = JobSerializer(instance=job)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+    def put(self,request,JobId):
+        data_dict = request.data
+        job = JobModel.objects.get(JobId=JobId)
+        serializer = JobSerializer(instance=job,data=data_dict)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data,status=status.HTTP_201_CREATED)
+    def delete(self,request,JobId): 
+        job = JobModel.objects.get(JobId=JobId)
+        job.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)           
 #===========================view: check and get result===========================
 import base64
 class ResultAPIView(APIView):
@@ -275,12 +290,17 @@ class ResultAPIView(APIView):
         try:
             job = JobModel.objects.get(JobId=JobId)
             serializer = JobSerializer (instance=job)
+            print(serializer.data)
             if COMPUTE_LOCALHOST:
                 if serializer.data['JobStatus']==True:
                     #visual local
+                    imgpaths_list = []
                     result_folder = JobsFolder+JobId+'/analysis/'
-                    imgpaths_list = [result_folder+"probs.png",result_folder+"edges_domain.png",]
-                    img_list=find(imgpaths_list)
+                    print(os.path.exists(result_folder+"edges_domain.png"))
+                    if os.path.exists(result_folder+"edges_domain.png"):
+                        imgpaths_list.append(result_folder+"edges_domain.png")
+                    imgpaths_list.append(result_folder+"probs.png")
+                    imgs_dict=find(imgpaths_list)
                     #path local
                     path = JobsFolder+f'{JobId}/analysis/source46.txt'
                     source = open(path, 'rb').readlines()
@@ -298,7 +318,7 @@ class ResultAPIView(APIView):
                             line.split(':')[1].split('->') 
                             paths.append({'key':i,'pathname':line.split(':')[0].strip(),'path':line.split(':')[1].strip(),'probability':float(line.split(':')[2])})
                             i+=1
-                    return Response({"JobId":serializer.data['JobId'],"JobStatus":serializer.data['JobStatus'],'file_data': img_list,'paths':paths,'strucFilePath':serializer.data['StrucFilePath']})
+                    return Response({"JobId":serializer.data['JobId'],"JobStatus":serializer.data['JobStatus'],'file_data': imgs_dict,'paths':paths,'strucFilePath':serializer.data['StrucFilePath']})
                 return Response(serializer.data)
             else:
                 jobfolder = JobsFolder+serializer.data['JobId']
@@ -307,8 +327,11 @@ class ResultAPIView(APIView):
                     job.save()
                     #visual HPC
                     result_folder = JobsFolder+JobId+'/analysis/'
-                    imgpaths_list = [result_folder+"probs.png",result_folder+"edges_domain.png",]
-                    img_list=find(imgpaths_list)
+                    imgpaths_list = []
+                    imgpaths_list.append(result_folder+"probs.png")
+                    if os.path.exists(result_folder+"edges_domain.png"):
+                        imgpaths_list.append(result_folder+"edges_domain.png")
+                    imgs_dict=find(imgpaths_list)
                     #path HPC
                     path = JobsFolder+f'{JobId}/analysis/paths.txt'
                     source = open(path, 'rb').readlines()
@@ -325,18 +348,23 @@ class ResultAPIView(APIView):
                             line.split(':')[1].split('->') 
                             paths.append({'key':i,'pathname':line.split(':')[0].strip(),'path':line.split(':')[1].strip(),'probability':float(line.split(':')[2])})
                             i+=1
-                    return Response({"JobId":serializer.data['JobId'],"JobStatus":serializer.data['JobStatus'],'file_data': img_list,'paths':paths})
+                    return Response({"JobId":serializer.data['JobId'],"JobStatus":serializer.data['JobStatus'],'file_data': imgs_dict,'paths':paths})
                 return Response(serializer.data)
         except:
             return Response('NotExist')
+
 def find(imgpaths_list):
-    img_list=[]
+    imgs_dict={}
+    print(imgpaths_list)
     for i in imgpaths_list:
+        print(i)
         pro = open(i, 'rb')
+        head,tail =os.path.split(i)
+
         data = pro.read()
-        img_list.append({'file_name': i, 'file_base64': base64.b64encode(data)})
+        imgs_dict[tail.split('.')[0]]=base64.b64encode(data)
         pro.close()
-    return img_list
+    return imgs_dict
 
 
 """
@@ -358,6 +386,7 @@ def Path_localhost(request):
     dist_threshold=int(request.GET.get('Nodes[DistThreshold]'))
     source_node=int(request.GET.get('Nodes[SourceNode]'))
     target_node=int(request.GET.get('Nodes[TargetNode]'))
+
     print(dist_threshold,source_node,target_node)
     #postanalysis_path.py
     analysispath = AnalysisPathInResult(
@@ -389,6 +418,7 @@ class VisualLocalhost(APIView):
         job=JobModel.objects.get(JobId=jobid)
         threshold=float(request.GET.get('Domains[visualThreshold]'))
         domainInput=request.GET.get('Domains[domains]')
+        print(domainInput)
         # postanalysis_visual.py
         num_residues=job.NumResidues
         fileDir=JobsFolder+jobid+"/logs/"
@@ -401,9 +431,8 @@ class VisualLocalhost(APIView):
                                                 domainInput=domainInput
                                                 )
         imgpaths = analysisvisual.compute()
-        print(imgpaths)
-        img_list=find(imgpaths)
-        return Response({'file_data': img_list})
+        imgs_dict=find(imgpaths)
+        return Response({'file_data': imgs_dict})
 
 
 #===========================view: download example trajectory===========================
@@ -435,10 +464,10 @@ def download_examplestruc(request):
 print(settings.STATIC_URL)
 print(settings.BASE_DIR)
 def download_python(request):
-    path=settings.BASE_DIR+settings.STATIC_URL+'scripts/python.zip'
+    path=settings.BASE_DIR+settings.STATIC_URL+'scripts/traj2CApdb.rar'
     print(path)
     file = open(path, 'rb')
     response = FileResponse(file)
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment;filename="ca_1.pdb"'
+    response['Content-Disposition'] = 'attachment;filename="traj2CApdb.rar"'
     return response

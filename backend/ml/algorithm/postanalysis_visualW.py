@@ -181,7 +181,7 @@ class AnalysisVisualInResult():
     def compute(self):
         if not os.path.exists(self.outputDir):
             os.makedirs(self.outputDir)
-        out_file = self.outputDir+'new_probs.png'
+        out_file = self.outputDir+'probs.png'
 
         # Load distribution of learned edges
         edges_results_visual = self.getEdgeResults(threshold=True)
@@ -192,7 +192,8 @@ class AnalysisVisualInResult():
         # plt.show()
         plt.close()
 
-
+        imgpaths = []
+        imgpaths.append(self.outputDir+'probs.png')
         # Step 2: Get domain specific results
         # Ad hoc usage in original study
         # According to the distribution of learned edges between residues, we integrated adjacent residues as blocks for a more straightforward observation of the interactions.
@@ -238,8 +239,9 @@ class AnalysisVisualInResult():
             ax = sns.heatmap(edges_results_T, linewidth=1,
                             cmap="Blues", vmax=1.0, vmin=0.0)
             ax.set_ylim([len(domainList), 0])
-            plt.savefig(self.outputDir+'new_edges_domain.png', dpi=600)
+            plt.savefig(self.outputDir+'edges_domain.png', dpi=600)
             # plt.show()
             plt.close()
-
-            return [self.outputDir+'new_probs.png',self.outputDir+'new_edges_domain.png',]
+            imgpaths.append(self.outputDir+'edges_domain.png')
+        print(imgpaths)
+        return imgpaths
