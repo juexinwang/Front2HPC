@@ -1,7 +1,7 @@
 #models
-from .models import StructureFileModel,JobModel,TrajectoryFileModel
+from server.models import StructureFileModel,JobModel,TrajectoryFileModel
 #serializers
-from .serializers import TrajectoryFileModelSerializer,StructureFileModelSerializer,JobSerializer,JobIdSerializer
+from server.serializers import TrajectoryFileModelSerializer,StructureFileModelSerializer,JobSerializer,JobIdSerializer
 #viewsets-ModelViewSet
 from rest_framework.viewsets import ModelViewSet
 #response
@@ -44,6 +44,33 @@ if COMPUTE_LOCALHOST:
     scheduler.add_jobstore(DjangoJobStore(), 'default')
     register_events(scheduler)
     scheduler.start()
+
+from threading import Timer
+class RepeatingTimer(Timer): 
+    def run(self):
+        while not self.finished.is_set():
+            self.function(*self.args, **self.kwargs)
+            self.finished.wait(self.interval)
+def MyCheckStatusAndSendEmail():
+    queryset=JobModel.objects.all()
+    for job in queryset:
+        if job.JobId != None:
+            jobfolder = JobsFolder+job.JobId
+            print(jobfolder)
+            if (os.path.exists(jobfolder) and not job.JobStatus):
+                print(1111111111111111)
+                mail.send_mail(
+                subject='NRIMD job finished',
+                message='your job has finished, job id is {}'.format(job.JobId),
+                from_email='2938225901@qq.com',
+                recipient_list=[job.Email]
+                )
+                job.JobStatus=True
+                job.save()
+if not COMPUTE_LOCALHOST:
+    t = RepeatingTimer(300, MyCheckStatusAndSendEmail)
+    t.start()
+
 
 def preditctLocalHost(trajfilepath,email,jobid,epochs,batchsize,encoder,decoder,lr):
     jobfolder=JobsFolder+jobid
