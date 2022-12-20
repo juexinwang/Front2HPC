@@ -77,7 +77,8 @@ export default function Plot(props){
           <div style={{width:"50%"}}>{ListPath()}</div>
       </Col>
       <Col span={12}>
-      <iframe src={`http://localhost:9090/index.php?pdb=${Path2Filename(props.results.strucFilePath)}&path=${path}`} width="100%" height="800px" frameBorder = "1" ></iframe>
+      {/* <iframe src={`http://localhost:9090/index.php?pdb=${Path2Filename(props.results.strucFilePath)}&path=${path}`} width="100%" height="800px" frameBorder = "1" ></iframe> */}
+      <iframe src={`http://nrimd.luddy.iupui.edu:9090/index.php?pdb=3177142_2por.pdb`} width="100%" height="800px" frameBorder = "1" ></iframe>
       </Col>
     </Row>
     
