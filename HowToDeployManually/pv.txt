@@ -1,8 +1,0 @@
-1.prepare docker # More details on that
-
-2.create image and container
-install extesion for docker in vscode
-compose up 'docker-compose-dev.apache.yml' in pv folders
-
-3.enjoy
-can visit in http://localhost:9090/index.php?pdb=1ake.pdb
