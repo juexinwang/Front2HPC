@@ -68,7 +68,7 @@ def MyCheckStatusAndSendEmail():
                 job.JobStatus=True
                 job.save()
 if not COMPUTE_LOCALHOST:
-    t = RepeatingTimer(300, MyCheckStatusAndSendEmail)
+    t = RepeatingTimer(60, MyCheckStatusAndSendEmail)
     t.start()
 
 
@@ -345,7 +345,8 @@ class ResultAPIView(APIView):
                             line.split(':')[1].split('->') 
                             paths.append({'key':i,'pathname':line.split(':')[0].strip(),'path':line.split(':')[1].strip(),'probability':float(line.split(':')[2])})
                             i+=1
-                    return Response({"JobId":serializer.data['JobId'],"JobStatus":serializer.data['JobStatus'],'file_data': imgs_dict,'paths':paths,'strucFilePath':serializer.data['StrucFilePath']})
+                    return Response({"JobId":serializer.data['JobId'],"JobStatus":serializer.data['JobStatus'],'file_data': imgs_dict,'paths':paths,'strucFilePath':serializer.data['StrucFilePath'],
+                    'Domain':serializer.data['Domain'],'DistThreshold':serializer.data['DistThreshold'],'SourceNode':serializer.data['SourceNode'],'TargetNode':serializer.data['TargetNode']})
                 return Response(serializer.data)
             else:
                 jobfolder = JobsFolder+serializer.data['JobId']
@@ -375,7 +376,9 @@ class ResultAPIView(APIView):
                             line.split(':')[1].split('->') 
                             paths.append({'key':i,'pathname':line.split(':')[0].strip(),'path':line.split(':')[1].strip(),'probability':float(line.split(':')[2])})
                             i+=1
-                    return Response({"JobId":serializer.data['JobId'],"JobStatus":serializer.data['JobStatus'],'file_data': imgs_dict,'paths':paths})
+                    return Response({"JobId":serializer.data['JobId'],"JobStatus":serializer.data['JobStatus'],
+                    'file_data': imgs_dict,'paths':paths, 'Domain':serializer.data['Domain'],
+                    'DistThreshold':serializer.data['DistThreshold'],'SourceNode':serializer.data['SourceNode'],'TargetNode':serializer.data['TargetNode']})
                 return Response(serializer.data)
         except:
             return Response('NotExist')
@@ -445,6 +448,8 @@ class VisualLocalhost(APIView):
         job=JobModel.objects.get(JobId=jobid)
         threshold=float(request.GET.get('Domains[visualThreshold]'))
         domainInput=request.GET.get('Domains[domains]')
+        job.Domain=domainInput
+        job.save()
         print(domainInput)
         # postanalysis_visual.py
         num_residues=job.NumResidues
@@ -498,3 +503,18 @@ def download_python(request):
     response['Content-Type'] = 'application/octet-stream'
     response['Content-Disposition'] = 'attachment;filename="traj2CApdb.rar"'
     return response
+
+#===========================view: download result===========================
+print(settings.STATIC_URL)
+print(settings.BASE_DIR)
+def DownloadResult(request):
+    print(request.GET)
+    print(11111111111111)
+    # jobid=request.GET.get('JobId')
+    # path=JobsFolder+jobid
+    # print(path)
+    # file = open(path, 'rb')
+    # response = FileResponse(file)
+    # response['Content-Type'] = 'application/octet-stream'
+    # response['Content-Disposition'] = 'attachment;filename="result"'
+    return 'ok'

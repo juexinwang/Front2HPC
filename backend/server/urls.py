@@ -12,6 +12,7 @@ urlpatterns=[
     url('download3/',views.download_python),
     url(r'^setvisual/$',views.VisualLocalhost.as_view()), 
     url(r'^setnode/$',views.Path_localhost),
+    url(r'^download_result/$', views.DownloadResult),
     
     # url(r'^check/$',views.JobIdAPIView.as_view()),
     # url(r'^check/(?P<JobId>[0-9]{14}[A-Z]{4})/$',views.JobDetailAPIView.as_view()),

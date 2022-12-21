@@ -42,7 +42,7 @@ export default function Result() {
     if(!jobStatus){
       timer = setInterval(()=>{
         check();
-      },300000);
+      },60000);
     }
     return ()=>{
       clearInterval(timer);
@@ -62,8 +62,10 @@ export default function Result() {
         console.log(res.JobStatus);
         console.log(res.paths);
         console.log(res.strucFilePath);
+        console.log('res',res)
         // setResults({'probImg':res.file_data[0].file_base64,'domainImg':res.file_data[1].file_base64,'paths':res.paths,'strucFilePath':res.strucFilePath})
-        setResults({'imgs':res.file_data,'paths':res.paths,'strucFilePath':res.strucFilePath})
+        setResults({'imgs':res.file_data,'paths':res.paths,'strucFilePath':res.strucFilePath,'domains':res.Domain,
+        'sourcenode':res.SourceNode,'targetnode':res.TargetNode,'distThreshold':res.DistThreshold})
       }else{
         setTable([{id:1,jobid:id,time:res.Created_at.split('.')[0].replace('T', ' '),status:tag}])
         message.success("fresh")

@@ -12,3 +12,5 @@ export const CheckApi = (params) => request.get('/result/', {params})
 export const setVisualApi = (params) => request.get('/setvisual/', {params})
 //set path and submit in result
 export const setNodeApi = (params) => request.get('/setnode/', {params})
+//download result
+export const downloadResultAPI = (params) => request.get('/download_result/', {params})

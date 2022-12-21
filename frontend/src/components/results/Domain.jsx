@@ -1,14 +1,32 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Space,InputNumber } from 'antd';
 import { setVisualApi} from '../../requests/api'
 import { useParams } from 'react-router-dom';
 const Domain = (props) => {
   const {id} = useParams()
+  const [form] = Form.useForm()
+
+    useEffect(()=>{
+      console.log(props.results.domain);
+      if(props.results.domains !==undefined){
+        if(props.results.domains !== ','){
+          console.log('domains',props.results.domains);
+          let dmarr =props.results.domains.split(',').map(dm_s_e => {return {'domain':dm_s_e.split('_')[0],'start':Number(dm_s_e.split('_')[1])+1,'end':Number(dm_s_e.split('_')[2])+1}})
+          form.setFieldsValue({
+            domain_arr: dmarr
+          })
+         }
+      }
+  },[props.results.domains])
+
+
   const submitVisual = async (domains) => {
+    console.log('domains',domains.domains.split(','));
     const res = await setVisualApi({ Domains: domains});
-    props.setResults({...props.results,'imgs':{...props.results.imgs,"edges_domain":res.file_data.edges_domain}})
+    props.setResults({...props.results,'imgs':{...props.results.imgs,"edges_domain":res.file_data.edges_domain},'domain':domains.domains})
   }
+
   const onFinish = (values) => {
     const arr=values.domain_arr
     // const req=obj.domain+'_'+obj.start+'_'+obj.end
@@ -18,9 +36,11 @@ const Domain = (props) => {
     const req={domains,visualThreshold,JobId}
     submitVisual(req)
   };
+
+
   return (
     <>
-    <Form name="dynamic_form_nest_item" onFinish={onFinish} autoComplete="off" >
+    <Form name="dynamic_form_nest_item" onFinish={onFinish} autoComplete="off" form={form}>
 
     <Form.Item name="visualThreshold" label= "Visualization Threshold" rules={[{type:"number",required:true }]} >   
         <InputNumber placeholder='0.6'/>

@@ -6,8 +6,9 @@ import { Button, Form, Input, InputNumber, message, Upload ,Table, Divider, Tag,
 import { Col, Row } from 'antd';
 import { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { setNodeApi } from '../../requests/api';
+import { setNodeApi,downloadResultAPI,uploadTrajApi  } from '../../requests/api';
 import { Typography } from 'antd';
+import {DownloadOutlined,} from '@ant-design/icons';
 import Traj from './Traj';
 const { Title } = Typography; 
 export default function Plot(props){
@@ -33,6 +34,8 @@ export default function Plot(props){
     }
     // console.log('aaaaa',props.results.imgs.edges_domain)
   },[props.results])
+
+  
   const cm = [{title:'Path Name',dataIndex:'pathname'},{title:'Path',dataIndex:'path'},{title:'Probability',dataIndex:'probability'}]
   const rowSelection = {
     // defaultSelectedRowKeys: [0],
@@ -65,8 +68,18 @@ const domain =
   </div>
 </div>    
 
+const download_result=()=>{
+  console.log('download')
+  downloadResultAPI({'JobId':id})
+  
+}
   return <>
-    <h4>Your job {id} has finished, here are results: </h4>
+    <h4>Your job {id} has finished, here are results:     
+                                      </h4>
+    {/*#TODO <Button type="primary" icon={<DownloadOutlined />}   onClick={download_result}>Download</Button> */}
+                                
+                              
+
     <Divider style={{fontSize:"large"}}>1. Visualize the distribution of learned edges between residues</Divider>
     <Row>
       <Col span={14}>
@@ -144,7 +157,7 @@ const domain =
         
         {showPDB?
         <div style={{marginLeft:'50px',marginRight:'30px'}}>
-          <iframe src={`http://nrimd.luddy.iupui.edu:9090/index.php?pdb=${Path2Filename(props.results.strucFilePath)}&path=${path}`} width="100%" height="500px"  frameborder="1" scrolling="no"></iframe>
+          <iframe src={`http://localhost:9090/index.php?pdb=${Path2Filename(props.results.strucFilePath)}&path=${path}`} width="100%" height="500px"  frameborder="1" scrolling="no"></iframe>
         </div>
           :''}
    

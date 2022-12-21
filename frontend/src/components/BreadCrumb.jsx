@@ -21,6 +21,9 @@ export default function BreadCrumb() {
             case '/intro':
                 setbreadName('introduction');
                 break; 
+            case '/':
+                setbreadName('introduction');
+                break; 
             case '/contact':
                 setbreadName('contact us');
                 break;    

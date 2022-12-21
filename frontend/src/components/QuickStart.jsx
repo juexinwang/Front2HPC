@@ -51,7 +51,7 @@ const QuickStart = () => {
 
   return (
     <>
-      <Title level={2}>Introduction to NRI-MD</Title>
+      <Title level={2}>Introduction to NRIMD</Title>
       <Divider/>
       <Title level={3}>Quick Start</Title>
       <Steps current={current} onChange={onChange} items={items} />

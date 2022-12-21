@@ -17,12 +17,23 @@ const Prob = (props) => {
     const req={domains,visualThreshold,JobId}
     submitVisual(req)
   };
+
+  const validateMessages = {
+    required: '${label} is required!',
+    types: {
+      Email: '${label} is not a valid email!',
+    },
+    Epochs: {
+      range: '${label} between ${min} and ${max}',
+    },
+  
+  };
   return (
     <>
     
-    <Form name="dynamic_form_nest_item" onFinish={onFinish} autoComplete="off" >
+    <Form name="dynamic_form_nest_item" onFinish={onFinish} autoComplete="off"  validateMessages={validateMessages}>
     <Form.Item name="Start" style={{marginBottom:"0",height:"35px"}}>   
-      <Form.Item name="VisualThreshold" label= "Visual Threshold"  rules={[{type:"number",required:true }]}  style={{ display: 'inline-block',  width: '70%',}}>   
+      <Form.Item name="VisualThreshold" label= "Visualization Threshold"  rules={[{type:"number",required:true }]}  style={{ display: 'inline-block',  width: '70%',}}>   
           <InputNumber  min={0.01} max={1} placeholder='0.6' width="500px"/>
       </Form.Item>
       <Form.Item style={{ display: 'inline-block',  width: '30%',marginBottom:"0"}}>

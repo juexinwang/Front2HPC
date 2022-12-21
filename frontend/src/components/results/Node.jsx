@@ -3,13 +3,25 @@ import { Button, Form, Input, Select, Space, Tooltip, Typography,InputNumber,Upl
 import { setNodeApi } from '../../requests/api';
 import { useParams } from 'react-router-dom';
 import { UploadOutlined,MinusCircleOutlined,PlusOutlined } from '@ant-design/icons';
+import { useEffect } from 'react';
 //request
 const { Option } = Select;
 
 const Node = (props) => {
+  const [form] = Form.useForm()
   const {id} =useParams()
   const JobId =id
   const [strucFileList, setStrucFileList] = useState([]);
+  console.log('aaaaaaaaaa',props.results.targetnode);
+
+  useEffect(()=>{
+      form.setFieldsValue({
+        distThreshold:props.results.distThreshold,
+        source:props.results.sourcenode,
+        target:props.results.targetnode,
+      })
+  },[])
+
   const submitNodes = async (nodes) => {
     const res = await setNodeApi({ Nodes: nodes});
     // props.setPaths(res.paths)
@@ -26,7 +38,7 @@ const Node = (props) => {
 
   
   return (
-    <Form name="complex-form" onFinish={onFinish} labelCol={{span: 6,}} wrapperCol={{span: 16,}} style={{marginTop:'10px'}}>
+    <Form name="complex-form" onFinish={onFinish} labelCol={{span: 6,}} wrapperCol={{span: 16,}} style={{marginTop:'10px'}} form={form}>
         
       <Form.Item name="distThreshold" label= "Distance Threshold" rules={[{type:"number" }]} style={{marginBottom:"20px"}}>   
           <InputNumber placeholder='12'/>
