@@ -61,7 +61,7 @@ def MyCheckStatusAndSendEmail():
                 print(1111111111111111)
                 mail.send_mail(
                 subject='NRIMD job finished',
-                message='your job has finished, job id is {}'.format(job.JobId),
+                message='Your job has finished, your result is availabe at http://nrimd.luddy.iupui.edu/result/{}'.format(job.JobId),
                 from_email='2938225901@qq.com',
                 recipient_list=[job.Email]
                 )
