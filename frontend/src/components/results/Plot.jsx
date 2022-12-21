@@ -144,7 +144,7 @@ const domain =
         
         {showPDB?
         <div style={{marginLeft:'50px',marginRight:'30px'}}>
-          <iframe src={`http://localhost:9090/index.php?pdb=${Path2Filename(props.results.strucFilePath)}&path=${path}`} width="100%" height="500px"  frameborder="1" scrolling="no"></iframe>
+          <iframe src={`http://nrimd.luddy.iupui.edu:9090/index.php?pdb=${Path2Filename(props.results.strucFilePath)}&path=${path}`} width="100%" height="500px"  frameborder="1" scrolling="no"></iframe>
         </div>
           :''}
    

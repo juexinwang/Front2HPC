@@ -1,7 +1,7 @@
 <?php
 
 $pdb_name = $_GET['pdb'];
-echo $pdb_name;
+// echo $pdb_name;
 $path = $_GET['path']
 
 

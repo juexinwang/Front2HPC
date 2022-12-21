@@ -81,7 +81,7 @@ export default function Result() {
       <div><img style={{width:'200px',height:'200px'}} src={`data:image/png;base64,${domainImg}`} alt=""/></div>
       <div>probability image</div>
       <div><img style={{width:'200px',height:'200px'}} src={`data:image/png;base64,${probImg}`} alt=""/></div>
-      <iframe src={`http://localhost:9090/index.php?pdb=3tdb.pdb&path=${paths1}`} width="1200" height="800px" frameBorder = "0" ></iframe>
+      <iframe src={`http://nrimd.luddy.iupui.edu:9090/index.php?pdb=3tdb.pdb&path=${paths1}`} width="1200" height="800px" frameBorder = "0" ></iframe>
     </>
   }
   function CheckResult(){
