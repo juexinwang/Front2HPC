@@ -90,7 +90,7 @@ def preditctLocalHost(trajfilepath,email,jobid,epochs,batchsize,encoder,decoder,
     job.save()
     mail.send_mail(
     subject='submit',
-    message='your job has finished, job id is {}'.format(jobid),
+    message='your job has finished, job id is http://nrimd.luddy.iupui.edu/result/{}'.format(jobid),
     from_email='2938225901@qq.com',
     recipient_list=['{}'.format(email)]
     )
