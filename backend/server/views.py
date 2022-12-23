@@ -8,7 +8,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from django.http import FileResponse
 from hashlib import md5, sha1
-from django.http import HttpResponse,JsonResponse
+from django.http import HttpResponse,JsonResponse, StreamingHttpResponse
 #action
 from rest_framework.decorators import action
 from rest_framework.parsers import FileUploadParser,MultiPartParser, FormParser
@@ -16,6 +16,7 @@ import time,os,datetime
 from rest_framework import status
 from rest_framework.exceptions import APIException
 from django.conf import settings
+
 #ml
 from rest_framework.views import APIView
 from ml.algorithm.convert_dataset import Convert
@@ -25,18 +26,17 @@ from ml.algorithm.postanalysis_visual import AnalysisVisual
 from ml.algorithm.postanalysis_pathW import AnalysisPathInResult
 from ml.algorithm.postanalysis_visualW import AnalysisVisualInResult
 from ml.hpc.BackJobsRunner import BackJobsRunner
-
 from django.core import mail
 from apscheduler.schedulers.background import BackgroundScheduler
 from django_apscheduler.jobstores import DjangoJobStore, register_events, register_job
 import os
 
 #auto configration 
-# StorageFolder= "/home/hy/Desktop/websever/store/v1/backend/ml/"
-StorageFolder= "/media/volume/sdb/jobs/"
+StorageFolder= "/home/hy/Desktop/websever/store/v1/backend/ml/"
+# StorageFolder= "/media/volume/sdb/jobs/"
 JobsFolder = StorageFolder+"jobs/"
 TrajFileFolder= StorageFolder+"files/"
-StrucFileFolder= "/home/exouser/NRIproject/Front2HPC/pv/pdbs/"
+StrucFileFolder= "/home/hy/Desktop/websever/store/v1/pv/pdbs/"
 COMPUTE_LOCALHOST = False
 
 if COMPUTE_LOCALHOST:
@@ -61,14 +61,14 @@ def MyCheckStatusAndSendEmail():
                 print(1111111111111111)
                 mail.send_mail(
                 subject='NRIMD job finished',
-                message='Your job has finished, your result is availabe at http://nrimd.luddy.iupui.edu/result/{}'.format(job.JobId),
+                message='your job has finished, job id is {}'.format(job.JobId),
                 from_email='2938225901@qq.com',
                 recipient_list=[job.Email]
                 )
                 job.JobStatus=True
                 job.save()
 if not COMPUTE_LOCALHOST:
-    t = RepeatingTimer(60, MyCheckStatusAndSendEmail)
+    t = RepeatingTimer(600, MyCheckStatusAndSendEmail)
     t.start()
 
 
@@ -287,6 +287,7 @@ class JobAPIView(APIView):
                 'domainInput':serializer.data["Domain"],
                 #'domainInput':'A_0_40,B_41_70,C_71_76', # default: ',', # start from 0
             }
+            #TODO
             bj = BackJobsRunner(jobid = jobid, filename = filename, params = params)
             print('Submit:')
             bj.submit()
@@ -350,9 +351,10 @@ class ResultAPIView(APIView):
                 return Response(serializer.data)
             else:
                 jobfolder = JobsFolder+serializer.data['JobId']
-                if os.path.exists(jobfolder)==True:
-                    job.JobStatus=True
-                    job.save()
+                if serializer.data['JobStatus']==True:
+                    # job.JobStatus=True
+                    # job.save()
+                    #TODOok by Yi HE
                     #visual HPC
                     result_folder = JobsFolder+JobId+'/analysis/'
                     imgpaths_list = []
@@ -361,24 +363,30 @@ class ResultAPIView(APIView):
                         imgpaths_list.append(result_folder+"edges_domain.png")
                     imgs_dict=find(imgpaths_list)
                     #path HPC
+                    
                     path = JobsFolder+f'{JobId}/analysis/paths.txt'
-                    source = open(path, 'rb').readlines()
-                    newsource=[]
-                    for line in source:
-                        string=str(line,'utf-8')
-                        newsource.append(string.strip())
-                    paths = []
-                    i=0
-                    for line in newsource:
-                        if line.startswith('target node'):
-                            node = int(line.split(':')[1])
-                        else:
-                            line.split(':')[1].split('->') 
-                            paths.append({'key':i,'pathname':line.split(':')[0].strip(),'path':line.split(':')[1].strip(),'probability':float(line.split(':')[2])})
-                            i+=1
-                    return Response({"JobId":serializer.data['JobId'],"JobStatus":serializer.data['JobStatus'],
-                    'file_data': imgs_dict,'paths':paths, 'Domain':serializer.data['Domain'],
-                    'DistThreshold':serializer.data['DistThreshold'],'SourceNode':serializer.data['SourceNode'],'TargetNode':serializer.data['TargetNode']})
+                    if os.path.exists(path):
+                        source = open(path, 'rb').readlines()
+                        newsource=[]
+                        for line in source:
+                            string=str(line,'utf-8')
+                            newsource.append(string.strip())
+                        paths = []
+                        i=0
+                        for line in newsource:
+                            if line.startswith('target node'):
+                                node = int(line.split(':')[1])
+                            else:
+                                line.split(':')[1].split('->') 
+                                paths.append({'key':i,'pathname':line.split(':')[0].strip(),'path':line.split(':')[1].strip(),'probability':float(line.split(':')[2])})
+                                i+=1
+                        return Response({"JobId":serializer.data['JobId'],"JobStatus":serializer.data['JobStatus'],
+                        'file_data': imgs_dict,'paths':paths, 'Domain':serializer.data['Domain'],
+                        'DistThreshold':serializer.data['DistThreshold'],'SourceNode':serializer.data['SourceNode'],'TargetNode':serializer.data['TargetNode']})
+                    else:
+                        return Response({"JobId":serializer.data['JobId'],"JobStatus":serializer.data['JobStatus'],
+                        'file_data': imgs_dict, 'Domain':serializer.data['Domain'],
+                        'DistThreshold':serializer.data['DistThreshold'],'SourceNode':serializer.data['SourceNode'],'TargetNode':serializer.data['TargetNode']})
                 return Response(serializer.data)
         except:
             return Response('NotExist')
@@ -419,6 +427,7 @@ def Path_localhost(request):
 
     print(dist_threshold,source_node,target_node)
     #postanalysis_path.py
+    #TODOok
     analysispath = AnalysisPathInResult(
                                         dist_threshold=dist_threshold,
                                         filename=JobsFolder+jobid+"/logs/out_probs_train.npy",
@@ -426,6 +435,7 @@ def Path_localhost(request):
                                         target_node=target_node,
                                         PDBfilename=PDBfilename,
                                         outputDir=JobsFolder+jobid+"/analysis/",
+
                                         )
     strings = analysispath.caculate()
     paths = []
@@ -452,6 +462,7 @@ class VisualLocalhost(APIView):
         job.save()
         print(domainInput)
         # postanalysis_visual.py
+        #TODOok
         num_residues=job.NumResidues
         fileDir=JobsFolder+jobid+"/logs/"
         outputDir=JobsFolder+jobid+"/analysis/"
@@ -462,6 +473,7 @@ class VisualLocalhost(APIView):
                                                 outputDir=outputDir,
                                                 domainInput=domainInput
                                                 )
+
         imgpaths = analysisvisual.compute()
         imgs_dict=find(imgpaths)
         return Response({'file_data': imgs_dict})
@@ -471,7 +483,7 @@ class VisualLocalhost(APIView):
 print(settings.STATIC_URL)
 print(settings.BASE_DIR)
 def download_exampletraj(request):
-    path=settings.BASE_DIR+settings.STATIC_URL+'pdbs/ca_1.pdb'
+    path=settings.BASE_DIR+settings.STATIC_URL+'pdbs/sod1_traj.pdb'
     print(path)
     file = open(path, 'rb')
     response = FileResponse(file)
@@ -501,20 +513,68 @@ def download_python(request):
     file = open(path, 'rb')
     response = FileResponse(file)
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment;filename="traj2CApdb.rar"'
+    response['Content-Disposition'] = 'attachment;filename="a.zip"'
     return response
 
 #===========================view: download result===========================
-print(settings.STATIC_URL)
-print(settings.BASE_DIR)
-def DownloadResult(request):
-    print(request.GET)
+def DownloadResult(request,id):
+    # print(request.GET)
+    print(id)
     print(11111111111111)
-    # jobid=request.GET.get('JobId')
-    # path=JobsFolder+jobid
-    # print(path)
-    # file = open(path, 'rb')
-    # response = FileResponse(file)
-    # response['Content-Type'] = 'application/octet-stream'
-    # response['Content-Disposition'] = 'attachment;filename="result"'
-    return 'ok'
+    inputpath=JobsFolder+id+'/analysis'
+    outpath = JobsFolder+id+'/'+id+'_result'+'.zip'
+    zip = zipfile.ZipFile(outpath, 'w', zipfile.ZIP_DEFLATED)
+    for path, dirnames, filenames in os.walk(inputpath):
+        fpath = path.replace(inputpath, '')
+        for filename in filenames:
+            zip.write(os.path.join(path, filename), os.path.join(fpath, filename))
+    zip.close()
+    file = open(outpath, 'rb')
+    response = FileResponse(file)
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment;filename="result.zip"'
+
+    return  response
+import zipfile
+class DownloadResultAPIView(APIView):
+    def get(self,request):
+        # print(id)
+        print(111111111111111111111)
+        print(request.GET)
+        jobid=request.GET.get('JobId')
+        print(jobid)
+        inputpath=JobsFolder+jobid+'/analysis'
+        outpath = JobsFolder+jobid+'/'+jobid+'_result'+'.zip'
+        zip = zipfile.ZipFile(outpath, 'w', zipfile.ZIP_DEFLATED)
+        for path, dirnames, filenames in os.walk(inputpath):
+            fpath = path.replace(inputpath, '')
+            for filename in filenames:
+                zip.write(os.path.join(path, filename), os.path.join(fpath, filename))
+        zip.close()
+        print(2222222222222)
+        print(os.path.exists(outpath))
+        # print(outpath)
+
+        # zippath = '/home/hy/Desktop/websever/store/v1/backend/static/scripts/traj2CApdb.rar'
+        file = open(outpath, 'rb')
+        response = FileResponse(file)
+        response['Content-Type'] = 'application/octet-stream'
+        response['Content-Disposition'] = 'attachment;filename="result"'
+
+
+        # def file_iterator(file_path, chunk_size=512):
+        #     with open(file_path, mode='rb') as f:
+        #         while True:
+        #             c = f.read(chunk_size)
+        #             if c:
+        #                 yield c
+        #             else:
+        #                 break
+
+
+        # response = StreamingHttpResponse(file_iterator(outpath))
+        # # 以流的形式下载文件,这样可以实现任意格式的文件下载
+        # response['Content-Type'] = 'application/octet-stream'
+        # # Content-Disposition就是当用户想把请求所得的内容存为一个文件的时候提供一个默认的文件名
+        # response['Content-Disposition'] = 'attachment;filename="{}"'.format('aa.zip')
+        return response
