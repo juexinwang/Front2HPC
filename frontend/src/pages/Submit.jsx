@@ -203,7 +203,7 @@ export default function Submit() {
         &&domain=='b1_0_25,diml_25_29,disl_29_32,zl_32_43,b2_43_62,el_62_77,b3_72_77'
         ){
           console.log("domain",domain);
-          navigate('/result/0001AAAA') 
+          navigate('/result/0000AAAA') 
       }else{
         console.log('submitting',{...form,Domain:domain})
         const res = await submitJobApi({...form,Domain:domain});
@@ -393,8 +393,8 @@ export default function Submit() {
           </Form.Item>
 
           <Form.Item name="" label="Paths" style={{marginBottom:"0"}} rules={[{type:"number",  min: 1, max: 1000, }]}> 
-            <Form.Item name="SourceNode" style={{ display: 'inline-block', width: 'calc(50% - 15px)',}} rules={[{type:"number", min: 1, max: 1000, }]} extra="Source Node" >   
-              <InputNumber   onChange={(e) => setForm({ ...form, SourceNode: Number(e) })} placeholder='Source Node'  style={{ display: 'inline-block', width: 'calc(30% - 15px)',}}/>
+            <Form.Item name="SourceNode" style={{ display: 'inline-block', width: 'calc(23% - 15px)',}} rules={[{type:"number", min: 1, max: 1000, }]} extra="Source Node" >   
+              <InputNumber   onChange={(e) => setForm({ ...form, SourceNode: Number(e) })} placeholder='Source Node'  style={{ display: 'inline-block',}}/>
             </Form.Item>
             <Form.Item name=""  style={{ display: 'inline-block',  width: '30px', textAlign:'center'}}  >   
               <div>-&gt;</div>
