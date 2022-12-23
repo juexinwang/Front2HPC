@@ -68,7 +68,7 @@ def MyCheckStatusAndSendEmail():
                 job.JobStatus=True
                 job.save()
 if not COMPUTE_LOCALHOST:
-    t = RepeatingTimer(600, MyCheckStatusAndSendEmail)
+    t = RepeatingTimer(30, MyCheckStatusAndSendEmail)
     t.start()
 
 
@@ -90,7 +90,7 @@ def preditctLocalHost(trajfilepath,email,jobid,epochs,batchsize,encoder,decoder,
     job.save()
     mail.send_mail(
     subject='submit',
-    message='your job has finished, job id is http://nrimd.luddy.iupui.edu/result/{}'.format(jobid),
+    message='Your NRIMD job has finished, your result is availabe at http://nrimd.luddy.iupui.edu/result/{}'.format(jobid),
     from_email='2938225901@qq.com',
     recipient_list=['{}'.format(email)]
     )
@@ -488,7 +488,7 @@ def download_exampletraj(request):
     file = open(path, 'rb')
     response = FileResponse(file)
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment;filename="ca_1.pdb"'
+    response['Content-Disposition'] = 'attachment;filename="sod1_traj.pdb"'
     return response
 
 
@@ -501,21 +501,20 @@ def download_examplestruc(request):
     file = open(path, 'rb')
     response = FileResponse(file)
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment;filename="ca_1.pdb"'
+    response['Content-Disposition'] = 'attachment;filename="sod1.pdb"'
     return response
 
 #===========================view: download python script===========================
 print(settings.STATIC_URL)
 print(settings.BASE_DIR)
 def download_python(request):
-    path=settings.BASE_DIR+settings.STATIC_URL+'scripts/traj2CApdb.rar'
-    print(path)
+    path=settings.BASE_DIR+settings.STATIC_URL+'scripts/traj2CApdb.zip'
+    print(os.path.exists('/home/hy/Desktop/websever/store/v1/backend/static/scripts/traj2CApdb.zip'))
     file = open(path, 'rb')
     response = FileResponse(file)
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment;filename="a.zip"'
+    response['Content-Disposition'] = 'attachment;filename="traj2CApdb.zip"'
     return response
-
 #===========================view: download result===========================
 def DownloadResult(request,id):
     # print(request.GET)
