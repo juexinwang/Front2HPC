@@ -135,7 +135,7 @@ export default function Submit() {
         setLength(file.response.amount_residues)
         setLengthValid(file.response.length_valid)
         setForm({ ...form, TrajFilePath: file.response.TrajFilePath, NumResidues:file.response.NumResidues,NumFrames:file.response.NumFrames})
-        setExampleSha1(file.response.sha1==="fb23725ba350646c11db9845f7c865a040b3ae87") 
+        setExampleSha1(file.response.sha1==="00c7abf54c5a420cb5292a9a702529fb9f8c9c19") 
         console.log(2222222);
         
       }
@@ -394,13 +394,13 @@ export default function Submit() {
 
           <Form.Item name="" label="Paths" style={{marginBottom:"0"}} rules={[{type:"number",  min: 1, max: 1000, }]}> 
             <Form.Item name="SourceNode" style={{ display: 'inline-block', width: 'calc(50% - 15px)',}} rules={[{type:"number", min: 1, max: 1000, }]} extra="Source Node" >   
-              <Input   onChange={(e) => setForm({ ...form, SourceNode: Number(e.target.value) })} placeholder='Source Node'/>
+              <InputNumber   onChange={(e) => setForm({ ...form, SourceNode: Number(e) })} placeholder='Source Node'  style={{ display: 'inline-block', width: 'calc(30% - 15px)',}}/>
             </Form.Item>
             <Form.Item name=""  style={{ display: 'inline-block',  width: '30px', textAlign:'center'}}  >   
               <div>-&gt;</div>
             </Form.Item>
-            <Form.Item name="TargetNode"  style={{ display: 'inline-block',  width: 'calc(50% - 15px)',}} rules={[{type:"number", min: 1, max: 1000, }]} extra="Target Node">   
-              <Input   onChange={(e) => setForm({ ...form, TargetNode: Number(e.target.value) })} placeholder='Target Node'/>
+            <Form.Item name="TargetNode"  style={{ display: 'inline-block',  width: 'calc(50% - 15px)',}} rules={[{type:"number",min: 1, max: 1000, }]} extra="Target Node">   
+              <InputNumber   onChange={(e) => setForm({ ...form, TargetNode: Number(e) })} placeholder='Target Node'/>
             </Form.Item>
           </Form.Item>
 

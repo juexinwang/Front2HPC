@@ -56,7 +56,7 @@ export default function Result() {
     if (res == "NotExist") {
       navigate('/result',{state:{jobIfExist:false,jobid:id}})
     } else {
-      console.log(res.JobStatus)
+      console.log('status',res)
       if(res.JobStatus){
         // console.log('11222',res.file_data[1].file_base64);
         console.log(res.JobStatus);

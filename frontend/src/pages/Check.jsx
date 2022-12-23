@@ -18,6 +18,7 @@ export default function Check() {
         message.error(`your job (${location.state.jobid} ) not exist`)
     }
   }
+
 //navgate
   const navigate = useNavigate()
 //useParams()

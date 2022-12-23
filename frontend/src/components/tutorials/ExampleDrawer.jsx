@@ -16,7 +16,7 @@ const ExampleDrawer = () => {
     setOpen(false);
   };
   const title = <>
-                  <span style={{color:'black'}}>example ca_1.pdb</span> &emsp;
+                  <span style={{color:'black'}}>example sod1_traj.pdb</span> &emsp;
                     <a href='/api/download1/'>
                                       <Button type="primary" icon={<DownloadOutlined />} >
                                 Download

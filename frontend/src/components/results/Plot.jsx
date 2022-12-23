@@ -18,8 +18,6 @@ export default function Plot(props){
   const [showDomain,setShowDomain] = useState(true)
   const [showPDB,setShowPDB]=useState('')
   const [showsetdomain,setShowsetdomain] = useState("none")
-  console.log(props.results.imgs.edges_domain);
-  console.log('aaa',props.results.strucFilePath)
   useEffect(()=>{
     props.setResults(props.results)
     if(props.results.imgs.edges_domain==undefined){
@@ -68,15 +66,19 @@ const domain =
   </div>
 </div>    
 
-const download_result=()=>{
+const download_result=  async()=>{
   console.log('download')
-  downloadResultAPI({'JobId':id})
+  const res = await downloadResultAPI({'JobId':id});
+  console.log(res);
   
 }
   return <>
     <h4>Your job {id} has finished, here are results:     
+    <a href={'http://localhost:8000/download_result/'+id} style={{marginLeft:"50px"}}><Button type="primary" icon={<DownloadOutlined />}>Download Result</Button></a>
                                       </h4>
-    {/*#TODO <Button type="primary" icon={<DownloadOutlined />}   onClick={download_result}>Download</Button> */}
+                                      {/* onClick={download_result} */}
+    {/* <Button type="primary" onClick={download_result} icon={<DownloadOutlined></DownloadOutlined>} > Download1</Button> */}
+   
                                 
                               
 
