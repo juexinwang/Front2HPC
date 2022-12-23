@@ -260,13 +260,13 @@ export default function Submit() {
 
           <Form.Item name="" label="Interval" style={{display:advanced,marginBottom:"0"}}>   
             <Form.Item name="TrainInterval" style={{ display: 'inline-block', width: '30%',}} rules={[{type:"number",min: 1, max: 1000, }]} extra="train interval">   
-              <Input onChange={(e) => setForm({ ...form, TrainInterval: Number(e.target.value) })} placeholder='train interval'/>
+              <InputNumber  onChange={(e) => setForm({ ...form, TrainInterval: Number(e) })} placeholder='train interval'/>
             </Form.Item>
             <Form.Item name="ValidateInterval"  style={{ display: 'inline-block',  width: '30%', marginLeft: '5%', }} rules={[{type:"number", min: 1, max: 1000, }]}  extra="validate interval">   
-              <Input onChange={(e) => setForm({ ...form, ValidateInterval: Number(e.target.value) })} placeholder='validate interval'/>
+              <InputNumber  onChange={(e) => setForm({ ...form, ValidateInterval: Number(e) })} placeholder='validate interval'/>
             </Form.Item>
             <Form.Item name="TestInterval"  style={{ display: 'inline-block',  width: '30%', marginLeft: '5%', }} rules={[{type:"number", min: 1, max: 1000, }]} extra="test interval">   
-              <Input  onChange={(e) => setForm({ ...form, TestInterval: Number(e.target.value) })} placeholder='test interval'/>
+              <InputNumber   onChange={(e) => setForm({ ...form, TestInterval: Number(e) })} placeholder='test interval'/>
             </Form.Item>
           </Form.Item>
 
