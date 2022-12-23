@@ -32,11 +32,11 @@ from django_apscheduler.jobstores import DjangoJobStore, register_events, regist
 import os
 
 #auto configration 
-StorageFolder= "/home/hy/Desktop/websever/store/v1/backend/ml/"
-# StorageFolder= "/media/volume/sdb/jobs/"
+# StorageFolder= "/home/hy/Desktop/websever/store/v1/backend/ml/"
+StorageFolder= "/media/volume/sdb/jobs/"
 JobsFolder = StorageFolder+"jobs/"
 TrajFileFolder= StorageFolder+"files/"
-StrucFileFolder= "/home/hy/Desktop/websever/store/v1/pv/pdbs/"
+StrucFileFolder= "/home/exouser/NRIproject/Front2HPC/pv/pdbs/"
 COMPUTE_LOCALHOST = False
 
 if COMPUTE_LOCALHOST:
