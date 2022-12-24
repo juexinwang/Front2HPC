@@ -135,7 +135,7 @@ export default function Submit() {
         setLength(file.response.amount_residues)
         setLengthValid(file.response.length_valid)
         setForm({ ...form, TrajFilePath: file.response.TrajFilePath, NumResidues:file.response.NumResidues,NumFrames:file.response.NumFrames})
-        setExampleSha1(file.response.sha1==="00c7abf54c5a420cb5292a9a702529fb9f8c9c19") 
+        setExampleSha1(file.response.sha1==="21c6c62497a2a53b736ba47244914f11918e0647") 
         console.log(2222222);
         
       }
