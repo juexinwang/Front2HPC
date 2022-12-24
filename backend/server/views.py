@@ -56,9 +56,9 @@ def MyCheckStatusAndSendEmail():
     for job in queryset:
         if job.JobId != None:
             jobfolder = JobsFolder+job.JobId
-            print(jobfolder)
+            # print(jobfolder)
             if (os.path.exists(jobfolder) and not job.JobStatus):
-                print(1111111111111111)
+                # print(1111111111111111)
                 mail.send_mail(
                 subject='NRIMD job finished',
                 message='Your NRIMD job has finished, your result is availabe at http://nrimd.luddy.iupui.edu/result/{}'.format(job.JobId),
