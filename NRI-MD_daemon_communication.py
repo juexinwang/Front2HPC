@@ -8,8 +8,11 @@
 # 1. Every 5 minutes to check the status. (NRI-MD_daemon_communication.py)
 # */5 * * * * /home/exouser/anaconda3/bin/python /home/exouser/NRIproject/Front2HPC/NRI-MD_daemon_communication.py >> /media/volume/sdb/daemonlog.txt 2>&1
 #
-# 2. Delete results in 14 days
-# find /path/to/directory/ -mindepth 1 -mtime +14 -delete
+# 2. Delete results in 14 days, but run every week
+# 0 0 * * 0 find /media/volume/sdb/jobs/files -mtime +14 -type f -delete
+# 0 0 * * 0 find /home/exouser/NRIproject/Front2HPC/pv/pdbs/ -mtime +14 -type f -delete
+## delete on every sunday
+## find /path/to/directory/ -mindepth 1 -mtime +14 -delete
 ## Check: find /path/to/directory/ -mindepth 1 -mtime +14 -depth -print
 #
 
