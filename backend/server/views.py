@@ -420,7 +420,7 @@ def Path_localhost(request):
     print(request.GET)
     jobid=request.GET.get('Nodes[JobId]')
     job=JobModel.objects.get(JobId=jobid)
-    PDBfilename=job.TrajFilePath
+    PDBfilename=job.TrajFilePath.split('_')[0]+'.pdb'
     dist_threshold=int(request.GET.get('Nodes[DistThreshold]'))
     source_node=int(request.GET.get('Nodes[SourceNode]'))
     target_node=int(request.GET.get('Nodes[TargetNode]'))
