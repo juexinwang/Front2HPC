@@ -438,6 +438,7 @@ def Path_localhost(request):
 
                                         )
     strings = analysispath.caculate()
+    print(strings)
     paths = []
     i=0
     print(paths)
