@@ -427,9 +427,13 @@ def Path_localhost(request):
 
     print(dist_threshold,source_node,target_node)
     #postanalysis_path.py
-    #TODOok
+    num_residues=job.NumResidues
+    print(job.End-job.Start+1)
+    windowsize=job.End-job.Start+1
     analysispath = AnalysisPathInResult(
                                         dist_threshold=dist_threshold,
+                                        windowsize=windowsize,
+                                        num_residues=num_residues,
                                         filename=JobsFolder+jobid+"/logs/out_probs_train.npy",
                                         source_node=source_node,
                                         target_node=target_node,
@@ -438,7 +442,6 @@ def Path_localhost(request):
 
                                         )
     strings = analysispath.caculate()
-    print(strings)
     paths = []
     i=0
     print(paths)
@@ -463,12 +466,13 @@ class VisualLocalhost(APIView):
         job.save()
         print(domainInput)
         # postanalysis_visual.py
-        #TODOok
         num_residues=job.NumResidues
+        windowsize=job.End-job.Start+1
         fileDir=JobsFolder+jobid+"/logs/"
         outputDir=JobsFolder+jobid+"/analysis/"
         analysisvisual = AnalysisVisualInResult(
                                                 num_residues=num_residues,
+                                                windowsize=windowsize,
                                                 threshold=threshold,
                                                 fileDir=fileDir,
                                                 outputDir=outputDir,

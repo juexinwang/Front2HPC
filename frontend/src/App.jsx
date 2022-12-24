@@ -33,15 +33,15 @@ export default function App() {
   return (
     <Layout className='totolLayout'>
       <header>
-        <div className='logo'>NRIMD</div>
-        <span className='word'>a web server for analyzing long-range interactions in proteins from molecular dynamics simulations</span>
+        <div className='logo'><Link to='/intro' style={{color:'aqua'}}>NRIMD</Link></div>
+        <span className='word'><Link to='/intro' style={{color:'whitesmoke'}}>a web server for analyzing long-range interactions in proteins from molecular dynamics simulations</Link></span>
         <div className='contactus'><Link to='/contact'>Contact us</Link></div>
       </header>
       <Layout className='midLayout'>
         <Sider width={250} >
             <Menu className='Menu' mode="inline" defaultSelectedKeys={['1']} items={items}/>
         </Sider>
-        <Content className='Content' >
+        <Content className='Content'>
           <BreadCrumb className="BreadCrumb"/>
           <div className="siteLayoutContent">
             <Outlet/>
