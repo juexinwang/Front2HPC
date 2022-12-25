@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import environ
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -172,17 +173,19 @@ CORS_ALLOW_HEADERS = (
 #yutrapqopvfgfouz
 
 #gmail_send/settings.py
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = 'nrimdserver@gmail.com'
-# EMAIL_HOST_PASSWORD = 'yutrapqopvfgfouz' #past the key or password app here
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# DEFAULT_FROM_EMAIL = 'default from email'
+env = environ.Env()
+environ.Env.read_env()
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD') #past the key or password app here
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'default from email'
 
-EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST='smtp.qq.com'
-EMAIL_PORT=25
-EMAIL_HOST_USER='2938225901@qq.com'
-EMAIL_HOST_PASSWORD='qtejejwutpnqdcee'
-EMAIL_USE_TLS=False
+# EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST='smtp.qq.com'
+# EMAIL_PORT=25
+# EMAIL_HOST_USER='2938225901@qq.com'
+# EMAIL_HOST_PASSWORD='qtejejwutpnqdcee'
+# EMAIL_USE_TLS=False
