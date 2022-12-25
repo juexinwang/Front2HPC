@@ -302,8 +302,8 @@ class JobAPIView(APIView):
                 job.JobStatus=True
                 job.save()
                 mail.send_mail(
-                subject='submit',
-                message='Your NRIMD job has finished, your result is availabe at http://nrimd.luddy.iupui.edu/result/{}'.format(jobid),
+                subject='NRIMD example job finished',
+                message='Your NRIMD example job has finished, your result is availabe at http://nrimd.luddy.iupui.edu/result/{}'.format(jobid),
                 from_email='nrimdserver@gmail.com',
                 recipient_list=['{}'.format(job.Email)]
                 )
