@@ -296,7 +296,7 @@ class JobAPIView(APIView):
                 print('Submit finished.')
             else:
                 #TODO
-                sourcepath = JobsFolder+'1220AAAM'
+                sourcepath = JobsFolder+'../example'
                 targetpath = JobsFolder+jobid
                 shutil.copytree(sourcepath,targetpath)
                 job.JobStatus=True
