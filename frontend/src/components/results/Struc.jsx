@@ -6,7 +6,7 @@ import { UploadOutlined,MinusCircleOutlined,PlusOutlined } from '@ant-design/ico
 //request
 const { Option } = Select;
 
-const Traj = (props) => {
+const Struc = (props) => {
   const {id} =useParams()
   const JobId =id
   const [strucFileList, setStrucFileList] = useState([]);
@@ -36,4 +36,4 @@ const Traj = (props) => {
     </Form>
   );
 };
-export default Traj;
+export default Struc;

@@ -9,7 +9,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { setNodeApi,downloadResultAPI,uploadTrajApi  } from '../../requests/api';
 import { Typography } from 'antd';
 import {DownloadOutlined,} from '@ant-design/icons';
-import Traj from './Traj';
+import Struc from './Struc';
 const { Title } = Typography; 
 export default function Plot(props){
   const {id} =useParams()
@@ -74,14 +74,10 @@ const download_result=  async()=>{
 }
   return <>
     <h4>Your job {id} has finished, here are results:     
-    <a href={'http://localhost:8000/download_result/'+id} style={{marginLeft:"50px"}}><Button type="primary" icon={<DownloadOutlined />}>Download Result</Button></a>
+    <a href={'/api/download_result/'+id+'/'} style={{marginLeft:"50px"}}><Button type="primary" icon={<DownloadOutlined />}>Download Result</Button></a>
                                       </h4>
-                                      {/* onClick={download_result} */}
+                                      {/* onClick={download_result}  'http://localhost:8000/download_result/'+id*/}
     {/* <Button type="primary" onClick={download_result} icon={<DownloadOutlined></DownloadOutlined>} > Download1</Button> */}
-   
-                                
-                              
-
     <Divider style={{fontSize:"large"}}>1. Visualize the distribution of learned edges between residues</Divider>
     <Row>
       <Col span={14}>
@@ -154,7 +150,7 @@ const download_result=  async()=>{
       </Col>
       <Col span={12}>
 
-        <Traj setResults={props.setResults} results={props.results}/>
+        <Struc setResults={props.setResults} results={props.results}/>
 
         
         {showPDB?

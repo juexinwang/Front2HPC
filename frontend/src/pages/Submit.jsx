@@ -5,7 +5,7 @@ import { useNavigate,Link, } from 'react-router-dom';
 import { Button, Form, Input, InputNumber, Radio, message, Upload ,Slider,Space} from 'antd';
 import { UploadOutlined,MinusCircleOutlined,PlusOutlined } from '@ant-design/icons';
 //request
-import { submitJobApi } from '../requests/api'
+import { submitJobApi,submitExampleApi } from '../requests/api'
 //component
 import SubmitSuccessfully from '../components/SubmitSuccessfully';
 import ExampleDrawer from '../components/tutorials/ExampleDrawer';
@@ -203,10 +203,20 @@ export default function Submit() {
         &&domain=='b1_0_25,diml_25_29,disl_29_32,zl_32_43,b2_43_62,el_62_77,b3_72_77'
         ){
           console.log("domain",domain);
-          navigate('/result/0000AAAA') 
+          // navigate('/result/0000AAAA') 
+          const res = await submitJobApi({...form,Domain:domain,Example:true});
+          console.log(res);
+          if (res) {
+            message.success('Submit Successfully')
+            setIfSubmit(false)
+            setJobid(res.JobId)
+          } else {
+            message.error('Submit failedly')
+          }
+           
       }else{
         console.log('submitting',{...form,Domain:domain})
-        const res = await submitJobApi({...form,Domain:domain});
+        const res = await submitJobApi({...form,Domain:domain,Example:false});
         if (res) {
           message.success('Submit Successfully')
           setIfSubmit(false)
