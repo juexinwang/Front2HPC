@@ -45,6 +45,7 @@ class JobModel(models.Model):
     SourceNode = models.IntegerField(blank=True,null=True)
     TargetNode = models.IntegerField(blank=True,null=True)
     JobStatus = models.BooleanField(default=False)
+    Example = models.BooleanField(blank=True,null=True)
     NumResidues = models.IntegerField(default=0)
     NumFrames = models.IntegerField(default=0)
     Created_at = models.DateTimeField(auto_now_add=True,)

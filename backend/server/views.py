@@ -30,6 +30,7 @@ from django.core import mail
 from apscheduler.schedulers.background import BackgroundScheduler
 from django_apscheduler.jobstores import DjangoJobStore, register_events, register_job
 import os
+import shutil
 
 #auto configration 
 # StorageFolder= "/home/hy/Desktop/websever/store/v1/backend/ml/"
@@ -62,7 +63,7 @@ def MyCheckStatusAndSendEmail():
                 mail.send_mail(
                 subject='NRIMD job finished',
                 message='Your NRIMD job has finished, your result is availabe at http://nrimd.luddy.iupui.edu/result/{}'.format(job.JobId),
-                from_email='2938225901@qq.com',
+                from_email='nrimdserver@gmail.com',
                 recipient_list=[job.Email]
                 )
                 job.JobStatus=True
@@ -91,7 +92,7 @@ def preditctLocalHost(trajfilepath,email,jobid,epochs,batchsize,encoder,decoder,
     mail.send_mail(
     subject='submit',
     message='Your NRIMD job has finished, your result is availabe at http://nrimd.luddy.iupui.edu/result/{}'.format(jobid),
-    from_email='2938225901@qq.com',
+    from_email='nrimdserver@gmail.com',
     recipient_list=['{}'.format(email)]
     )
 
@@ -238,7 +239,7 @@ class JobAPIView(APIView):
             else:
                 print('lastjob is yesterday',lastjobid[:4])
                 jobid = time+ten2TwentySix(1,4)
-        job.JobId= jobid
+        job.JobId = jobid
         head,tail =os.path.split(filepath)
         print(head,tail)
         newpath = head+"/{}_{}_{}.pdb".format(jobid,str(job.NumResidues),job.NumFrames)
@@ -256,42 +257,56 @@ class JobAPIView(APIView):
                                             ])
         #=========================compute in HPC========================
         else:
-            jobid = serializer.data["JobId"]
-            head,tail=os.path.split(serializer.data['TrajFilePath'])
-            filename = tail
-            params={
-                'start':serializer.data["Start"], # start from 1
-                'end':serializer.data["End"],  # start from 1
-                'timestep_size':serializer.data["TimestepSize"],
-                'train_interval':serializer.data["TrainInterval"],
-                'validate_interval':serializer.data["ValidateInterval"],
-                'test_interval':serializer.data["TestInterval"],
-                'seed':serializer.data["Seed"],
-                'epochs':serializer.data["Epochs"],
-                'lr':serializer.data["Lr"],
-                'encoder_hidden':serializer.data["EncoderHidden"],
-                'decoder_hidden':serializer.data["DecoderHidden"],
-                'encoder':serializer.data["Encoder"],
-                'decoder':serializer.data["Decoder"],
-                'encoder_dropout':serializer.data["DecoderDropout"],
-                'decoder_dropout':serializer.data["EncoderDropout"],
-                'lr_decay':serializer.data["LrDecay"],
-                'gamma':serializer.data["Gamma"],
-                'var':serializer.data["Var"],
-                # postanalysis_path.py
-                'dist_threshold':serializer.data["DistThreshold"], # default is end-start+1
-                'source_node':serializer.data["SourceNode"], # start from 0
-                'target_node':serializer.data["TargetNode"], # start from 0
-                # postanalysis_visual.py
-                'threshold':serializer.data["VisualThreshold"],
-                'domainInput':serializer.data["Domain"],
-                #'domainInput':'A_0_40,B_41_70,C_71_76', # default: ',', # start from 0
-            }
-            #TODO
-            bj = BackJobsRunner(jobid = jobid, filename = filename, params = params)
-            print('Submit:')
-            bj.submit()
-            print('Submit finished.')
+            if not job.Example:
+                jobid = serializer.data["JobId"]
+                head,tail=os.path.split(serializer.data['TrajFilePath'])
+                filename = tail
+                params={
+                    'start':serializer.data["Start"], # start from 1
+                    'end':serializer.data["End"],  # start from 1
+                    'timestep_size':serializer.data["TimestepSize"],
+                    'train_interval':serializer.data["TrainInterval"],
+                    'validate_interval':serializer.data["ValidateInterval"],
+                    'test_interval':serializer.data["TestInterval"],
+                    'seed':serializer.data["Seed"],
+                    'epochs':serializer.data["Epochs"],
+                    'lr':serializer.data["Lr"],
+                    'encoder_hidden':serializer.data["EncoderHidden"],
+                    'decoder_hidden':serializer.data["DecoderHidden"],
+                    'encoder':serializer.data["Encoder"],
+                    'decoder':serializer.data["Decoder"],
+                    'encoder_dropout':serializer.data["DecoderDropout"],
+                    'decoder_dropout':serializer.data["EncoderDropout"],
+                    'lr_decay':serializer.data["LrDecay"],
+                    'gamma':serializer.data["Gamma"],
+                    'var':serializer.data["Var"],
+                    # postanalysis_path.py
+                    'dist_threshold':serializer.data["DistThreshold"], # default is end-start+1
+                    'source_node':serializer.data["SourceNode"], # start from 0
+                    'target_node':serializer.data["TargetNode"], # start from 0
+                    # postanalysis_visual.py
+                    'threshold':serializer.data["VisualThreshold"],
+                    'domainInput':serializer.data["Domain"],
+                    #'domainInput':'A_0_40,B_41_70,C_71_76', # default: ',', # start from 0
+                }
+                #TODO
+                bj = BackJobsRunner(jobid = jobid, filename = filename, params = params)
+                print('Submit:')
+                bj.submit()
+                print('Submit finished.')
+            else:
+                #TODO
+                sourcepath = JobsFolder+'1220AAAM'
+                targetpath = JobsFolder+jobid
+                shutil.copytree(sourcepath,targetpath)
+                job.JobStatus=True
+                job.save()
+                mail.send_mail(
+                subject='submit',
+                message='Your NRIMD job has finished, your result is availabe at http://nrimd.luddy.iupui.edu/result/{}'.format(jobid),
+                from_email='nrimdserver@gmail.com',
+                recipient_list=['{}'.format(job.Email)]
+                )
         return Response(serializer.data)
 class JobDetailAPIView(APIView):
     def get(self,request,JobId):
