@@ -28,6 +28,7 @@ scikit-learn==0.21.3
 apscheduler==3.9.1
 django-apscheduler==0.6.0
 django-cors-headers==3.6.0
+django-environ
 ===================================
 
 conda install networkx seaborn pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
@@ -95,6 +96,26 @@ proxy: {
 now backend 'http://127.0.0.1:8000' has a new name '^/api',
 if you want create yourself axios request, you should set axiosOption={baseURL: '/api',...}, but now we provided it
 
+4.3 set up email address
+# set up gmail: 
+https://www.sitepoint.com/django-send-email/
+create .env in the same level of settings.py:
+EMAIL_HOST=smtp.gmail.com
+EMAIL_HOST_USER=nrimdserver@gmail.com
+EMAIL_HOST_PASSWORD=XXXXXXXX
+
+Test email:
+(/media/volume/sdb/nar) exouser@nrimd-frontend:~/NRIproject/Front2HPC/backend$ python manage.py shell
+/home/exouser/NRIproject/Front2HPC/backend/backend
+Python 3.7.15 (default, Nov 24 2022, 21:12:53) 
+[GCC 11.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from django.core.mail import send_mail
+>>> from django.conf import settings
+>>> send_mail('A cool subject', 'A stunning message', settings.EMAIL_HOST_USER, ['wang.juexin@gmail.com'])
+1
+
 5.enjoy
 now you only replace src folders with our src folders
 $sudo npm start
@@ -125,6 +146,10 @@ https://kb.iu.edu/d/aews
 # crontab -e
 # 1. Every 5 minutes to check the status. (NRI-MD_daemon_communication.py)
 # */5 * * * * /home/exouser/anaconda3/bin/python /home/exouser/NRIproject/Front2HPC/NRI-MD_daemon_communication.py >> /media/volume/sdb/daemonlog.txt 2>&1
+# 2. Delete results in 14 days, but run every week
+# 0 0 * * 0 find /media/volume/sdb/jobs/files -mtime +14 -type f -delete
+# 0 0 * * 0 find /home/exouser/NRIproject/Front2HPC/pv/pdbs/ -mtime +14 -type f -delete
+## delete on every sunday
 # Details in NRI-MD_daemon_communication.py
 
 ## Moniter open ports
