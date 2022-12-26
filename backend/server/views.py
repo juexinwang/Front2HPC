@@ -205,7 +205,11 @@ def TwentySix2Ten(string):
         number=sequence.index(string[i])
         Ten+=number*(26**(3-i))
     return Ten
-
+from django.utils import crypto
+def random_code():
+    length=1
+    code=crypto.get_random_string(length, allowed_chars='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
+    return code
 class JobAPIView(APIView):
     def get(self,request):
         file = JobModel.objects.all()
@@ -222,7 +226,7 @@ class JobAPIView(APIView):
         if pk==1:
             print('firstjob')
             time = datetime.datetime.now().strftime("%m%d") 
-            jobid = time+ten2TwentySix(1,4)
+            jobid = time+ten2TwentySix(1,4)+random_code()
         else:   
             while True:
                 pk-=1
@@ -234,11 +238,11 @@ class JobAPIView(APIView):
             time = datetime.datetime.now().strftime("%m%d") 
             if lastjobid[:4] == time:
                 print('lastjob is today',lastjobid[:4])
-                todayid = TwentySix2Ten(lastjobid[4:])
-                jobid = time+ten2TwentySix(todayid+1,4)
+                todayid = TwentySix2Ten(lastjobid[4:9])
+                jobid = time+ten2TwentySix(todayid+1,4)+random_code()
             else:
                 print('lastjob is yesterday',lastjobid[:4])
-                jobid = time+ten2TwentySix(1,4)
+                jobid = time+ten2TwentySix(1,4)+random_code()
         job.JobId = jobid
         head,tail =os.path.split(filepath)
         print(head,tail)
@@ -579,21 +583,4 @@ class DownloadResultAPIView(APIView):
         response = FileResponse(file)
         response['Content-Type'] = 'application/octet-stream'
         response['Content-Disposition'] = 'attachment;filename="result"'
-
-
-        # def file_iterator(file_path, chunk_size=512):
-        #     with open(file_path, mode='rb') as f:
-        #         while True:
-        #             c = f.read(chunk_size)
-        #             if c:
-        #                 yield c
-        #             else:
-        #                 break
-
-
-        # response = StreamingHttpResponse(file_iterator(outpath))
-        # # 以流的形式下载文件,这样可以实现任意格式的文件下载
-        # response['Content-Type'] = 'application/octet-stream'
-        # # Content-Disposition就是当用户想把请求所得的内容存为一个文件的时候提供一个默认的文件名
-        # response['Content-Disposition'] = 'attachment;filename="{}"'.format('aa.zip')
         return response
