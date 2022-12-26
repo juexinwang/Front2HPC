@@ -241,7 +241,7 @@ export default function Submit() {
             </Upload>
           </Form.Item>
 
-          <Form.Item name='JobName' label="Name" rules={[{ type: 'string',max: 50, }]} extra="user name we called you" >
+          <Form.Item name='JobName' label="Name" rules={[{ type: 'string',max: 50, }]} extra="User defined name" >
             <Input onChange={(e) => setForm({ ...form, JobName: e.target.value })} placeholder='optional'/>
           </Form.Item>
 
