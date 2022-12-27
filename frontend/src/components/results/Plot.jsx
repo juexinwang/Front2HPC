@@ -157,8 +157,9 @@ const download_result=  async()=>{
       <Col span={12}>
         {
           props.results.example?
+          ''
+          : 
           <Struc setResults={props.setResults} results={props.results}/>
-          :''
         }
         
         {showPDB?
