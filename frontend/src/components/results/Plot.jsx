@@ -18,6 +18,7 @@ export default function Plot(props){
   const [showDomain,setShowDomain] = useState(true)
   const [showPDB,setShowPDB]=useState('')
   const [showsetdomain,setShowsetdomain] = useState("none")
+  const [example,setExample]=useState('')
   useEffect(()=>{
     props.setResults(props.results)
     if(props.results.imgs.edges_domain==undefined){
@@ -29,6 +30,11 @@ export default function Plot(props){
       setShowPDB(false)
     }else{
       setShowPDB(true)
+    }
+    if(props.results.example===true){
+      setExample(true)
+    }else{
+      setExample(false)
     }
     // console.log('aaaaa',props.results.imgs.edges_domain)
   },[props.results])
@@ -149,9 +155,11 @@ const download_result=  async()=>{
         <div style={{width:"90%",marginLeft:"40px"}}>{ListPath()}</div>
       </Col>
       <Col span={12}>
-
-        <Struc setResults={props.setResults} results={props.results}/>
-
+        {
+          example?
+          <Struc setResults={props.setResults} results={props.results}/>
+          :''
+        }
         
         {showPDB?
         <div style={{marginLeft:'50px',marginRight:'30px'}}>
