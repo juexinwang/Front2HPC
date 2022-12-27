@@ -50,7 +50,7 @@ const QuickStart = () => {
 
   return (
     <>
-      <Title level={2}>Introduction to Neural Relational Inference from Molecular Dynamics Simulations (NRIMD)</Title>
+      <Title level={2}>Introduction to Neural Relational Inference from Molecular Dynamics (NRIMD)</Title>
       <Divider/>
       <Title level={3}>Quick Start</Title>
       <Steps current={current} onChange={onChange} items={items} />
