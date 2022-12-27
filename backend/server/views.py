@@ -366,7 +366,8 @@ class ResultAPIView(APIView):
                             paths.append({'key':i,'pathname':line.split(':')[0].strip(),'path':line.split(':')[1].strip(),'probability':float(line.split(':')[2])})
                             i+=1
                     return Response({"JobId":serializer.data['JobId'],"JobStatus":serializer.data['JobStatus'],'file_data': imgs_dict,'paths':paths,'strucFilePath':serializer.data['StrucFilePath'],
-                    'Domain':serializer.data['Domain'],'DistThreshold':serializer.data['DistThreshold'],'SourceNode':serializer.data['SourceNode'],'TargetNode':serializer.data['TargetNode']})
+                    'Domain':serializer.data['Domain'],'DistThreshold':serializer.data['DistThreshold'],'SourceNode':serializer.data['SourceNode'],'TargetNode':serializer.data['TargetNode']
+                    ,'Example':serializer.data['Example']})
                 return Response(serializer.data)
             else:
                 jobfolder = JobsFolder+serializer.data['JobId']
@@ -400,11 +401,11 @@ class ResultAPIView(APIView):
                                 paths.append({'key':i,'pathname':line.split(':')[0].strip(),'path':line.split(':')[1].strip(),'probability':float(line.split(':')[2])})
                                 i+=1
                         return Response({"JobId":serializer.data['JobId'],"JobStatus":serializer.data['JobStatus'],
-                        'file_data': imgs_dict,'paths':paths, 'Domain':serializer.data['Domain'],
+                        'file_data': imgs_dict,'paths':paths, 'Domain':serializer.data['Domain'],'Example':serializer.data['Example'],
                         'DistThreshold':serializer.data['DistThreshold'],'SourceNode':serializer.data['SourceNode'],'TargetNode':serializer.data['TargetNode']})
                     else:
                         return Response({"JobId":serializer.data['JobId'],"JobStatus":serializer.data['JobStatus'],
-                        'file_data': imgs_dict, 'Domain':serializer.data['Domain'],
+                        'file_data': imgs_dict, 'Domain':serializer.data['Domain'],'Example':serializer.data['Example'],
                         'DistThreshold':serializer.data['DistThreshold'],'SourceNode':serializer.data['SourceNode'],'TargetNode':serializer.data['TargetNode']})
                 return Response(serializer.data)
         except:

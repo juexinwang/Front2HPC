@@ -204,7 +204,7 @@ export default function Submit() {
         ){
           console.log("domain",domain);
           // navigate('/result/0000AAAA') 
-          const res = await submitJobApi({...form,Domain:domain,Example:true});
+          const res = await submitJobApi({...form,Domain:domain,Example:true,StrucFilePath:'/home/exouser/NRIproject/Front2HPC/backend/static/pdbs/sod1.pdb'});
           console.log(res);
           if (res) {
             message.success('Submit Successfully')
