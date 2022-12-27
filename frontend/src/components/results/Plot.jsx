@@ -156,7 +156,7 @@ const download_result=  async()=>{
       </Col>
       <Col span={12}>
         {
-          example?
+          props.results.example?
           <Struc setResults={props.setResults} results={props.results}/>
           :''
         }
