@@ -36,7 +36,7 @@ export default function Plot(props){
     }else{
       setExample(false)
     }
-    // console.log('aaaaa',props.results.imgs.edges_domain)
+    console.log('aaaaa',props.results.strucFilePath)
   },[props.results])
 
   
