@@ -20,7 +20,7 @@ let submit=<div>
         </div>
 let result=<div>
               You can check your results <Link to='/result'>here</Link>, and input your Job ID when submitting successfully. <br/>
-              As the deep learning based jobs take some time (~1 hour or longer, depends on the sequence length and the queue in HPC), You can either bookmark your result as http://nrimd.luddy.iupui.edu/result/ + your job Id, or click the link in your emailbox if email address is provided.
+              As the deep learning based jobs take some time (~1 hour or longer, depends on the sequence length and the queue in HPC), You can either bookmark your result as http://nrimd.luddy.iupui.edu/result/ + your job Id, or click the link in your emailbox if email address is provided. <br/>
               <label htmlFor="bold">Note: All finished jobs will be deleted automatically in 14 days.</label>
           </div>
 

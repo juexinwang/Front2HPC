@@ -58,8 +58,8 @@ const items = new Array(3).fill(null).map((_, i) => {
 const HowSubmit = () => {
   return <>
     <h2>2.1 Prepare Trajectory</h2>
-    <div>The input molecular dynamics trajectory should be like this SOD1 <ExampleDrawer/> as C-alpha skeletons, details in the previous <a href="https://www.nature.com/articles/s41467-022-29331-3">paper</a>. The input contains several time frames from molecular dynamics in pdb format, and each frame only includes CA atom of each residue. </div>
-    <div>The input can be prepared from outputs in GROMACS, AMBER, and NAMD: </div>
+    <div>The input molecular dynamics trajectory should be like this <ExampleDrawer/> in SOD1 as C-alpha skeletons, details in the previous <a href="https://www.nature.com/articles/s41467-022-29331-3">paper</a>. The input contains several time frames from molecular dynamics in pdb format, and each frame only includes C-alpha atom of each residue. </div>
+    <div>The input can be prepared from outputs in GROMACS, AMBER, and NAMD as below: </div>
     <br/>
     <div className="card-container">
         <Tabs type="card" items={methods} />
