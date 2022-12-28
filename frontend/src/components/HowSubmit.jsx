@@ -57,15 +57,15 @@ const items = new Array(3).fill(null).map((_, i) => {
   );
 const HowSubmit = () => {
   return <>
-    <h2>1 prepare trajectory</h2>
-    <div>Your molecular dynamics trajectory should like <ExampleDrawer/>, every frame the protein only includes CA atom information of each residue and file needs to be in pdb format. </div>
-    <div>We provide 3 methods below for praparing CA trajecory file in pdb format: </div>
+    <h2>2.1 Prepare Trajectory</h2>
+    <div>The input molecular dynamics trajectory should be like this SOD1 <ExampleDrawer/> as C-alpha skeletons, details in the previous <a href="https://www.nature.com/articles/s41467-022-29331-3">paper</a>. The input contains several time frames from molecular dynamics in pdb format, and each frame only includes CA atom of each residue. </div>
+    <div>The input can be prepared from outputs in GROMACS, AMBER, and NAMD: </div>
     <br/>
     <div className="card-container">
         <Tabs type="card" items={methods} />
     </div>
-    <h2>2 submit</h2>
-    <div>then upload your prapared file <span style={{color:"green"}}>ca_traj.pdb</span> and submit, <Link to='/submit'>Go to submit</Link>.</div>
+    <h2>2.2 Submit</h2>
+    <div>After obatined the input <span style={{color:"green"}}>ca_traj.pdb</span> within the approaches above, <Link to='/submit'>Go to submit</Link>.</div>
   </>
 };
 export default HowSubmit;
