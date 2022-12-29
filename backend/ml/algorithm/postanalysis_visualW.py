@@ -186,9 +186,7 @@ class AnalysisVisualInResult():
         # Load distribution of learned edges
         edges_results_visual = self.getEdgeResults(threshold=True)
         # Step 1: Visualize results
-        # ax = sns.heatmap(edges_results_visual, linewidth=0.5,cmap="Blues", vmax=1.0, vmin=0.0)
-        ax = sns.heatmap(edges_results_visual, cmap="Blues", vmax=1.0, vmin=0.0)
-        print(edges_results_visual.shape)
+        ax = sns.heatmap(edges_results_visual, linewidth=0.5,cmap="Blues", vmax=1.0, vmin=0.0)
         labels=np.arange(1,edges_results_visual.shape[0]+1)
         ax.set_xticklabels(labels)
         ax.set_yticklabels(labels)

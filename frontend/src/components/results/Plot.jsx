@@ -88,7 +88,6 @@ const download_result=  async()=>{
     In the results genereated below, both rows and columns are residues of the input Carbon-Alpha skeleton, this heatmap demonstrates the inferred interactions between these residues from the NRIMD model. The color demonstrates the strength of the interaction. Dark color means strong interaction, light color weak interaction. Users can tune the parameter below to select customerized threshold.
     <Row>
       <Col span={14}>
-        <Title level={4}style={{textAlign:"center"}}>Heatmap of the learned edges</Title>
         <img style={{width:'100%',display:"flex"}} src={`data:image/png;base64,${props.results.imgs.probs}`} alt=""/>  
       </Col>
       <Col span={10}>
@@ -123,7 +122,6 @@ const download_result=  async()=>{
           (Optional) Comparing to the heatmap on interactions between residues genereated above, users can manually define the domains below to get the coarse grained heatmap between the domains. 
           <Col span={14}>
               <div>
-                <Title level={4}style={{textAlign:"center"}}>Heatmap of the learned edges between domains</Title>
                 <img style={{width:'100%',}} src={`data:image/png;base64,${props.results.imgs.edges_domain}`} alt=""/>  
               </div>
           </Col>

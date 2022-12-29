@@ -29,6 +29,7 @@ apscheduler==3.9.1
 django-apscheduler==0.6.0
 django-cors-headers==3.6.0
 django-environ
+matplotlib==3.2.0
 ===================================
 
 conda install networkx seaborn pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
