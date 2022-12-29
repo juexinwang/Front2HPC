@@ -65,7 +65,7 @@ const HowSubmit = () => {
         <Tabs type="card" items={methods} />
     </div>
     <h2>2.2 Submit</h2>
-    <div>After obatined the input <span style={{color:"green"}}>ca_traj.pdb</span> within the approaches above, Go to <Link to='/submit'>submit</Link>.</div>
+    <div>After obatined the input <span style={{color:"green"}}>ca_traj.pdb</span> within the approaches above, go to <Link to='/submit'>submit</Link>.</div>
   </>
 };
 export default HowSubmit;

@@ -80,11 +80,12 @@ const download_result=  async()=>{
 }
   return <>
     <h4>Your job {id} has finished, here are results:     
-    <a href={'/api/download_result/'+id+'/'} style={{marginLeft:"50px"}}><Button type="primary" icon={<DownloadOutlined />}>Download Result</Button></a>
+    <a href={'/api/download_result/'+id+'/'} style={{marginLeft:"50px"}}><Button type="primary" icon={<DownloadOutlined />}>Download Results</Button></a>
                                       </h4>
                                       {/* onClick={download_result}  'http://localhost:8000/download_result/'+id*/}
     {/* <Button type="primary" onClick={download_result} icon={<DownloadOutlined></DownloadOutlined>} > Download1</Button> */}
     <Divider style={{fontSize:"large"}}>1. Visualize the distribution of learned edges between residues</Divider>
+    Rows and columns are both residues of the input Carbon-Alpha skeleton, the heatmap demonstrates inferred interactions between these residues.
     <Row>
       <Col span={14}>
         <img style={{width:'100%',display:"flex"}} src={`data:image/png;base64,${props.results.imgs.probs}`} alt=""/>
