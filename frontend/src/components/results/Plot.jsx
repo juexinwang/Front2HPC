@@ -84,8 +84,9 @@ const download_result=  async()=>{
                                       </h4>
                                       {/* onClick={download_result}  'http://localhost:8000/download_result/'+id*/}
     {/* <Button type="primary" onClick={download_result} icon={<DownloadOutlined></DownloadOutlined>} > Download1</Button> */}
-    <Divider style={{fontSize:"large"}}>1. Visualize the learned interactions between residues</Divider>
-    In the results genereated below, both rows and columns are residues of the input Carbon-Alpha skeleton, this heatmap demonstrates the inferred interactions between these residues from the NRIMD model. The color demonstrates the strength of the interaction. Dark color means strong interaction, light color weak interaction. Users can tune the parameter below to select customerized threshold.
+    <Title level={4}style={{textAlign:"center"}}>1. Visualize the learned interactions between residues</Title>
+    <Divider style={{fontSize:"large"}}>In the results genereated below, both rows and columns are residues of the input Carbon-Alpha skeleton, this heatmap demonstrates the inferred interactions between these residues from the NRIMD model. The color demonstrates the strength of the interaction. Dark color means strong interaction, light color weak interaction. Users can tune the parameter below to select customerized threshold.
+    </Divider>
     <Row>
       <Col span={14}>
         <img style={{width:'100%',display:"flex"}} src={`data:image/png;base64,${props.results.imgs.probs}`} alt=""/>  
@@ -119,7 +120,8 @@ const download_result=  async()=>{
 
       {showDomain?
         <Row >
-          (Optional) Comparing to the heatmap on interactions between residues genereated above, users can manually define the domains below to get the coarse grained heatmap between the domains. 
+          <Divider style={{fontSize:"large"}}>(Optional) Comparing to the heatmap on interactions between residues genereated above, users can manually define the domains below to get the coarse grained heatmap between the domains.
+          </Divider> 
           <Col span={14}>
               <div>
                 <img style={{width:'100%',}} src={`data:image/png;base64,${props.results.imgs.edges_domain}`} alt=""/>  
@@ -145,8 +147,9 @@ const download_result=  async()=>{
     <br/>
 
 
-    <Divider style={{fontSize:"large"}}>2. Find the potential pathways between residues (Optional)</Divider>
-    Inferring the potential pathways from user defined source residue to target residue. The paths are inferred as the shortest distances by Dijkstra's algorithm. 
+    <Title level={4}style={{textAlign:"center"}}>2. Find the potential pathways between residues (Optional)</Title>
+    <Divider style={{fontSize:"large"}}>Inferring the potential pathways from user defined source residue to target residue. The paths are inferred as the shortest distances by Dijkstra's algorithm. 
+    </Divider>
     <Row>
       <Col span={12}>
         <div style={{ background: "#fffbe6", border: "1px solid #ffe58f",marginRight:"10px",marginLeft:"10px" }}>
