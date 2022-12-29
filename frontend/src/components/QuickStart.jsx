@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, message, Steps } from 'antd'
-import flowchart from '../assets/imgs/chart.webp'
+// import flowchart from '../assets/imgs/chart.webp'
+import flowchart from '../assets/imgs/workflow.png'
 import { Typography,Divider } from 'antd';
 import HowSubmit from './HowSubmit';
 import { Link } from 'react-router-dom';
