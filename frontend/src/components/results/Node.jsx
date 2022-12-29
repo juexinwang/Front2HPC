@@ -45,10 +45,10 @@ const Node = (props) => {
       </Form.Item>
       
       <Form.Item  style={{marginBottom: 0,marginLeft:'40px'}} >
-        <Form.Item name="source" rules={[{required: true, },]} style={{display: 'inline-block',width: 'calc(50% - 4px)',marginBottom:"15px"}} extra="source node">
+        <Form.Item name="source" rules={[{required: true, },]} style={{display: 'inline-block',width: 'calc(50% - 4px)',marginBottom:"15px"}} extra="source residue">
             <Input placeholder="Input source ndoe" />  
         </Form.Item>
-        <Form.Item name="target" rules={[{required: true,}, ]} style={{display: 'inline-block',width: 'calc(50% - 4px)',marginLeft: '8px',marginBottom:"15px"}} extra="target node">
+        <Form.Item name="target" rules={[{required: true,}, ]} style={{display: 'inline-block',width: 'calc(50% - 4px)',marginLeft: '8px',marginBottom:"15px"}} extra="target residue">
           <Input placeholder="Input target node" />
         </Form.Item>
       </Form.Item>
