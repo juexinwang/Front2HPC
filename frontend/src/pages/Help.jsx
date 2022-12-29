@@ -50,13 +50,13 @@ export default function Help() {
     <div><span>Eecoder</span>: Type of Eecoder model (mlp or rnn)</div>
     <div><span>Encoder Hidden</span>: Number of hidden units in encoder</div>
     <div><span>Encoder Dropout</span>: Dropout rate (1 - keep probability) in encoder</div>
-    <Title level={5}> 2.3.1 Visualize the distribution of learned edges between residues</Title>
+    <Title level={5}> 2.3.1 Visualize the learned interactions between residues</Title>
     <div><span>Visualization Threshold</span>: threshold for interaction visualization</div>
     <div><span>Domain</span>: Set domain, only calculate domain information if domainInput has information</div>
     <Title level={5}>2.3.2 Find shortest paths along domains in residues. Running on both backend and frontend</Title>
     <div><span>Distance Threshold</span>: threshold for shortest distance, set as num-residues if it does not work</div>
-    <div><span>Source Node</span>: source residue of the PDB</div>
-    <div><span>Target Node</span>: target residue of the PDB</div>
+    <div><span>Source Residue</span>: source residue of the PDB</div>
+    <div><span>Target Residue</span>: target residue of the PDB</div>
   </div>
 
 
