@@ -122,7 +122,7 @@ const download_result=  async()=>{
 
       {showDomain?
         <Row >
-          <Divider style={{fontSize:"large"}}>(Optional) Comparing to the heatmap on interactions between residues genereated above, users can manually define the domains below to get the coarse grained heatmap between the domains.
+          <Divider style={{fontSize:"large"}}><br />(Optional) Comparing to the heatmap on interactions between residues genereated above, users can manually define the domains below to get the coarse grained heatmap between the domains.
           </Divider> 
           <Col span={14}>
               <div>
