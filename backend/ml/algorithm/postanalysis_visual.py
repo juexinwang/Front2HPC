@@ -150,7 +150,13 @@ class AnalysisVisual:
         # Step 1: Visualize results
         ax = sns.heatmap(edges_results_visual, linewidth=0.5,
                         cmap="Blues", vmax=1.0, vmin=0.0)
-        plt.savefig('{}/analysis/probs.png'.format(save_folder), dpi=100)
+        labels=np.arange(1,edges_results_visual.shape[0]+1)
+        ax.set_xticklabels(labels)
+        ax.set_yticklabels(labels)
+        ax.set_xlabel('Residues')
+        ax.set_ylabel('Residues')
+        ax.set_title('Heatmap of the Inferred Interactions')
+        plt.savefig('{}/analysis/probs.png'.format(save_folder), dpi=600)
         # plt.show()
         plt.close()
 
@@ -176,7 +182,12 @@ class AnalysisVisual:
         # Visualize
         ax = sns.heatmap(edges_results_T, linewidth=1,
                         cmap="Blues", vmax=1.0, vmin=0.0)
-        ax.set_ylim([7, 0])
-        plt.savefig('{}/analysis/edges_domain.png'.format(save_folder), dpi=100)
+        labels=np.arange(1,8)
+        ax.set_xticklabels(labels)
+        ax.set_yticklabels(labels)
+        ax.set_xlabel('Domains')
+        ax.set_ylabel('Domains')
+        ax.set_title('Heatmap of the Inferred Interactions between Domains')
+        plt.savefig('{}/analysis/edges_domain.png'.format(save_folder), dpi=600)
         # plt.show()
         plt.close()
