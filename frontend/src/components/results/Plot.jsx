@@ -85,9 +85,9 @@ const download_result=  async()=>{
                                       {/* onClick={download_result}  'http://localhost:8000/download_result/'+id*/}
     {/* <Button type="primary" onClick={download_result} icon={<DownloadOutlined></DownloadOutlined>} > Download1</Button> */}
     <Title level={4}style={{textAlign:"center"}}>1. Visualize the learned interactions between residues</Title>
-    <Divider style={{fontSize:"large"}}>In the results genereated below, both rows and columns are residues of the input Carbon-Alpha skeleton, this heatmap demonstrates the inferred interactions between these residues<br />
+    In the results genereated below, both rows and columns are residues of the input Carbon-Alpha skeleton, this heatmap demonstrates the inferred interactions between these residues<br />
     from the NRIMD model. The color demonstrates the strength of the interaction. Dark color means strong interaction, light color weak interaction. Users can tune the parameter below <br />
-    to select customerized threshold.</Divider>
+    to select customerized threshold.
     
     <Row>
       <Col span={14}>
