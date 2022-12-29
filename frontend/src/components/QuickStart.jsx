@@ -11,7 +11,7 @@ let intro=<div>
             <h2>Analyzing long-range interactions in molecular dynamics simulations using deep learning</h2>
             <div>
             Long-range allostery communication between distant sites in proteins is central to biological regulation but still poorly characterized, limiting the development of protein engineering and drug design. Molecular dynamics (MD) simulation provides a powerful computational approach to probe the allosteric effect and other long-range interactions.
-            Based on our recent works on neural relational inference using graph neural networks (<a href="https://www.nature.com/articles/s41467-022-29331-3">Zhu et al, Nature Communications</a>), we developed <Link to='/intro'>NRIMD</Link>, a web server for analyzing long-range interactions in proteins from MD simulation. The cloud-based web server accepts MD simulation data in the Carbon-Alpha skeleton format from mainstream MD software AMBER, NAMD, and GROMACS. The input MD trajectory data is validated in the front end, and then submitted to the backend on a High-Performance Computer system supported by Indiana University cyberinfrastructure. Due to its computational intensity on GPUs, the submitted tasks will be lined up in the computational queue in the HPC. The results include the learned long-range interactions and pathways that can mediate the long-range interactions between distant sites, and the visualization from the trajectories obtained in MD.<br></br>
+            Based on our recent works on neural relational inference using graph neural networks (<a href="https://www.nature.com/articles/s41467-022-29331-3">Zhu et al, Nature Communications</a>), we developed <Link to='/intro'>NRIMD</Link>, a web server for analyzing long-range interactions in proteins from MD simulation. The cloud-based web server accepts MD simulation data in the Carbon-Alpha skeleton format from mainstream MD software GROMACS, AMBER, and NAMD. The input MD trajectory data is validated in the front end, and then submitted to the backend on a High-Performance Computer system supported by Indiana University cyberinfrastructure. Due to its computational intensity on GPUs, the submitted tasks will be lined up in the computational queue in the HPC. The results include the learned long-range interactions and pathways that can mediate the long-range interactions between distant sites, and the visualization from the trajectories obtained in MD.<br></br>
             <br></br>
             </div>
             <img src={flowchart} alt="" style={{width:'1000px'}}></img>
@@ -20,8 +20,8 @@ let submit=<div>
   <HowSubmit/>
         </div>
 let result=<div>
-              You can check your results <Link to='/result'>here</Link>, and input your Job ID when submitting successfully. <br/>
-              As the deep learning based jobs take some time (~1 hour or longer, depends on the sequence length and the queue in HPC), You can either bookmark your result as http://nrimd.luddy.iupui.edu/result/ + your job Id, or click the link in your emailbox if email address is provided. <br/>
+              Users can check their results <Link to='/result'>here</Link>, and input Job ID if submitting successfully. <br/>
+              As the deep learning based jobs take some time (~1 hour or longer, depends on the sequence length and the queue in the HPC), users can either bookmark their results as http://nrimd.luddy.iupui.edu/result/ + job Id, or click the link in the emailbox if email address is provided. <br/>
               <span style={{ fontWeight: 'bold' }}>Note: All finished jobs will be deleted automatically in 14 days.</span>
           </div>
 
