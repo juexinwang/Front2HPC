@@ -42,10 +42,14 @@ python manage.py runserver
 
 #can visit in http://localhost:8000
 
-##
+## TODO
 sudo HTTPS=true SSL_CRT_FILE=reactcert/nrimd_luddy_iupui_edu_cert.cer SSL_KEY_FILE=reactcert/nrimd.luddy.iupui.edu.key.2022_12_19 npm start
     "start": "export HTTPS=true&&SSL_CRT_FILE=reactcert/nrimd_luddy_iupui_edu_cert.cer&&SSL_KEY_FILE=reactcert/nrimd.luddy.iupui.edu.key.2022_12_19 node scripts/start.js",
 HTTPS=true&&SSL_CRT_FILE=reactcert/cert.pem&&SSL_KEY_FILE=reactcert/key.pem
+
+## deploy on apache:
+https://codeburst.io/deploying-and-hosting-a-react-app-on-an-apache-server-b7121dffb07a
+
 
 ## B. Frontend
 1.prepare environment
