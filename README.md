@@ -255,3 +255,21 @@ resultsBJ.getPaths(jobid) #dict
 --lr-decay
 --gamma
 --var
+
+
+#TODO List
+1. Download does not work: http://nrimd.luddy.iupui.edu/api/download_result/1229AAAEC/
+2. Adjust to screen, not pixel
+3. Residue from 0/1
+4. Workflow Figure change
+5. Results page submit -> change
+6. paths submit to the right
+7. source node/target node -> residue; Add click the path to view the paths in the PDB
+8. Help documents
+9. Citations
+10. Explaination of the example (2c9v)
+
+Long term: One-stop solution
+1. Integrate other PCA/Hassian methods
+2. Docker of the integrate toolkit/webserver
+3. Another computational resources as back up
