@@ -15,7 +15,7 @@ const { Title } = Typography;
 
 export default function Help() {
   return <>
-  <Title level={2}>Help Document</Title>
+  <Title level={2}>User Guide</Title>
   <Title level={3}>1 Preparation for trajecory file</Title>
     <Title level={4}>1.1 Built commands of MD software</Title>
       <Title level={5}>1.1.1 Gromacs</Title>
