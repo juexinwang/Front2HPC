@@ -268,6 +268,7 @@ resultsBJ.getPaths(jobid) #dict
 8. Help documents
 9. Citations
 10. Explaination of the example (2c9v)
+11. shrink the size of the the python code
 
 Long term: One-stop solution
 1. Integrate other PCA/Hassian methods
