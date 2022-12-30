@@ -15,7 +15,7 @@ let intro=<div>
             <br></br>
             </div>
             <img src={flowchart} alt="" style={{width:'1000px'}}></img>
-            Citation: Zhu, J., Wang, J., Han, W., & Xu, D. (2022). Neural relational inference to learn long-range allosteric interactions in proteins from molecular dynamics simulations. Nature communications, 13(1), 1-16.
+            <br /><br />Citation: Zhu, J., Wang, J., Han, W., & Xu, D. (2022). Neural relational inference to learn long-range allosteric interactions in proteins from molecular dynamics simulations. Nature communications, 13(1), 1-16.
         </div>
 let submit=<div>
   <HowSubmit/>
