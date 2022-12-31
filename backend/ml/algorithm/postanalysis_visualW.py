@@ -188,8 +188,8 @@ class AnalysisVisualInResult():
         # Step 1: Visualize results
         ax = sns.heatmap(edges_results_visual, linewidth=0.5,cmap="Blues", vmax=1.0, vmin=0.0)
         labels=np.arange(1,edges_results_visual.shape[0]+1)
-        ax.set_xticks(labels)
-        ax.set_yticks(labels)
+        # ax.set_xticks(labels)
+        # ax.set_yticks(labels)
         # ax.xticklabels(labels)
         # ax.yticklabels(labels)
         ax.set_xlabel('Residues')
