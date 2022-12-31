@@ -148,11 +148,11 @@ class AnalysisVisual:
         # Load distribution of learned edges
         edges_results_visual = AnalysisVisual.getEdgeResults(self,thresholdB=True,threshold=threshold,trainfile_path=trainfile_path,num_residues=num_residues,windowsize=windowsize)
         # Step 1: Visualize results
-        ax = sns.heatmap(edges_results_visual, linewidth=0.5,
-                        cmap="Blues", vmax=1.0, vmin=0.0)
         labels=np.arange(1,edges_results_visual.shape[0]+1)
-        ax.set_xticklabels(labels)
-        ax.set_yticklabels(labels)
+        df = pd.DataFrame(edges_results_visual)
+        df.index = labels
+        df.columns = labels
+        ax = sns.heatmap(df, linewidth=0.5,cmap="Blues", vmax=1.0, vmin=0.0)
         ax.set_xlabel('Residues')
         ax.set_ylabel('Residues')
         ax.set_title('Heatmap of the Inferred Interactions')
