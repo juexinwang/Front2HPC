@@ -13,10 +13,7 @@ urlpatterns=[
     url(r'^setvisual/$',views.VisualLocalhost.as_view()), 
     url(r'^setnode/$',views.Path_localhost),
     url(r'^download_result/$', views.DownloadResultAPIView.as_view()),
-    url('download_result/(?P<id>[0-9]{4}[A-Z]{4})', views.DownloadResult),
-
-    
-    
+    url('download_result/(?P<id>[0-9]{4}[0-9a-zA-Z]{5})', views.DownloadResult),
     # url(r'^check/$',views.JobIdAPIView.as_view()),
     # url(r'^check/(?P<JobId>[0-9]{14}[A-Z]{4})/$',views.JobDetailAPIView.as_view()),
 ]
