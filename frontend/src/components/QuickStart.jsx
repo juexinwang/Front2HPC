@@ -54,7 +54,7 @@ const QuickStart = () => {
   return (
     <>
       <Title level={2}>Introduction to Neural Relational Inference from Molecular Dynamics (NRIMD)</Title>
-      <p style={{color:'red'}}>UPDATE: The website does not accept new jobs due to IU HPC maintenance by January 8, 7pm EST</p>
+      <p style={{color:'red'}}>UPDATE: The website does not accept new jobs due to IU HPC maintenance by January 8, 7pm EST. But the example works.</p>
       <Title level={3}>Quick Start</Title>
       <Steps current={current} onChange={onChange} items={items} />
       <br/>
