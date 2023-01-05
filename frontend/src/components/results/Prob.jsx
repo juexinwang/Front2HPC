@@ -21,25 +21,25 @@ const Prob = (props) => {
   const validateMessages = {
     required: '${label} is required!',
     types: {
-      Email: '${label} is not a valid email!',
+      number: '${label} is not a valid number!',
     },
-    Epochs: {
-      range: '${label} between ${min} and ${max}',
+    VisualThreshold: {
+      range: 'between ${min} and ${max}',
     },
   
   };
   return (
     <>
     
-    <Form name="dynamic_form_nest_item" onFinish={onFinish} autoComplete="off"  validateMessages={validateMessages}>
-    <Form.Item name="Start" style={{marginBottom:"0",height:"35px"}}>   
-      <Form.Item name="VisualThreshold" label= "Visualization Threshold"  rules={[{type:"number",required:true }]}  style={{ display: 'inline-block',  width: '70%',}}>   
-          <InputNumber  min={0.01} max={1} placeholder='0.6' width="500px"/>
+    <Form name="dynamic_form_nest_item" onFinish={onFinish} autoComplete="off" validateMessages={validateMessages}>
+    <Form.Item name="" style={{marginBottom:"0",height:"35px"}}>   
+      <Form.Item name="VisualThreshold" label= "Visualization Threshold"  rules={[{type:"number",required:true,min:0,max:1 }]}  style={{ display: 'inline-block',  width: '80%',}}>   
+        <InputNumber placeholder='0.6'/>
       </Form.Item>
-      <Form.Item style={{ display: 'inline-block',  width: '30%',marginBottom:"0"}}>
-        <Button type="primary" htmlType="submit" >Submit </Button>
+      <Form.Item style={{ display: 'inline-block',  width: '20%'}}>
+        <Button type="primary" htmlType="submit" >Change </Button>
       </Form.Item>
-      </Form.Item>
+    </Form.Item>
     </Form>
     </>
   );

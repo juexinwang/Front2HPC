@@ -54,7 +54,7 @@ const Node = (props) => {
       </Form.Item>
 
       <Form.Item  colon={false} style={{marginBottom:'10px',marginLeft:'40px'}}>
-        <Button type="primary" htmlType="submit">Submit</Button>  
+        <Button type="primary" htmlType="submit">Change</Button>  
       </Form.Item>
     </Form>
   );

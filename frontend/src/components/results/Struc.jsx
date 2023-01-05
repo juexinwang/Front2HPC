@@ -28,7 +28,7 @@ const Struc = (props) => {
   
   return (
     <Form name="complex-form" labelCol={{span: 6,}} wrapperCol={{span: 18,}}>
-          <Form.Item name="StrucFile" label="Protein Structure File" extra="optional, upload protein structure pdb file ( include all atoms ) can visualize long-range allosteric interactions in protein " >
+          <Form.Item name="StrucFile" label="PDB File" extra="optional, upload protein structure pdb file ( include all atoms ) can visualize long-range allosteric interactions in protein " >
             <Upload {...strucProps} fileList={strucFileList}>
               <Button icon={<UploadOutlined />}>Upload</Button>
             </Upload>
