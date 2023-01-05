@@ -16,7 +16,7 @@ export default function BreadCrumb() {
                 setbreadName('check result');
                 break;
             case '/help':
-                setbreadName('help document');
+                setbreadName('user guide');
                 break;            
             case '/intro':
                 setbreadName('introduction');
@@ -26,7 +26,10 @@ export default function BreadCrumb() {
                 break; 
             case '/contact':
                 setbreadName('contact us');
-                break;    
+                break; 
+            case '/example':
+                setbreadName('example explanation');
+                break;
             default:
                 setbreadName('get result');                                                                   
         }

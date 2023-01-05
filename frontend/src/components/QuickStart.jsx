@@ -7,16 +7,15 @@ import HowSubmit from './HowSubmit';
 import { Link } from 'react-router-dom';
 const { Title } = Typography;
 let intro=<div>
-  
             <h2>Analyzing long-range interactions in molecular dynamics simulations using deep learning</h2>
             <div>
             Long-range allostery communication between distant sites in proteins is central to biological regulation but still poorly characterized, limiting the development of protein engineering and drug design. Molecular dynamics (MD) simulation provides a powerful computational approach to probe the allosteric effect and other long-range interactions.
             Based on our recent works on neural relational inference using graph neural networks (<a href="https://www.nature.com/articles/s41467-022-29331-3">Zhu et al., Nature Communications</a>), we developed <Link to='/intro'>NRIMD</Link>, a web server for analyzing long-range interactions in proteins from MD simulation. The cloud-based web server accepts MD simulation data in the Carbon-Alpha skeleton format from mainstream MD software GROMACS, AMBER, and NAMD. The input MD trajectory data is validated in the front end, and then submitted to the backend on a High-Performance Computer system supported by Indiana University cyberinfrastructure. Due to its computational intensity on GPUs, the submitted tasks will be lined up in the computational queue in the HPC. The results include the learned long-range interactions and pathways that can mediate the long-range interactions between distant sites, and the visualization from the trajectories obtained in MD.<br></br>
             <br></br>
             </div>
-            <img src={flowchart} alt="" style={{width:'1000px'}}></img>
-            <br /><br /><b>Citation:</b> Zhu, J., Wang, J., Han, W., & Xu, D. (2022). Neural relational inference to learn long-range allosteric interactions in proteins from molecular dynamics simulations. Nature communications, 13(1), 1-16.
+            <img src={flowchart} alt="" style={{width:'100%'}}></img>
         </div>
+
 let submit=<div>
   <HowSubmit/>
         </div>

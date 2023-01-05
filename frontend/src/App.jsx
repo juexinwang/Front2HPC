@@ -23,7 +23,11 @@ const items = [
     icon: <SearchOutlined />,
   },
   {
-    label: (<Link to='/help'>Help Doc</Link>),
+    label: (<Link to='/example'>Example Explanation</Link>),
+    icon: <FileOutlined />,
+  },
+  {
+    label: (<Link to='/help'>User Guide</Link>),
     icon: <FileOutlined />,
   },
 ]
@@ -48,7 +52,8 @@ export default function App() {
           </div>
         </Content> 
       </Layout> 
-      <Footer  style={{textAlign: 'center',}}>NRIMD ©2022 Created by Yi He</Footer>
+      <Footer  style={{textAlign: 'center',}}><b>Citation:</b> Zhu, J., Wang, J., Han, W., & Xu, D. (2022). Neural relational inference to learn long-range allosteric interactions in proteins from molecular dynamics simulations. Nature communications, 13(1), 1-16.<br/>
+        NRIMD ©2022 Created by Yi He</Footer>
     </Layout>
   )
 }

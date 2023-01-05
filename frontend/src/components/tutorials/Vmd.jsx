@@ -15,14 +15,14 @@ export default function Vmd() {
     <div>
         <div style={{fontWeight:"bold"}}>please follow the steps below.</div>
         <div>First you should upload your trajecory file:</div>
-        <img src={v1} style={{border:"1px"}}></img>
-        <img src={v2}></img>
+        <img src={v1} style={{border:'3px solid #000'}}></img>
+        <img src={v2} style={{border:'3px solid #000'}}></img>
         <div>Next you should upload your topology file: </div>
-        <img src={v3}></img>
-        <img src={v4}></img>
+        <img src={v3} style={{border:'3px solid #000'}}></img>
+        <img src={v4} style={{border:'3px solid #000'}}></img>
         <div>Then you should open TK console:</div>
-        <img src={v5}></img>
-        <div><img src={v6}></img></div>
+        <img src={v5} style={{border:'3px solid #000'}}></img>
+        <div><img src={v6} style={{border:'3px solid #000'}}></img></div>
         <div>Then you should input commands below:</div>
         <div className='div'>
         {/* pbc wrap -centersel "protein" -center com -compound residue -all<br/>
@@ -57,7 +57,7 @@ export default function Vmd() {
           close $fp<br/>
         </div>
         <div>Finally will generate <span style={{color:"green"}}>catraj.pdb</span> in your VMD installation folder.</div>
-        <img src={v7}></img>
+        <img src={v7} style={{border:'3px solid #000'}}></img>
     </div>
   )
 }

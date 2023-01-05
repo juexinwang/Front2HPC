@@ -17,10 +17,10 @@ import { useRef } from 'react';
 //layout for form
 const layout = {
   labelCol: {
-    span: 8,
+    span: 7,
   },
   wrapperCol: {
-    span: 8,
+    span: 10,
   },
 };
 //validate for form
@@ -249,7 +249,7 @@ export default function Submit() {
             <Input onChange={(e) => setForm({ ...form, Email: e.target.value })} placeholder='optional'/>
           </Form.Item>
 
-            <Form.Item name="" wrapperCol={{offset:8,span:8}} style={{ display: advanced}}  >   
+            <Form.Item name="" wrapperCol={{offset:7,span:10}} style={{ display: advanced}}  >   
               <div><hr/></div>
             </Form.Item>
 
@@ -280,7 +280,7 @@ export default function Submit() {
             </Form.Item>
           </Form.Item>
 
-          <Form.Item name="" wrapperCol={{offset:8,span:8}} style={{ display: advanced}}  >   
+          <Form.Item name="" wrapperCol={{offset:7,span:10}} style={{ display: advanced}}  >   
               <div><hr/></div>
             </Form.Item>
 
@@ -351,7 +351,7 @@ export default function Submit() {
           </Form.Item>
 
 
-          <Form.Item name="" wrapperCol={{offset:8,span:8}} style={{ display: advanced}}  >   
+          <Form.Item name="" wrapperCol={{offset:7,span:10}} style={{ display: advanced}}  >   
               <div><hr/></div>
             </Form.Item>
 
@@ -403,13 +403,13 @@ export default function Submit() {
           </Form.Item>
 
           <Form.Item name="" label="Paths" style={{marginBottom:"0"}} rules={[{type:"number",  min: 1, max: 1000, }]}> 
-            <Form.Item name="SourceNode" style={{ display: 'inline-block', width: 'calc(23% - 15px)',}} rules={[{type:"number", min: 1, max: 1000, }]} extra="Source Node" >   
+            <Form.Item name="SourceNode" style={{ display: 'inline-block'}} rules={[{type:"number", min: 1, max: 1000, }]} extra="Source Node" >   
               <InputNumber   onChange={(e) => setForm({ ...form, SourceNode: Number(e) })} placeholder='Source Node'  style={{ display: 'inline-block',}}/>
             </Form.Item>
-            <Form.Item name=""  style={{ display: 'inline-block',  width: '30px', textAlign:'center'}}  >   
+            <Form.Item name=""  style={{ display: 'inline-block',  width: '30px', textAlign:'center',marginRight:5}}  >   
               <div>-&gt;</div>
             </Form.Item>
-            <Form.Item name="TargetNode"  style={{ display: 'inline-block',  width: 'calc(50% - 15px)',}} rules={[{type:"number",min: 1, max: 1000, }]} extra="Target Node">   
+            <Form.Item name="TargetNode"  style={{ display: 'inline-block'}} rules={[{type:"number",min: 1, max: 1000, }]} extra="Target Node">   
               <InputNumber   onChange={(e) => setForm({ ...form, TargetNode: Number(e) })} placeholder='Target Node'/>
             </Form.Item>
           </Form.Item>
