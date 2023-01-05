@@ -54,6 +54,7 @@ const QuickStart = () => {
     <>
       <Title level={2}>Introduction to Neural Relational Inference from Molecular Dynamics (NRIMD)</Title>
       <Divider/>
+      <Panel style={{color:'red'}}>The website does not accept new jobs due to IU HPC maintenance by January 8, 7pm EST</Panel>
       <Title level={3}>Quick Start</Title>
       <Steps current={current} onChange={onChange} items={items} />
       <br/>
