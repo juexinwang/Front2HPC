@@ -1,5 +1,5 @@
 ## Use cron in linux of front end
-# BigRed200 as the primary
+# Carbonate as the backup
 #
 # Check cron jobs
 # crontab -l
@@ -7,7 +7,7 @@
 # Edit cron jobs
 # crontab -e
 # 1. Every 5 minutes to check the status. (NRI-MD_daemon_communication.py)
-# */5 * * * * /home/exouser/anaconda3/bin/python /home/exouser/NRIproject/Front2HPC/NRI-MD_daemon_communication.py >> /media/volume/sdb/daemonlog.txt 2>&1
+# */5 * * * * /home/exouser/anaconda3/bin/python /home/exouser/NRIproject/Front2HPC/NRI-MD_daemon_communication_Carbonate.py >> /media/volume/sdb/daemonlog.txt 2>&1
 #
 # 2. Delete results in 14 days, but run every week
 # 0 0 * * 0 find /media/volume/sdb/jobs/files -mtime +14 -type f -delete
@@ -25,21 +25,21 @@ import datetime,os
 #
 # Only change here if needed
 #####################
-transferDir = "/N/u/soicwang/BigRed200/transfer/"
+transferDir = "/N/u/soicwang/Carbonate/transfer/"
 targetDir = '/media/volume/sdb/jobs/jobs/'
-deployedDir = '/N/u/soicwang/BigRed200/projects/Front2HPC/'
+deployedDir = '/N/u/soicwang/Carbonate/projects/Front2HPC/'
 
 
 # main
 # Check the status of the jobs
-cmd = 'ssh soicwang@bigred200.uits.iu.edu bash '+ deployedDir +'HPC_NRI-MD_check.sh'
+cmd = 'ssh soicwang@carbonate.uits.iu.edu bash '+ deployedDir +'HPC_NRI-MD_check_Carbonate.sh'
 os.system(cmd)
 # Debug:
 print(datetime.datetime.now())
 print(cmd)
 
 # Copy the files from HPC to the frontend
-cmd =  'scp -r soicwang@bigred200.uits.iu.edu:'+transferDir+'* '+targetDir
+cmd =  'scp -r soicwang@carbonate.uits.iu.edu:'+transferDir+'* '+targetDir
 os.system(cmd)
 # Debug:
 print(datetime.datetime.now())

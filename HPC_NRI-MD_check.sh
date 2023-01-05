@@ -1,4 +1,4 @@
-## Put this into the HPC
+## Put this into the HPC: BigRed200 as the primary
 
 # Check status
 sacct -S 2022-12-21 -u soicwang > status_current.txt

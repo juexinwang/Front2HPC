@@ -1,6 +1,6 @@
 ## Prepare a folder only for transfering
 ## It should located on the root of the HPC under username of soicwang
-## BigRed200 as the primary
+## Carbonate as the backup
 
 import sys,os,shutil
 
@@ -10,8 +10,8 @@ import sys,os,shutil
 # Only change here if needed
 #####################
 
-transferDir = "/N/u/soicwang/BigRed200/transfer/"
-resultsDir = "/N/u/soicwang/BigRed200/projects/NRI-MD/logs/"
+transferDir = "/N/u/soicwang/Carbonate/transfer/"
+resultsDir = "/N/u/soicwang/Carbonate/projects/NRI-MD/logs/"
 
 jobidList = []
 

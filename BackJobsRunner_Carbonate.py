@@ -1,9 +1,9 @@
 ## For submiting jobs from front-end in Django
-## BigRed200 as the primary
+## Carbonate as the backup
 
 import os
 
-class BackJobsRunner:
+class BackJobsRunner_Carbonate:
     """ Basic Runner from the front-end, used for submit jobs
     
     All the params included:
@@ -37,12 +37,12 @@ class BackJobsRunner:
         self.filename = filename #jobid_numresidues_nummodels.pdb #TODO
         self.params = params
         self.slurmDir = '/media/volume/sdb/jobs/slurmDir/'
-        self.slurmHPCDir = '/N/u/soicwang/BigRed200/inputslurmDir/'
-        self.inputHPCDir = '/N/u/soicwang/BigRed200/inputPDBDir/'
-        self.codeDir = '/N/u/soicwang/BigRed200/projects/NRI-MD/'    
+        self.slurmHPCDir = '/N/u/soicwang/Carbonate/inputslurmDir/'
+        self.inputHPCDir = '/N/u/soicwang/Carbonate/inputPDBDir/'
+        self.codeDir = '/N/u/soicwang/Carbonate/projects/NRI-MD/'    
 
     def generateSlurm(self):
-        """ Generate slurm script for BigRed 200"""
+        """ Generate slurm script for Carbonate"""
 
         ## Find the appropriate params of number of reisdues and number of models
         words = self.filename.split('_')
@@ -64,7 +64,7 @@ class BackJobsRunner:
 
         fileStr = fileStr + ' --MDfolder ' + self.inputHPCDir\
         + ' --inputFile ' + self.jobid+'.pdb' \
-        + ' --datafolder '+ self.inputHPCDir + self.jobid + '/data/' #'/N/u/soicwang/BigRed200/inputPDBDir/1213AAAA/data/'
+        + ' --datafolder '+ self.inputHPCDir + self.jobid + '/data/' #'/N/u/soicwang/Carbonate/inputPDBDir/1213AAAA/data/'
 
         ## Add params of preprocess_dataset.py
         fileStr = fileStr + ' --start ' + str(self.params['start'])\
@@ -77,7 +77,7 @@ class BackJobsRunner:
 
         fileStr = fileStr + 'srun python ' + self.codeDir + 'main.py'
         ## Add params of main.py from input
-        #inputdir: /N/u/soicwang/BigRed200/inputPDBDir/1213AAAA/data/
+        #inputdir: /N/u/soicwang/Carbonate/inputPDBDir/1213AAAA/data/
         fileStr = fileStr + ' --jobid ' + self.jobid \
         + ' --inputdir ' + self.inputHPCDir + self.jobid +'/data/' \
         + ' --num-residues ' + num_residues \
@@ -107,9 +107,9 @@ class BackJobsRunner:
         + ' --PDBfilename ' + self.inputHPCDir + self.jobid + '.pdb' \
         + ' --outputDir ' + self.codeDir + 'logs/' + self.jobid + '/analysis/' \
 
-        # filename: '/N/u/soicwang/BigRed200/projects/NRI-MD/logs/1213AAAA/logs/out_probs_train.npy'
-        # PDBfilename: '/N/u/soicwang/BigRed200/inputPDBDir/1213AAAA.pdb'
-        # outputfilename: '/N/u/soicwang/BigRed200/projects/NRI-MD/logs/1213AAAA/analysis/paths.txt'
+        # filename: '/N/u/soicwang/Carbonate/projects/NRI-MD/logs/1213AAAA/logs/out_probs_train.npy'
+        # PDBfilename: '/N/u/soicwang/Carbonate/inputPDBDir/1213AAAA.pdb'
+        # outputfilename: '/N/u/soicwang/Carbonate/projects/NRI-MD/logs/1213AAAA/analysis/paths.txt'
 
         fileStr = fileStr + ' --dist-threshold ' + str(self.params['dist_threshold'])\
         + ' --source-node ' + str(self.params['source_node'])\
@@ -122,8 +122,8 @@ class BackJobsRunner:
         + ' --fileDir ' + self.codeDir + 'logs/' + self.jobid + '/logs/' \
         + ' --outputDir ' + self.codeDir + 'logs/' + self.jobid + '/analysis/' \
 
-        # fileDir: '/N/u/soicwang/BigRed200/projects/NRI-MD/logs/1213AAAA/logs/'
-        # outputDir: '/N/u/soicwang/BigRed200/projects/NRI-MD/logs/1213AAAA/analysis/'
+        # fileDir: '/N/u/soicwang/Carbonate/projects/NRI-MD/logs/1213AAAA/logs/'
+        # outputDir: '/N/u/soicwang/Carbonate/projects/NRI-MD/logs/1213AAAA/analysis/'
 
         fileStr = fileStr + ' --dist-threshold ' + str(self.params['dist_threshold'])\
         + ' --threshold ' + str(self.params['threshold'])\
@@ -146,17 +146,17 @@ class BackJobsRunner:
         self.generateSlurm()
 
         ## 3. Copy slurm script to HPC
-        cmd =  'scp '+self.slurmDir+self.jobid+'.slurm soicwang@bigred200.uits.iu.edu:'+self.slurmHPCDir
+        cmd =  'scp '+self.slurmDir+self.jobid+'.slurm soicwang@carbonate.uits.iu.edu:'+self.slurmHPCDir
         os.system(cmd)
         print(cmd)
 
         ## 4. Copy input to HPC
-        cmd =  'scp -r '+self.filepath+self.jobid+'.pdb soicwang@bigred200.uits.iu.edu:'+self.inputHPCDir
+        cmd =  'scp -r '+self.filepath+self.jobid+'.pdb soicwang@carbonate.uits.iu.edu:'+self.inputHPCDir
         os.system(cmd)
         print(cmd)
 
         ## 5. Submit slurm script
-        cmd = 'ssh soicwang@bigred200.uits.iu.edu sbatch '+self.slurmHPCDir+self.jobid+'.slurm'
+        cmd = 'ssh soicwang@carbonate.uits.iu.edu sbatch '+self.slurmHPCDir+self.jobid+'.slurm'
         os.system(cmd)
         print(cmd)
 

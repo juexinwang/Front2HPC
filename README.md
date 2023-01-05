@@ -139,6 +139,13 @@ can visit in http://localhost:9090/index.php?pdb=1ake.pdb
 
 
 ## Set up HPC:
+You will need an account on BR200; this account should sign the “SSH key agreement” and be able to login without DUO (https://kb.iu.edu/d/brcc#access)
+Example steps to submit a job to BR200 from the external server:
+SCP the files/data/job script that you need for the job to BR200 (https://kb.iu.edu/d/agye)
+                                                               i.      scp job.slurm username@bigred200.uits.iu.edu:/path/to/workdir
+                                                             ii.      scp -r other-files username@bigred200.uits.iu.edu:/path/to/workdir
+ssh username@bigred200.uits.iu.edu sbatch /path/to/workdir/job.slurm
+SCP the output files back to your server
 
 Access BigRed 200
 https://kb.iu.edu/d/brcc#access
