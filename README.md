@@ -143,9 +143,13 @@ can visit in http://localhost:9090/index.php?pdb=1ake.pdb
 Access BigRed 200
 https://kb.iu.edu/d/brcc#access
 
+Access Carbonate
+https://kb.iu.edu/d/aolp
 
 Set up key
 https://kb.iu.edu/d/aews
+
+git clone -b webserver --single-branch https://github.com/juexinwang/NRI-MD.git
 
 ## Set up crontab:
 # crontab -e
