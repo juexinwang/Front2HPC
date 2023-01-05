@@ -6,6 +6,7 @@ import { Typography,Divider } from 'antd';
 import HowSubmit from './HowSubmit';
 import { Link } from 'react-router-dom';
 const { Title } = Typography;
+// <Divider/> after title
 let intro=<div>
             <h2>Analyzing long-range interactions in molecular dynamics simulations using deep learning</h2>
             <div>
@@ -53,7 +54,6 @@ const QuickStart = () => {
   return (
     <>
       <Title level={2}>Introduction to Neural Relational Inference from Molecular Dynamics (NRIMD)</Title>
-      <Divider/>
       <p style={{color:'red'}}>The website does not accept new jobs due to IU HPC maintenance by January 8, 7pm EST</p>
       <Title level={3}>Quick Start</Title>
       <Steps current={current} onChange={onChange} items={items} />
