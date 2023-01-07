@@ -65,8 +65,7 @@ class BackJobsRunner_Carbonate:
 
         fileStr = fileStr + ' --MDfolder ' + self.inputHPCDir\
         + ' --inputFile ' + self.jobid+'.pdb' \
-        + ' --datafolder '+ self.inputHPCDir + self.jobid + '/data/' \
-        + ' --save-folder /N/u/soicwang/Carbonate/projects/NRI-MD/logs/' #hardcode now
+        + ' --datafolder '+ self.inputHPCDir + self.jobid + '/data/'
         # datafolder: '/N/u/soicwang/Carbonate/inputPDBDir/1213AAAA/data/'
 
         ## Add params of preprocess_dataset.py
@@ -87,6 +86,8 @@ class BackJobsRunner_Carbonate:
         + ' --timesteps ' + str(self.params['timestep_size']) \
         + ' --number-expstart ' + str(int(self.params['start'])-1) \
         + ' --number-exp ' + str(self.params['end']) \
+        + ' --save-folder /N/u/soicwang/Carbonate/projects/NRI-MD/logs/' \
+        # hardcode
         ## Add params of main.py
 
         fileStr = fileStr + ' --seed ' + str(self.params['seed'])\
