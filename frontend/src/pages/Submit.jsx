@@ -2,7 +2,7 @@
 import React, { useState,useEffect } from 'react'
 import { useNavigate,Link, } from 'react-router-dom';
 //antd
-import { Button, Form, Input, InputNumber, Radio, message, Upload ,Slider,Space} from 'antd';
+import { Button, Form, Input, InputNumber, Radio, message, Upload ,Slider, Space} from 'antd';
 import { UploadOutlined,MinusCircleOutlined,PlusOutlined } from '@ant-design/icons';
 //request
 import { submitJobApi,submitExampleApi } from '../requests/api'
@@ -11,8 +11,6 @@ import SubmitSuccessfully from '../components/SubmitSuccessfully';
 import ExampleDrawer from '../components/tutorials/ExampleDrawer';
 //less
 import '../assets/lesses/submit.less'
-import { useRef } from 'react';
-
 
 //layout for form
 const layout = {
@@ -36,44 +34,44 @@ const validateMessages = {
 };
 
 export default function Submit() {
-  //state: submit form or submit finished ?
+  //===========================state===========================
+  //state: submit form or submit finished?
   const [ifsubmit,setIfSubmit] = useState(true)
   //state for submitting form
   const [advanced,setAdvanced] = useState('none')
   //form
-  const navigate = useNavigate()
-
   const [form, setForm] = useState({ 
     Name:'user',  Email:'', 
-    TrajFilePath:'',NumResidues: 0, NumFrames: 0, 
+    TrajFilePath:'', NumResidues: 0, NumFrames: 0, 
     Start: 0, End: 0, TimestepSize: 0, TrainInterval:0, ValidateInterval:0, TestInterval:0,
-    Epochs:0,Lr:0.0, LrDecay:0, Gamma:0.0, Var:0.0, Seed:0,
+    Epochs:0, Lr:0.0, LrDecay:0, Gamma:0.0, Var:0.0, Seed:0,
     Encoder:'mlp', Decoder:'rnn', EncoderHidden:0, DecoderHidden:0, EncoderDropout:0, DecoderDropout:0,
     StrucFilePath:'', 
-    SourceNode:0, TargetNode:0, VisualThreshold: 0, DistThreshold:0, 
-    Domain: ',',
+    SourceNode:0, TargetNode:0, VisualThreshold: 0,
+    DistThreshold:0, Domain: ',',
     }); 
-  console.log(form);
   //state for uploading trajectory file
   const [trajFileList, setTrajFileList] = useState([]);
   const [length,setLength] = useState(0)
   const [lengthValid,setLengthValid] = useState(false)
+  const [uploaded,setUploaded] = useState(false)
+  const [fileClass,setFileClass] = useState('none')
   //state for uploading protein structure file
   const [strucFileList, setStrucFileList] = useState([]);
-  //state for tansfer jobid
+  //state for tansfer jobid //now use form.JobId instead setJobid(res.JobId)
   const [jobid,setJobid] = useState('')
-  //now use form.JobId instead > setJobid(res.JobId)
-  
-  //
+  //state for if example?
   const [exampleSha1,setExampleSha1] = useState(false)
-
-
-
-
+  //to set form default value
   const [formform] = Form.useForm()
 
-    useEffect(()=>{
-      if(exampleSha1){
+  useEffect(()=>{
+
+  },[uploaded])
+
+
+  useEffect(()=>{
+      if(fileClass==='example'){
         console.log("example")
         formform.setFieldsValue({
                                   Start: 1, End: 96, TimestepSize: 45, TrainInterval:100, ValidateInterval:120, TestInterval:150,
@@ -100,26 +98,27 @@ export default function Submit() {
           // NumFrames:3000,
 
         })
-      }else{
-        formform.setFieldsValue({
-          Start: 1, End: 56, TimestepSize: 50, TrainInterval:60, ValidateInterval:80, TestInterval:100,
-          Epochs:200,Lr:0.0005, LrDecay:200, Gamma:0.5, Var:0.00005, Seed:42,
-          Encoder:'mlp', Decoder:'rnn', EncoderHidden:256, DecoderHidden:256, EncoderDropout:0, DecoderDropout:0,
-          SourceNode:46, TargetNode:61,VisualThreshold: 0.6, DistThreshold:12, 
-          
-      })
-        setForm({...form,
-          Start: 1, End: 56, TimestepSize: 50, TrainInterval:60, ValidateInterval:80, TestInterval:100,
-          Epochs:200,Lr:0.0005, LrDecay:200, Gamma:0.5, Var:0.00005, Seed:42,
-          Encoder:'mlp', Decoder:'rnn', EncoderHidden:256, DecoderHidden:256, EncoderDropout:0, DecoderDropout:0,
-          SourceNode:46, TargetNode:61,VisualThreshold: 0.6, DistThreshold:12, 
+        }
+        if(fileClass==='notexample'){
+          console.log('not example')
+          formform.setFieldsValue({
+            Start: 1, End: 56, TimestepSize: 50, TrainInterval:60, ValidateInterval:80, TestInterval:100,
+            Epochs:200,Lr:0.0005, LrDecay:200, Gamma:0.5, Var:0.00005, Seed:42,
+            Encoder:'mlp', Decoder:'rnn', EncoderHidden:256, DecoderHidden:256, EncoderDropout:0, DecoderDropout:0,
+            SourceNode:46, TargetNode:61,VisualThreshold: 0.6, DistThreshold:12, 
+            
         })
-      }
-    },[exampleSha1])
+          setForm({...form,
+            Start: 1, End: 56, TimestepSize: 50, TrainInterval:60, ValidateInterval:80, TestInterval:100,
+            Epochs:200,Lr:0.0005, LrDecay:200, Gamma:0.5, Var:0.00005, Seed:42,
+            Encoder:'mlp', Decoder:'rnn', EncoderHidden:256, DecoderHidden:256, EncoderDropout:0, DecoderDropout:0,
+            SourceNode:46, TargetNode:61,VisualThreshold: 0.6, DistThreshold:12, 
+          })
+        }
+        
+      // }
+    },[fileClass])
 
-    // console.log('submit',form);
-  
-    console.log("esha", exampleSha1)
   //upload trajectory file
   const trajHandleChange = (info) => {
     let newFileList = [...info.fileList];
@@ -135,7 +134,12 @@ export default function Submit() {
         setLength(file.response.amount_residues)
         setLengthValid(file.response.length_valid)
         setForm({ ...form, TrajFilePath: file.response.TrajFilePath, NumResidues:file.response.NumResidues,NumFrames:file.response.NumFrames})
-        setExampleSha1(file.response.sha1==="21c6c62497a2a53b736ba47244914f11918e0647") 
+        // setExampleSha1(file.response.sha1==="21c6c62497a2a53b736ba47244914f11918e0647") 
+        if(file.response.sha1==="21c6c62497a2a53b736ba47244914f11918e0647"){
+          setFileClass('example')
+        }else{
+          setFileClass('notexample')
+        }
         console.log(2222222);
         
       }
@@ -144,7 +148,10 @@ export default function Submit() {
     setTrajFileList(newFileList);
   };
   const trajProps={action:'/api/uploadtraj/',onChange:trajHandleChange,multiple:true}
- 
+
+
+  console.log('ExampleSha1',exampleSha1)
+  console.log(form);
   //upload structure file
   const strucHandleChange = (info) => {
     let newFileList = [...info.fileList];
