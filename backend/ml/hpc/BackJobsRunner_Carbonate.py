@@ -65,8 +65,9 @@ class BackJobsRunner_Carbonate:
 
         fileStr = fileStr + ' --MDfolder ' + self.inputHPCDir\
         + ' --inputFile ' + self.jobid+'.pdb' \
-        + ' --datafolder '+ self.inputHPCDir + self.jobid + '/data/' #'/N/u/soicwang/Carbonate/inputPDBDir/1213AAAA/data/'
+        + ' --datafolder '+ self.inputHPCDir + self.jobid + '/data/' \
         + ' --save-folder /N/u/soicwang/Carbonate/projects/NRI-MD/logs/' #hardcode now
+        # datafolder: '/N/u/soicwang/Carbonate/inputPDBDir/1213AAAA/data/'
 
         ## Add params of preprocess_dataset.py
         fileStr = fileStr + ' --start ' + str(self.params['start'])\
