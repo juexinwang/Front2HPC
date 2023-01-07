@@ -25,7 +25,8 @@ from ml.algorithm.postanalysis_path import AnalysisPath
 from ml.algorithm.postanalysis_visual import AnalysisVisual
 from ml.algorithm.postanalysis_pathW import AnalysisPathInResult
 from ml.algorithm.postanalysis_visualW import AnalysisVisualInResult
-from ml.hpc.BackJobsRunner import BackJobsRunner
+from ml.hpc.BackJobsRunner import BackJobsRunner #main resource: bigred200
+from ml.hpc.BackJobsRunner_Carbonate import BackJobsRunner_Carbonate # backup: Carbonate
 from django.core import mail
 from apscheduler.schedulers.background import BackgroundScheduler
 from django_apscheduler.jobstores import DjangoJobStore, register_events, register_job
@@ -293,8 +294,12 @@ class JobAPIView(APIView):
                     'domainInput':serializer.data["Domain"],
                     #'domainInput':'A_0_40,B_41_70,C_71_76', # default: ',', # start from 0
                 }
-                #TODO
-                bj = BackJobsRunner(jobid = jobid, filename = filename, params = params)
+                # TODO: automatica select
+                #Different resources: BigRed200 and Carbonate
+                # Main resources: BigRed200
+                #bj = BackJobsRunner(jobid = jobid, filename = filename, params = params)
+                # Backup resources: Carbonate
+                bj = BackJobsRunner_Carbonate(jobid = jobid, filename = filename, params = params)
                 print('Submit:')
                 bj.submit()
                 print('Submit finished.')
