@@ -58,14 +58,14 @@ const items = new Array(3).fill(null).map((_, i) => {
 const HowSubmit = () => {
   return <>
     <h2>2.1 Prepare Trajectory</h2>
-    <div>The input molecular dynamics trajectory should be like the SOD1 <ExampleDrawer/> with the Carbon-alpha skeleton input, details in the previous <a href="https://www.nature.com/articles/s41467-022-29331-3">paper</a>. The input contains time-series frames from molecular dynamics in pdb format, and each frame only includes C-alpha atom of each residue. </div>
-    <div>The input can be prepared from outputs in GROMACS, AMBER, and NAMD as below: </div>
+    <div>The input Molecular Dynamics trajectory should be like the SOD1 <ExampleDrawer/> with the Carbon-Alpha skeleton input, details in the previous <a href="https://www.nature.com/articles/s41467-022-29331-3">paper</a>. Take the results from molecular dynamics in <a href="https://www.cgl.ucsf.edu/chimera/docs/UsersGuide/tutorials/pdbintro.html">PDB format</a> time-series frames, each frame only includes Carbon-Alpha atom of each residue. </div>
+    <div>The NRIMD input can be prepared from outputs of mainstream Molecular Dynamics software GROMACS, AMBER, and NAMD. We provide instructions using Built-in commands, VMD, and Customized python scripts as follows: </div>
     <br/>
     <div className="card-container">
         <Tabs type="card" items={methods} />
     </div>
     <h2>2.2 Submit</h2>
-    <div>After obatined the input <span style={{color:"green"}}>ca_traj.pdb</span> within the approaches above, go to <Link to='/submit'>submit</Link>.</div>
+    <div>After obatin the input <span style={{color:"green"}}>ca_traj.pdb</span> in the designed format, go to <Link to='/submit'>submit</Link>.</div>
   </>
 };
 export default HowSubmit;

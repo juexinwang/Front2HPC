@@ -13,17 +13,17 @@ const { Paragraph } = Typography;
 export default function Vmd() {
   return (
     <div>
-        <div style={{fontWeight:"bold"}}>please follow the steps below.</div>
-        <div>First you should upload your trajecory file:</div>
+        <div style={{fontWeight:"bold"}}>Please follow the steps.</div>
+        <div>First upload your trajecory file:</div>
         <img src={v1} style={{border:'3px solid #000'}}></img>
         <img src={v2} style={{border:'3px solid #000'}}></img>
-        <div>Next you should upload your topology file: </div>
+        <div>Next upload your topology file: </div>
         <img src={v3} style={{border:'3px solid #000'}}></img>
         <img src={v4} style={{border:'3px solid #000'}}></img>
-        <div>Then you should open TK console:</div>
+        <div>Then open TK console:</div>
         <img src={v5} style={{border:'3px solid #000'}}></img>
         <div><img src={v6} style={{border:'3px solid #000'}}></img></div>
-        <div>Then you should input commands below:</div>
+        <div>Input commands below (you can copy and paste):</div>
         <div className='div'>
         {/* pbc wrap -centersel "protein" -center com -compound residue -all<br/>
         set ref atomselect top backbone frame 0<br/>
@@ -56,7 +56,7 @@ export default function Vmd() {
           &#125;<br/>
           close $fp<br/>
         </div>
-        <div>Finally will generate <span style={{color:"green"}}>catraj.pdb</span> in your VMD installation folder.</div>
+        <div>These commands will generate desired C-Alpha skeleton <span style={{color:"green"}}>ca_traj.pdb</span> as the NRIMD input in your corresponding VMD folder.</div>
         <img src={v7} style={{border:'3px solid #000'}}></img>
     </div>
   )
