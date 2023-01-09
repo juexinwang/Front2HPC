@@ -21,15 +21,12 @@ export default function Check() {
 
 //navgate
   const navigate = useNavigate()
-//useParams()
+
 //   useEffect(()=>{
 //     setJobid(id) 
 //     form.setFieldsValue({JobId:id})
 //   },[id])
-  
-
   const onFinish = (values) => {
-        // console.log(values.JobId)
         navigate('/result/'+values.JobId,{state:{"jobid":values.JobId}})
   }
 

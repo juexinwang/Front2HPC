@@ -60,7 +60,7 @@ export default function Status(props) {
     ];
     return (
         <>
-            <div style={{ marginBottom: "10px" }}>The job status will fresh every 5 minutes <Button type="primary" onClick={() => setAgainGet(true)}>refresh</Button></div>
+            <div style={{ marginBottom: "10px" }}>The job status will fresh every 1 minutes <Button type="primary" onClick={() => setAgainGet(true)}>refresh</Button></div>
             <Table columns={columns} dataSource={props.table} pagination={false} />
         </>
     )

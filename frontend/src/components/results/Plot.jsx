@@ -65,7 +65,7 @@ export default function Plot(props){
  }
  
 const domain =          
-<div  style={{ background: "#fffbe6", border: "1px solid #ffe58f",marginTop:"70px", marginRight:"70px" }}>
+<div  style={{ background: "#fffbe6", border: "1px solid #ffe58f",marginTop:"30px", marginRight:"30px" }}>
   <div style={{ margin: "20px"}}>
   <Domain setResults={props.setResults} results={props.results}/>
   </div>
@@ -116,17 +116,17 @@ const download_result=  async()=>{
 
 
       {showDomain?
+      <>
+        <div style={{fontSize:"large",}}><br />(Optional) Comparing to the heatmap on interactions between residues genereated above, users can manually define the domains below to get the coarse grained heatmap between the domains.
+        </div> 
         <Row >
-          <div style={{fontSize:"large",}}><br />(Optional) Comparing to the heatmap on interactions between residues genereated above, users can manually define the domains below to get the coarse grained heatmap between the domains.
-          </div> 
           <Col span={14}>
               <div>
                 <img style={{width:'100%',}} src={`data:image/png;base64,${props.results.imgs.edges_domain}`} alt=""/>  
               </div>
           </Col>
           <Col span={10}>
-          {/* {domain} */}
-            <div>
+            <div style={{width:"100%"}}>
               {domain}
               <div style={{marginTop:"10px"}}>
                 <div><span style={{fontWeight:"bolder"}}>Visualization Threshold</span>: Visual interaction threshold</div>
@@ -134,7 +134,8 @@ const download_result=  async()=>{
               </div>
             </div>
           </Col> 
-        </Row>    
+        </Row>  
+        </>  
         :
         ''
       }
@@ -144,7 +145,7 @@ const download_result=  async()=>{
 
 
     <Title level={4}style={{textAlign:"center"}}>2. Find the potential pathways between residues (Optional)</Title>
-    <div style={{fontSize:"large"}}>Inferring the potential pathways from user defined source residue to target residue. The paths are inferred as the shortest distances by Dijkstra's algorithm. 
+    <div style={{fontSize:"large", marginBottom:20}}>Inferring the potential pathways from user defined source residue to target residue. The paths are inferred as the shortest distances by Dijkstra's algorithm. 
     </div>
     <Row>
       <Col span={12}>
@@ -152,7 +153,7 @@ const download_result=  async()=>{
           <Node setResults={props.setResults} results={props.results} />
         </div>
         <br/>
-        <div style={{width:"90%",marginLeft:"40px"}}>{ListPath()}</div>
+        <div style={{width:"90%",marginLeft:"5%"}}>{ListPath()}</div>
       </Col>
       <Col span={12}>
         {

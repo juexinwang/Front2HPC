@@ -60,7 +60,7 @@ const Domain = (props) => {
                       <Input style={{width: 95,textAlign: 'center', }} placeholder="start index"/>
                   </Form.Item>
                   
-                  <Input className="site-input-split" style={{width: 10,borderLeft: 0,borderRight: 0,pointerEvents: 'none',marginBottom:'24px'}} placeholder="~" disabled/>
+                  <Input className="site-input-split" style={{width: 30,borderLeft: 0,borderRight: 0,pointerEvents: 'none',marginBottom:'24px'}} placeholder="~" disabled/>
 
                   <Form.Item {...restField} name={[name, 'end']} rules={[{ required: true, message: 'Missing last name',},  ]}>
                     <Input  className="site-input-right"style={{width: 95,textAlign: 'center',}} placeholder="end index" />

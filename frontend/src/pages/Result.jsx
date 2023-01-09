@@ -39,30 +39,19 @@ export default function Result() {
     againGet && check()
   }, [id, againGet])
 
+  //mount check id
+  useEffect(()=>{
+    let timer = null;
+    if(!jobStatus){
+      timer = setInterval(()=>{
+        check();
+      },60000);
+    }
+    return ()=>{
+      clearInterval(timer);
+    }
+  },[])
 
-  //check Status
-  // useEffect(()=>{
-  //   let timer = null;
-  //   if(!jobStatus){
-  //     timer = setInterval(()=>{
-  //       check();
-  //     },5000);
-  //   }
-  //   return ()=>{
-  //     clearInterval(timer);
-  //   }
-  // },[])
-
-  // useEffect(() => {
-  //   timer = setInterval(() => {
-  //     console.log('count',count)
-  //     setCount(v=>v - 1);
-  //     if (count === 0) {
-  //       console.log('first')
-  //     }
-  //   }, 1000)
-  //   return () => clearInterval(timer)
-  // }, [])
 
   const tag = <Tag icon={<SyncOutlined spin />} color="processing">running</Tag>
   const check = async () => {

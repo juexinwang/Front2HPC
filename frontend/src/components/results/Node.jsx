@@ -38,23 +38,24 @@ const Node = (props) => {
 
   
   return (
-    <Form name="complex-form" onFinish={onFinish} labelCol={{span: 6,}} wrapperCol={{span: 16,}} style={{marginTop:'10px'}} form={form}>
+    <Form name="complex-form" onFinish={onFinish} wrapperCol={{offset:0,span: 24,}} style={{marginTop:'10px'}} form={form}>
+
+      <div style={{marginLeft:20,marginTop:5,display:"inline-block"}}>Distance Threshold: &nbsp; </div>
         
-      <Form.Item name="distThreshold" label= "Distance Threshold" rules={[{type:"number" }]} style={{marginBottom:"20px"}}>   
+      <Form.Item name="distThreshold"  rules={[{type:"number" }]} style={{marginBottom:"10px",display:"inline-block"}}>   
           <InputNumber placeholder='12'/>
       </Form.Item>
       
-      <Form.Item  style={{marginBottom: 0,marginLeft:'40px'}} >
-        <Form.Item name="source" rules={[{required: true, },]} style={{display: 'inline-block',width: 'calc(50% - 4px)',marginBottom:"15px"}} extra="source residue">
+      <Form.Item  style={{marginBottom: 0,marginLeft:'20px'}} >
+        <Form.Item name="source" rules={[{required: true, },]} style={{display: 'inline-block',width: '35%',marginBottom:"15px"}} extra="source residue">
             <Input placeholder="Input source ndoe" />  
         </Form.Item>
-        <Form.Item name="target" rules={[{required: true,}, ]} style={{display: 'inline-block',width: 'calc(50% - 4px)',marginLeft: '8px',marginBottom:"15px"}} extra="target residue">
+        <Form.Item name="target" rules={[{required: true,}, ]} style={{display: 'inline-block',width: '35%',marginLeft: '5%',marginBottom:"15px"}} extra="target residue">
           <Input placeholder="Input target node" />
         </Form.Item>
-      </Form.Item>
-
-      <Form.Item  colon={false} style={{marginBottom:'10px',marginLeft:'40px'}}>
-        <Button type="primary" htmlType="submit">Change</Button>  
+        <Form.Item  colon={false} style={{marginBottom:'10px',display:'inline-block', width: '20%',marginLeft:"5%"}}>
+          <Button type="primary" htmlType="submit">Change</Button>  
+        </Form.Item>
       </Form.Item>
     </Form>
   );
