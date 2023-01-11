@@ -12,6 +12,9 @@ export default function BreadCrumb() {
             case '/submit':
                 setbreadName('submit job');
                 break;
+            case '/cookies':
+                setbreadName('cookies');
+                break;
             case '/result':
                 setbreadName('check result');
                 break;

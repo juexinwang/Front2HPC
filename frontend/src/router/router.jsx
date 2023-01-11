@@ -7,6 +7,7 @@ import Contact from '../pages/Contact'
 import Example from '../pages/Example'
 import {BrowserRouter as Router,Route,Routes} from 'react-router-dom'
 import Check from '../pages/Check'
+import Cookies from '../pages/Cookies'
 import NotFound from '../pages/NotFound'
 
 const BaseRouter=()=>(
@@ -14,12 +15,13 @@ const BaseRouter=()=>(
         <Routes>
                 <Route element={<App/>}>
                     <Route path='/' element={<Intro/>}></Route>
+                    <Route path='/cookies' element={<Cookies/>}></Route>
                     <Route path='/intro' element={<Intro/>}></Route>
                     <Route path='/submit' element={<Submit/>}></Route>
                     <Route path='/result' element={<Check/>}></Route>
                     <Route path='/result/:id' element={<Result/>}></Route>
                     <Route path='/help' element={<Help/>}></Route>
-                    <Route path='/contact' element={<Contact/>}></Route>
+                    <Route path='/contact' element={<Contact/>}></Route>   
                     <Route path='/example' element={<Example/>}></Route>   
                 </Route>
                 <Route path='*' element={<NotFound />}></Route>
