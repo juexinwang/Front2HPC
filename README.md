@@ -55,6 +55,9 @@ https://codeburst.io/deploying-and-hosting-a-react-app-on-an-apache-server-b7121
 1.prepare environment
 sudo apt install nodejs npm yarn
 
+1.1 Add react-cookie-consent plug-in 
+npm install react-cookie-consent
+
 # update node.js to 14.X
 https://computingforgeeks.com/install-node-js-14-on-ubuntu-debian-linux/
 
