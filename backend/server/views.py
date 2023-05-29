@@ -298,9 +298,9 @@ class JobAPIView(APIView):
                 # Resources available in IU: BigRed200 and Carbonate
                 # However, IU will retire Carbonate on December 17, 2023, so we will use Quartz as backup instead
                 # Main resources: BigRed200
-                bj = BackJobsRunner(jobid = jobid, filename = filename, params = params)
+                # bj = BackJobsRunner(jobid = jobid, filename = filename, params = params)
                 # Backup resources: Carbonate
-                # bj = BackJobsRunner_Carbonate(jobid = jobid, filename = filename, params = params)
+                bj = BackJobsRunner_Carbonate(jobid = jobid, filename = filename, params = params)
                 print('Submit:')
                 bj.submit()
                 print('Submit finished.')
