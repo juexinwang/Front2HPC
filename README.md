@@ -292,3 +292,27 @@ Long term: One-stop solution
 1. Integrate other PCA/Hassian methods
 2. Docker of the integrate toolkit/webserver
 3. Another computational resources as back up
+
+
+
+#########
+# Quick start machine if the machine is down
+#########
+
+In cloud computer
+1. backend
+screen
+conda activate /media/volume/sdb/nar
+cd /home/exouser/NRIproject/Front2HPC/backend
+python manage.py runserver
+ctrl+AD
+
+2. frontend
+screen
+cd /home/exouser/NRIproject/Front2HPC/frontend/src
+sudo npm start
+
+3. docker
+Remote connecting use docker
+install extesion for docker in vscode
+compose up 'docker-compose-dev.apache.yml' in pv folders

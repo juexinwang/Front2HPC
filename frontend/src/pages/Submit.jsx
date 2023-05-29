@@ -193,7 +193,7 @@ export default function Submit() {
   let submitForm = <>
     <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages} form={formform}>
       <Form.Item name="JobFile" label="Trajectory File" rules={[{ required: true, },] } 
-        extra="upload protein trajectory pdb file ( only include CA atoms ), protein should be less than 100 residues" >
+        extra="upload protein trajectory pdb file ( only include CA atoms ), protein should be less than 500 residues" >
           <Upload {...trajProps} fileList={trajFileList}> 
             <Button icon={<UploadOutlined />}>Upload</Button> <span onClick={(e)=>{e.stopPropagation()}}><ExampleDrawer/></span>
           </Upload>

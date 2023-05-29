@@ -154,7 +154,7 @@ class TrajectoryFileAPIView(APIView):
         TrajectoryFileModel.objects.create(**dict_data)
         num_residues, totalModelNum = validate_param(filepath)
         sha1value = getSha1(filepath) 
-        return Response({"length_valid":num_residues< 200,'TrajFilePath':filepath,"NumResidues":num_residues,"NumFrames":totalModelNum,"sha1":sha1value})
+        return Response({"length_valid":num_residues<= 500,'TrajFilePath':filepath,"NumResidues":num_residues,"NumFrames":totalModelNum,"sha1":sha1value})
 
 #===========================view: upload protein structure file===========================
 class StructureFileAPIView(APIView):
