@@ -156,21 +156,6 @@ https://kb.iu.edu/d/brcc#access
 Access Carbonate
 https://kb.iu.edu/d/aolp
 
-#######
-# Change resource
-#######
-1. backend/server/views.py
-# Main resources: BigRed200
-#bj = BackJobsRunner(jobid = jobid, filename = filename, params = params)
-# Backup resources: Carbonate
-bj = BackJobsRunner_Carbonate(jobid = jobid, filename = filename, params = params)
-
-2. If we have new resources: should change the following settings;
-NRI-MD_daemon_communication.py
-HPC_NRI-MD_prepareTransfer.py
-HPC_NRI-MD_check.sh
-
-
 Set up key
 https://kb.iu.edu/d/aews
 
@@ -331,3 +316,25 @@ sudo npm start
 Remote connecting use docker
 install extesion for docker in vscode
 compose up 'docker-compose-dev.apache.yml' in pv folders
+
+
+#######
+# Change resource, currently has to change manually
+#######
+1. backend/server/views.py
+# Main resources: BigRed200
+#bj = BackJobsRunner(jobid = jobid, filename = filename, params = params)
+# Backup resources: Carbonate
+bj = BackJobsRunner_Carbonate(jobid = jobid, filename = filename, params = params)
+
+2. Change crontab -e
+see the ref at NRI-MD_daemon_communication.py
+
+3. If we have new resources: should change the following settings;
+backend/ml/hpc:
+BackJobsRunner.py
+
+root:
+NRI-MD_daemon_communication.py
+HPC_NRI-MD_prepareTransfer.py
+HPC_NRI-MD_check.sh

@@ -55,6 +55,7 @@ class BackJobsRunner:
                 '#SBATCH -o ' + self.jobid + '_%j.txt\n'\
                 '#SBATCH -e ' + self.jobid + '_%j.err\n'\
                 '#SBATCH --nodes=1\n'\
+                '#SBATCH --account r00086\n'\
                 '#SBATCH --gpus-per-node 1\n'\
                 '#SBATCH --time=24:00:00\n\n'\
                 'module load deeplearning\n'\
