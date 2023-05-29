@@ -156,6 +156,21 @@ https://kb.iu.edu/d/brcc#access
 Access Carbonate
 https://kb.iu.edu/d/aolp
 
+#######
+# Change resource
+#######
+1. backend/server/views.py
+# Main resources: BigRed200
+#bj = BackJobsRunner(jobid = jobid, filename = filename, params = params)
+# Backup resources: Carbonate
+bj = BackJobsRunner_Carbonate(jobid = jobid, filename = filename, params = params)
+
+2. If we have new resources: should change the following settings;
+NRI-MD_daemon_communication.py
+HPC_NRI-MD_prepareTransfer.py
+HPC_NRI-MD_check.sh
+
+
 Set up key
 https://kb.iu.edu/d/aews
 

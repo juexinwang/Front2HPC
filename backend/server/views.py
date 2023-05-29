@@ -295,7 +295,8 @@ class JobAPIView(APIView):
                     #'domainInput':'A_0_40,B_41_70,C_71_76', # default: ',', # start from 0
                 }
                 # TODO: automatica select
-                #Different resources: BigRed200 and Carbonate
+                # Resources available in IU: BigRed200 and Carbonate
+                # However, IU will retire Carbonate on December 17, 2023, so we will use Quartz as backup instead
                 # Main resources: BigRed200
                 #bj = BackJobsRunner(jobid = jobid, filename = filename, params = params)
                 # Backup resources: Carbonate
