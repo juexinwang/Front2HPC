@@ -112,7 +112,7 @@ export default function Submit() {
       if(file.response){
         console.log('file',file.response);
         if(!file.response.length_valid){
-          message.error(`Your protein length is ${file.response.NumResidues}, now we don't support caculate a protein more than 100 amino-acids`)
+          message.error(`Your protein length is ${file.response.NumResidues}, now we don't support caculate a protein more than 500 amino-acids`)
         }
         if(file.response.sha1==="21c6c62497a2a53b736ba47244914f11918e0647"){
           setFileClass('example')
@@ -210,7 +210,7 @@ export default function Submit() {
         }
       }
     }else{
-      message.error(`Your protein length is valid, now we don't support caculating a protein more than 100 amino-acids`)
+      message.error(`Your protein length is valid, now we don't support caculating a protein more than 500 amino-acids`)
     }
   };
 
