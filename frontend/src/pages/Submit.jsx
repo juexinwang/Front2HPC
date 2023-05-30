@@ -90,7 +90,7 @@ export default function Submit() {
     newFileList = newFileList.map((file) => {
       if(file.response){
         if(!file.response.length_valid){
-          message.error(`Your protein length is ${file.response.NumResidues}, now we don't support caculate a protein more than 100 amino-acids`)
+          message.error(`Your protein length is ${file.response.NumResidues}, now we don't support caculate a protein more than 500 amino-acids`)
         }
         setLengthValid(file.response.length_valid)
         setForm({ ...form, TrajFilePath: file.response.TrajFilePath, NumResidues:file.response.NumResidues, NumFrames:file.response.NumFrames})
@@ -176,7 +176,7 @@ export default function Submit() {
         message.error('Submit failedly')
       }
     }else{
-      message.error(`Your protein length is valid, now we don't support caculating a protein more than 100 amino-acids`)
+      message.error(`Your protein length is valid, now we don't support caculating a protein more than 500 amino-acids`)
     }
   };
 
